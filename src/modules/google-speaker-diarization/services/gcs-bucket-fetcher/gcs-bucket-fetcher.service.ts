@@ -12,7 +12,8 @@ export class GcsBucketFetcherService {
     }
 
     getBucketFilesMetaData(folderName): object {
-        const bucketFilesMetaDataUrl = `https://us-central1-speaker-diarization-resource.cloudfunctions.net/testFunc?folderName=${folderName}`;
+        // const bucketFilesMetaDataUrl = `https://us-central1-speaker-diarization-resource.cloudfunctions.net/testFunc?folderName=${folderName}`;
+        const bucketFilesMetaDataUrl = `https://us-central1-speaker-diarization-resource.cloudfunctions.net/read_bucket_folder?folderName=${folderName}`;
         // access the default provider token for gcloud
 
         return this.httpSrvc.get(bucketFilesMetaDataUrl).toPromise();
