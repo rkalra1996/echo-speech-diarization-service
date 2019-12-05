@@ -19,6 +19,7 @@ const automate_access_token_module_1 = require("./modules/automate-access-token/
 const async_reader_module_1 = require("./modules/async-reader/async-reader.module");
 const speaker_merger_module_1 = require("./modules/speaker-merger/speaker-merger.module");
 const zoom_parser_module_1 = require("./modules/zoom-parser/zoom-parser.module");
+const word_cloud_module_1 = require("./modules/word-cloud/word-cloud.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -34,6 +35,7 @@ AppModule = __decorate([
             speaker_merger_module_1.SpeakerMergerModule,
             async_reader_module_1.AsyncReaderModule,
             zoom_parser_module_1.ZoomParserModule,
+            word_cloud_module_1.WordCloudModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, common_request_validator_service_1.CommonRequestValidatorService],

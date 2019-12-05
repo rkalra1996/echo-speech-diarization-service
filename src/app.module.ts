@@ -12,6 +12,7 @@ import { AutomateAccessTokenModule } from './modules/automate-access-token/autom
 import { AsyncReaderModule } from './modules/async-reader/async-reader.module';
 import { SpeakerMergerModule } from './modules/speaker-merger/speaker-merger.module';
 import { ZoomParserModule } from './modules/zoom-parser/zoom-parser.module';
+import { WordCloudModule } from './modules/word-cloud/word-cloud.module';
 @Module({
   // serve static files in the server
   imports: [
@@ -25,6 +26,7 @@ import { ZoomParserModule } from './modules/zoom-parser/zoom-parser.module';
     SpeakerMergerModule,
     AsyncReaderModule,
     ZoomParserModule,
+    WordCloudModule,
   ],
   controllers: [AppController],
   providers: [AppService, CommonRequestValidatorService],

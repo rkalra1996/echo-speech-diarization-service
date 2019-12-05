@@ -1,0 +1,1999 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xmeml version="5">
+  <sequence id="sequence-0">
+    <media>
+      <audio>
+        <format>
+          <samplecharacteristics>
+            <depth>70</depth>
+            <samplerate>44100</samplerate>
+          </samplecharacteristics>
+        </format>
+        <track>
+          <clipitem id="clipitem-0">
+            <masterclipid>master-clip-1</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 1 - hub</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1</in>
+            <out>779.419</out>
+            <start>1</start>
+            <end>779.419</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177">
+              <media>
+                <audio>
+                  <samplecharacteristics>
+                    <depth>70</depth>
+                    <samplerate>44100</samplerate>
+                  </samplecharacteristics>
+                  <channelcount>1</channelcount>
+                </audio>
+              </media>
+              <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav</name>
+              <duration>3004.708571</duration>
+              <pathurl>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav</pathurl>
+              <rate>
+                <timebase>1</timebase>
+              </rate>
+            </file>
+          </clipitem>
+          <clipitem id="clipitem-1">
+            <masterclipid>master-clip-2</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 2 - hub</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>779.75</in>
+            <out>845.749</out>
+            <start>779.75</start>
+            <end>845.749</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-2">
+            <masterclipid>master-clip-3</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 3 - hub</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>846.75</in>
+            <out>848.75</out>
+            <start>846.75</start>
+            <end>848.75</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-3">
+            <masterclipid>master-clip-4</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 4 - hub</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>848.58</in>
+            <out>905.169</out>
+            <start>848.58</start>
+            <end>905.169</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-4">
+            <masterclipid>master-clip-5</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 5 - hub</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>907.05</in>
+            <out>911.649</out>
+            <start>907.05</start>
+            <end>911.649</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-5">
+            <masterclipid>master-clip-6</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 6 - speaker_1</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>912.7</in>
+            <out>929.21</out>
+            <start>912.7</start>
+            <end>929.21</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-6">
+            <masterclipid>master-clip-7</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 7 - speaker_1</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>929.68</in>
+            <out>939.929</out>
+            <start>929.68</start>
+            <end>939.929</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-7">
+            <masterclipid>master-clip-8</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 8 - speaker_1</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>940.51</in>
+            <out>952.299</out>
+            <start>940.51</start>
+            <end>952.299</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-8">
+            <masterclipid>master-clip-9</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 9 - speaker_1</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>952.72</in>
+            <out>969.37</out>
+            <start>952.72</start>
+            <end>969.37</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-9">
+            <masterclipid>master-clip-10</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 10 - speaker_1</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>970.12</in>
+            <out>996.539</out>
+            <start>970.12</start>
+            <end>996.539</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-10">
+            <masterclipid>master-clip-11</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 11 - speaker_1</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>996.88</in>
+            <out>1000.219</out>
+            <start>996.88</start>
+            <end>1000.219</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-11">
+            <masterclipid>master-clip-12</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 12 - speaker_1</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1010.26</in>
+            <out>1017.119</out>
+            <start>1010.26</start>
+            <end>1017.119</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-12">
+            <masterclipid>master-clip-13</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 13 - speaker_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1032.49</in>
+            <out>1054.549</out>
+            <start>1032.49</start>
+            <end>1054.549</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-13">
+            <masterclipid>master-clip-14</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 14 - speaker_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1056.14</in>
+            <out>1063.19</out>
+            <start>1056.14</start>
+            <end>1063.19</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-14">
+            <masterclipid>master-clip-15</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 15 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1071.15</in>
+            <out>1073.15</out>
+            <start>1071.15</start>
+            <end>1073.15</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-15">
+            <masterclipid>master-clip-16</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 16 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1072.66</in>
+            <out>1076.059</out>
+            <start>1072.66</start>
+            <end>1076.059</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-16">
+            <masterclipid>master-clip-17</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 17 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1081.2</in>
+            <out>1083.2</out>
+            <start>1081.2</start>
+            <end>1083.2</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-17">
+            <masterclipid>master-clip-18</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 18 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1086.1</in>
+            <out>1101.199</out>
+            <start>1086.1</start>
+            <end>1101.199</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-18">
+            <masterclipid>master-clip-19</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 19 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1103</in>
+            <out>1109.99</out>
+            <start>1103</start>
+            <end>1109.99</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-19">
+            <masterclipid>master-clip-20</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 20 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1111.22</in>
+            <out>1121.029</out>
+            <start>1111.22</start>
+            <end>1121.029</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-20">
+            <masterclipid>master-clip-21</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 21 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1124.76</in>
+            <out>1129.21</out>
+            <start>1124.76</start>
+            <end>1129.21</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-21">
+            <masterclipid>master-clip-22</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 22 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1129.63</in>
+            <out>1134.609</out>
+            <start>1129.63</start>
+            <end>1134.609</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-22">
+            <masterclipid>master-clip-23</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 23 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1141.69</in>
+            <out>1146.859</out>
+            <start>1141.69</start>
+            <end>1146.859</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-23">
+            <masterclipid>master-clip-24</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 24 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1149.13</in>
+            <out>1374.04</out>
+            <start>1149.13</start>
+            <end>1374.04</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-24">
+            <masterclipid>master-clip-25</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 25 - speaker_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1375.4</in>
+            <out>1377.4</out>
+            <start>1375.4</start>
+            <end>1377.4</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-25">
+            <masterclipid>master-clip-26</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 26 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1380.41</in>
+            <out>1421.939</out>
+            <start>1380.41</start>
+            <end>1421.939</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-26">
+            <masterclipid>master-clip-27</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 27 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1423.47</in>
+            <out>1428.95</out>
+            <start>1423.47</start>
+            <end>1428.95</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-27">
+            <masterclipid>master-clip-28</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 28 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1432.18</in>
+            <out>1437.419</out>
+            <start>1432.18</start>
+            <end>1437.419</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-28">
+            <masterclipid>master-clip-29</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 29 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1438</in>
+            <out>1464.93</out>
+            <start>1438</start>
+            <end>1464.93</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-29">
+            <masterclipid>master-clip-30</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 30 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1468.23</in>
+            <out>1517.529</out>
+            <start>1468.23</start>
+            <end>1517.529</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-30">
+            <masterclipid>master-clip-31</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 31 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1518.96</in>
+            <out>1527.21</out>
+            <start>1518.96</start>
+            <end>1527.21</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-31">
+            <masterclipid>master-clip-32</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 32 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1528.26</in>
+            <out>1543.14</out>
+            <start>1528.26</start>
+            <end>1543.14</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-32">
+            <masterclipid>master-clip-33</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 33 - speaker_3</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1544</in>
+            <out>1551.099</out>
+            <start>1544</start>
+            <end>1551.099</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-33">
+            <masterclipid>master-clip-34</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 34 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1552.63</in>
+            <out>1568.289</out>
+            <start>1552.63</start>
+            <end>1568.289</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-34">
+            <masterclipid>master-clip-35</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 35 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1568.72</in>
+            <out>1571.47</out>
+            <start>1568.72</start>
+            <end>1571.47</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-35">
+            <masterclipid>master-clip-36</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 36 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1571.87</in>
+            <out>1574.499</out>
+            <start>1571.87</start>
+            <end>1574.499</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-36">
+            <masterclipid>master-clip-37</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 37 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1574.52</in>
+            <out>1609.829</out>
+            <start>1574.52</start>
+            <end>1609.829</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-37">
+            <masterclipid>master-clip-38</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 38 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1610.35</in>
+            <out>1613.91</out>
+            <start>1610.35</start>
+            <end>1613.91</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-38">
+            <masterclipid>master-clip-39</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 39 - speaker_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1615.55</in>
+            <out>1617.55</out>
+            <start>1615.55</start>
+            <end>1617.55</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-39">
+            <masterclipid>master-clip-40</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 40 - speaker_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1617.74</in>
+            <out>1640.319</out>
+            <start>1617.74</start>
+            <end>1640.319</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-40">
+            <masterclipid>master-clip-41</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 41 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1643.66</in>
+            <out>1645.66</out>
+            <start>1643.66</start>
+            <end>1645.66</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-41">
+            <masterclipid>master-clip-42</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 42 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1646.1</in>
+            <out>1659.93</out>
+            <start>1646.1</start>
+            <end>1659.93</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-42">
+            <masterclipid>master-clip-43</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 43 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1661.13</in>
+            <out>1668.839</out>
+            <start>1661.13</start>
+            <end>1668.839</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-43">
+            <masterclipid>master-clip-44</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 44 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1669.15</in>
+            <out>1797.859</out>
+            <start>1669.15</start>
+            <end>1797.859</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-44">
+            <masterclipid>master-clip-45</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 45 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1800.68</in>
+            <out>1810.069</out>
+            <start>1800.68</start>
+            <end>1810.069</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-45">
+            <masterclipid>master-clip-46</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 46 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>1810.15</in>
+            <out>2031.049</out>
+            <start>1810.15</start>
+            <end>2031.049</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-46">
+            <masterclipid>master-clip-47</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 47 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2032.82</in>
+            <out>2036.63</out>
+            <start>2032.82</start>
+            <end>2036.63</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-47">
+            <masterclipid>master-clip-48</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 48 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2036.96</in>
+            <out>2102.69</out>
+            <start>2036.96</start>
+            <end>2102.69</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-48">
+            <masterclipid>master-clip-49</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 49 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2104.01</in>
+            <out>2128.01</out>
+            <start>2104.01</start>
+            <end>2128.01</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-49">
+            <masterclipid>master-clip-50</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 50 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2128.4</in>
+            <out>2133.19</out>
+            <start>2128.4</start>
+            <end>2133.19</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-50">
+            <masterclipid>master-clip-51</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 51 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2134.4</in>
+            <out>2142.079</out>
+            <start>2134.4</start>
+            <end>2142.079</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-51">
+            <masterclipid>master-clip-52</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 52 - speaker_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2142.63</in>
+            <out>2157.9</out>
+            <start>2142.63</start>
+            <end>2157.9</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-52">
+            <masterclipid>master-clip-53</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 53 - speaker_6</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2159.39</in>
+            <out>2164.849</out>
+            <start>2159.39</start>
+            <end>2164.849</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-53">
+            <masterclipid>master-clip-54</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 54 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2165.91</in>
+            <out>2167.91</out>
+            <start>2165.91</start>
+            <end>2167.91</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-54">
+            <masterclipid>master-clip-55</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 55 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2169.97</in>
+            <out>2178.76</out>
+            <start>2169.97</start>
+            <end>2178.76</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-55">
+            <masterclipid>master-clip-56</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 56 - speaker_6</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2180.38</in>
+            <out>2194.8</out>
+            <start>2180.38</start>
+            <end>2194.8</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-56">
+            <masterclipid>master-clip-57</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 57 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2196.57</in>
+            <out>2217.82</out>
+            <start>2196.57</start>
+            <end>2217.82</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-57">
+            <masterclipid>master-clip-58</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 58 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2219.81</in>
+            <out>2221.81</out>
+            <start>2219.81</start>
+            <end>2221.81</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-58">
+            <masterclipid>master-clip-59</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 59 - speaker_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2222.86</in>
+            <out>2224.86</out>
+            <start>2222.86</start>
+            <end>2224.86</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-59">
+            <masterclipid>master-clip-60</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 60 - speaker_7</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2225.49</in>
+            <out>2245.76</out>
+            <start>2225.49</start>
+            <end>2245.76</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-60">
+            <masterclipid>master-clip-61</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 61 - speaker_7</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2246.12</in>
+            <out>2253.75</out>
+            <start>2246.12</start>
+            <end>2253.75</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-61">
+            <masterclipid>master-clip-62</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 62 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2255.47</in>
+            <out>2296.949</out>
+            <start>2255.47</start>
+            <end>2296.949</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-62">
+            <masterclipid>master-clip-63</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 63 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2297.11</in>
+            <out>2303.159</out>
+            <start>2297.11</start>
+            <end>2303.159</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-63">
+            <masterclipid>master-clip-64</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 64 - speaker_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2305.52</in>
+            <out>2310.889</out>
+            <start>2305.52</start>
+            <end>2310.889</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-64">
+            <masterclipid>master-clip-65</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 65 - speaker_8</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2315.16</in>
+            <out>2321.21</out>
+            <start>2315.16</start>
+            <end>2321.21</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-65">
+            <masterclipid>master-clip-66</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 66 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2323.02</in>
+            <out>2347.46</out>
+            <start>2323.02</start>
+            <end>2347.46</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-66">
+            <masterclipid>master-clip-67</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 67 - speaker_9</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2349.41</in>
+            <out>2354.44</out>
+            <start>2349.41</start>
+            <end>2354.44</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-67">
+            <masterclipid>master-clip-68</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 68 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2356.27</in>
+            <out>2444.959</out>
+            <start>2356.27</start>
+            <end>2444.959</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-68">
+            <masterclipid>master-clip-69</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 69 - speaker_9</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2446.74</in>
+            <out>2448.74</out>
+            <start>2446.74</start>
+            <end>2448.74</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-69">
+            <masterclipid>master-clip-70</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 70 - speaker_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2450.11</in>
+            <out>2452.809</out>
+            <start>2450.11</start>
+            <end>2452.809</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-70">
+            <masterclipid>master-clip-71</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 71 - speaker_10</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2456.38</in>
+            <out>2490.429</out>
+            <start>2456.38</start>
+            <end>2490.429</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-71">
+            <masterclipid>master-clip-72</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 72 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2491.62</in>
+            <out>2521.439</out>
+            <start>2491.62</start>
+            <end>2521.439</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-72">
+            <masterclipid>master-clip-73</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 73 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2525.57</in>
+            <out>2527.57</out>
+            <start>2525.57</start>
+            <end>2527.57</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-73">
+            <masterclipid>master-clip-74</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 74 - speaker_11</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2530.01</in>
+            <out>2537.38</out>
+            <start>2530.01</start>
+            <end>2537.38</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-74">
+            <masterclipid>master-clip-75</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 75 - speaker_11</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2538.2</in>
+            <out>2540.2</out>
+            <start>2538.2</start>
+            <end>2540.2</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-75">
+            <masterclipid>master-clip-76</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 76 - speaker_11</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2540.33</in>
+            <out>2551.809</out>
+            <start>2540.33</start>
+            <end>2551.809</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-76">
+            <masterclipid>master-clip-77</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 77 - speaker_11</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2551.95</in>
+            <out>2558.61</out>
+            <start>2551.95</start>
+            <end>2558.61</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-77">
+            <masterclipid>master-clip-78</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 78 - speaker_11</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2559.37</in>
+            <out>2561.37</out>
+            <start>2559.37</start>
+            <end>2561.37</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-78">
+            <masterclipid>master-clip-79</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 79 - speaker_11</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2562.08</in>
+            <out>2571.249</out>
+            <start>2562.08</start>
+            <end>2571.249</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-79">
+            <masterclipid>master-clip-80</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 80 - speaker_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2571.28</in>
+            <out>2587.94</out>
+            <start>2571.28</start>
+            <end>2587.94</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-80">
+            <masterclipid>master-clip-81</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 81 - speaker_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2588.67</in>
+            <out>2594.35</out>
+            <start>2588.67</start>
+            <end>2594.35</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-81">
+            <masterclipid>master-clip-82</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 82 - speaker_12</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2597.93</in>
+            <out>2634.479</out>
+            <start>2597.93</start>
+            <end>2634.479</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-82">
+            <masterclipid>master-clip-83</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 83 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2638.57</in>
+            <out>2640.57</out>
+            <start>2638.57</start>
+            <end>2640.57</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-83">
+            <masterclipid>master-clip-84</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 84 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2639.75</in>
+            <out>2703.98</out>
+            <start>2639.75</start>
+            <end>2703.98</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-84">
+            <masterclipid>master-clip-85</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 85 - speaker_11</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2708.45</in>
+            <out>2710.45</out>
+            <start>2708.45</start>
+            <end>2710.45</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-85">
+            <masterclipid>master-clip-86</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 86 - speaker_11_5_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2712.05</in>
+            <out>2738.57</out>
+            <start>2712.05</start>
+            <end>2738.57</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-86">
+            <masterclipid>master-clip-87</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 87 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2739.49</in>
+            <out>2819.139</out>
+            <start>2739.49</start>
+            <end>2819.139</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-87">
+            <masterclipid>master-clip-88</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 88 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2820.36</in>
+            <out>2836.59</out>
+            <start>2820.36</start>
+            <end>2836.59</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-88">
+            <masterclipid>master-clip-89</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 89 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2838.12</in>
+            <out>2843.28</out>
+            <start>2838.12</start>
+            <end>2843.28</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-89">
+            <masterclipid>master-clip-90</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 90 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2844</in>
+            <out>2853.44</out>
+            <start>2844</start>
+            <end>2853.44</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-90">
+            <masterclipid>master-clip-91</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 91 - speaker_5</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2853.48</in>
+            <out>2897.62</out>
+            <start>2853.48</start>
+            <end>2897.62</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-91">
+            <masterclipid>master-clip-92</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 92 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2901.35</in>
+            <out>2909.579</out>
+            <start>2901.35</start>
+            <end>2909.579</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-92">
+            <masterclipid>master-clip-93</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 93 - speaker_4</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2909.94</in>
+            <out>2928.69</out>
+            <start>2909.94</start>
+            <end>2928.69</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-93">
+            <masterclipid>master-clip-94</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 94 - speaker_2</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2930.12</in>
+            <out>2938.64</out>
+            <start>2930.12</start>
+            <end>2938.64</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-94">
+            <masterclipid>master-clip-95</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 95 - speaker_7</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2939.18</in>
+            <out>2949.969</out>
+            <start>2939.18</start>
+            <end>2949.969</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-95">
+            <masterclipid>master-clip-96</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 96 - speaker_7</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2950.15</in>
+            <out>2955.679</out>
+            <start>2950.15</start>
+            <end>2955.679</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-96">
+            <masterclipid>master-clip-97</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 97 - speaker_7</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2956.12</in>
+            <out>2958.85</out>
+            <start>2956.12</start>
+            <end>2958.85</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+          <clipitem id="clipitem-97">
+            <masterclipid>master-clip-98</masterclipid>
+            <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav - 98 - speaker_7</name>
+            <enabled>TRUE</enabled>
+            <duration>3004.708571</duration>
+            <in>2958.93</in>
+            <out>3004.4</out>
+            <start>2958.93</start>
+            <end>3004.4</end>
+            <rate>
+              <timebase>1</timebase>
+            </rate>
+            <file id="file-177"/>
+          </clipitem>
+        </track>
+      </audio>
+    </media>
+    <uuid>KH1nlGZWTSGe7h_PTb7Gyw</uuid>
+    <duration>3004.708571</duration>
+    <name>NITRD_MDR_TB_ECHO_Clinic_21_December_clipped_reduced_twice.wav</name>
+    <rate>
+      <timebase>1</timebase>
+    </rate>
+    <marker>
+      <name>hub:</name>
+      <comment>Based on what we know, this is an issue of which excavation is more. What am I saying? I would private this vision is the world. And that's like the mix up that we have come to the village to do. That's really a reality. And that's why he's putting it up. He does to be shown to be bright enough to do that. This would create magical pieces of that country. And I say that morning with his concern. He's also really, really cute. That is a lot of money. That is all the way up. Whatever they said, you would have done the autopsy. And on the basis of that, we all see that he's been avoiding as mortgages. He's going to be standing. I would just like to say that we are seeing that this private sector in one mean. I would say along with them privately, they gives me a short time. There is definitely peace in it. Not to each year, not because of the threat. We are seeing that if you see the 2015 report about the nature of people with see education, that they did not jump into the peace of the notification. I would say this from 2003. Is that what you call the queen? We. What is that? What is that? We are they told none of these shit except this. Is this about what he thinks he saw? So we have a system with all notifications I'm gonna be tight with. I they put out to me and it was just I would thinking that this party and will be fine. The case is definitely said, especially I've seen that some other crap about the woman that I would take that I would make is this that on TV and your on. Except that also that would be. But this is the way you shoot someone and what I can see because more than 60 plus a cop appreciate what I make of the private sector as you really well know. And next I'll be a plus. I think that if I ever see stuff like that, what have you got? One of the 15 percent below poverty. And we just want to recreate this video recording reporting system for the private sector. Why you need fishing? No, I would say people typically ship mostly foreign fighters. That was the only part of the country by the private sector that all this stuff. The big ship with cases with this system in the country, meaning big a particular. We know that patient patients out of it. The route say that even if we but most of the time, I would say cancer doesn't have that system. And that's fine. Patient flow and patient with it for you? Probably not. That is the big challenge. The rabbit said that would be wise to see that this system has to be adopted with other public. When you stop and say this and also the battle between multiplication by that we'll get it from duplication of the government. We are not really sure if you mean that we think improving the communication. The next, importing the Asian identity not lost the last three years we have seen that, which is already what happened, the important role that ended up being beaten ended up government has been dragging its feet as a result. Another very important challenge in the country we end up being. I think that there is a speedy and elegant in a number of cases up here, a venue, the music industry and also the of the final lexicon shows of very popular and got TB cases. And this aspect of the program is concerned, dedicating more than one every year. This one has set up the parts. We have seen that in 2007. We why did I do it on 60 up into three out of every year? That is increasing piece. I don't give the patient. And this did not want to do equity that they did that definitely increase the venue for the expansion of the booth. And within the Sharpie offices. I was 60 up from 2007 working on the geographic area of the country. It ended up about will you at this particular. Yeah, we have to be in the region as we started in the country that morning. If those 60 people ever get we do that part of the patient and also work 60 for a 160 for India, what's out there in the country. And we are getting decentralizing. Well, these districts hospital. And that's why I appreciate what you did. If I may be, he gets it and we immediately put up with it. Let's take another test. We should be. This is not really a transformation offering the level of that process. So I did see that he's a genius by reaching already got me to India and start a hell of a. I have been dealing with, I think participate. And we are strong within the team. And that is one of the great art we like getting with the state governments that we have done this. People have started showing me off and that we speak at that point. He's talking to a who speaks and also seeks somebody like drinking age to be next. Are you happy with that? We'd sit at a desk with each and every state and we get this immigration. Was that mean? We can just do it. But at the same time, somehow we are not at the microscopic single that are really dead. All I could solve them. We depend on each state government agency in the country like this to be met with. We definitely had been debating not only the Edhi case, it was also predicting to get things done and that really we it being open more and more cases of that. And you have a case, as you say, these days. We start in 2016, in September. Do we put all those people adjusting back into the food? Wanted to. It is a number of issues and we increased more. Many, many people do agree that you may end up getting more cases. Another initiative was started in that IP be that is the quickly for the VIP patient. The six centers in the country that is a big house because like you went under a lot of insults. We don't have money. The only issue we ask everybody gets a lot of that sound. So. We go a Chevy and one in Colombia goes up. You're funny. We did these six of that have been identified as heroes. Is that actually a new club which is already starting? Is that the deficit at the beach? Yes. Is it on the way up? Usually, yeah. We already knew that. But he said. Yes. I think in the 60s that. But really soon it will be like simply this problem is finally going to be off the stage. We have already included all the speed up, the spectacle that speed this into the market. One in the. I was a song, a journey that began every night. And we definitely got to be honest. But actually, that's the 60s, the occasion in future. We had just started spending a lot of time. We already had music and we cleaned it up. It's the USA, obviously. You go that 2000 books are coming out next year and getting a pint. How to for this book that we can make is about a thousand. And just this 2000 suffering and subsequent fidelity we spending is celebrity deputy national security committee figures committee. You've already been established and the analysts that keep safety under threat, the. No, no know this book about the starting with the most documentary does seem that television producers and we would see that there is a division starting to say. Another lucky, really, quantum division in Alaska. Here we are. We have a HIV to me, that gave getting a very big challenge to the country, you say. As you look at it, what did you use every political operation in 2007? Yes, I did that too. I not only do I want to be working together for HIV TB collaboration acuity and get up with one of the big picture. We had this thing that we look after. It has been used for TB and HIV test and also the city that has been used on production. But we'll use that sleepyhead farther out. Like you said, and united behind me. I don't hide the HIV vote in the states. And he goes ballistic and my heart stops. We are used that way. And we have seen a really good result. We had to get within the reach of make up of diabetes. I know it is. You take you on a day to reach any that are sitting at the food bank sleeping up. I can see it. And also, we have to end up making decisions on infection control. But this audit division we are doing and we have seen that being successful brought everyone here and singularly to a drug distribution. And now we are expanding. You will be in a fight between poverty, HIV, TB patients and another issue. Are you ready for this? This morning we are discussing the same thing with Dr. Sophy. I said he was also aware because of the mainstream media at this meeting, whether we just want to stop just regular daily, they give you a hundred of autistics in the state and then in the high stakes and every night might is a lot. This is done without the being part of the issue. We are changing the company. Paradigm shift from that is that we didn't even think about solving the ice case. They had to stop. We are in LA Sookie and how much of the village and we are to the things that you even if this is what it is like that lets it already go in that space without is basically and s and complex system because we shape that very well. We get at least a dividend to improve daily living. Another. Another aspect I would like to see is that this an issue, if you could stop it, if you still do that. If you do. And then again, I mean, you really going to get busy and maybe this evening that could be that about some to initiate use. We are really pointing it should be equal. Rethinking the idea it will be more has been a build up. And he's had the political courage to get ahead of a lot of submissions we've got from the people and support them in a lot of what I guys said because I needed to be far away. We all agreed not to speak to each other. And that's like this. I sure as anybody and we see that the program would be who you really, really want to be. Nobody. Of course, we are deeply moving very fast and expanding the that can be one of the really important pillar of this. Is that a beauty, the cash benefit to the patient, not, if you will. Whose applications are people? And also, you said you out there. You said you screwed up private sector patients. Who I did is also goody, goody. Despite your feet apart from dedicated, we both are. And I see this. I don't see stuff in all the boxes. Yeah, absolutely. Definitely. But I simply base. And I think you do that. Any thoughts on that? I think it is. Thank you, my boss. That can be a part of the product. And then we see that. I didn't see the video for the other patient. Of course we saw each other. That's why I just read through ICP at this, saw campaigns that go through. So that information, all that we think about it. And in fact, as far as what this is, that do initiate you starting about program said and I say you already have a list of can. And another very important body that act is finding is that we are bringing, you know, like a fool. Which I read that I've been trying to hide and sloppily cleaned up accurately. So we are starting to get these things lively debate, really hydrated whether we need that. Ha! No, it's not being done yet. Well, we have a number of cases out of India. How do you type up? Yes. This is in India. That is a barometer we have become. And although it is not that gravity defying the biggest distinction. And yes, I mean, that is that it speaks that are either favoring the same population will do that, bring the Holstein housekeeping items.</comment>
+      <in>1</in>
+      <out>779.419</out>
+    </marker>
+    <marker>
+      <name>hub:</name>
+      <comment>Yes. I just population and I didn't invite them on a day to do that. I mean, the symptoms like fever of more than 50 monitoring. And then you have this taking this food down and sending this deeper and more so to do indicators. Would you do that for that? Would the only body and that same my body, we follow what they check that because she's having symptoms as the refugee legal officer. I think 2016 will get up and see that on other by needs. And also these are some really important issue and summer. Another important thing I would like to see you, the TV with all of these millions of them disclosure like a social media ratios and then you cry and social problems. The students I wouldn't say that because I beg you to tell you that already gets attacked locally by ending that special lose a lot of the population and system. I'm one of these people who doesn't say that we are some states that we should make nutrition support.</comment>
+      <in>779.75</in>
+      <out>845.749</out>
+    </marker>
+    <marker>
+      <name>hub:</name>
+      <comment>We are a little bit louder.</comment>
+      <in>846.75</in>
+      <out>848.75</out>
+    </marker>
+    <marker>
+      <name>hub:</name>
+      <comment>That is for the patients that you should not lose. His is and Oslo is a fisherman system that some sort of social support. We are thinking of you to the patient without their side that like you. We just want to keep going. They expire. Next stop and expanded. Already started getting a national study found already to the process of regaining and getting the of all the speaker experts. And with that, we put out so that the that is very important that Duke is fighting a private sector in this thing. So show support for the patient ICG based system and democratic cash benefit to the patient to the picture system being shared with the BBC. We give Egypt. Thank you very much. I just know we're going to do it to monitor.</comment>
+      <in>848.58</in>
+      <out>905.169</out>
+    </marker>
+    <marker>
+      <name>hub:</name>
+      <comment>I do not exaggerate.</comment>
+      <in>907.05</in>
+      <out>911.649</out>
+    </marker>
+    <marker>
+      <name>speaker_1:</name>
+      <comment>He's meeting as far as I'm in a very, very short time. I mean, it's just barely 15 minutes. He had no faith there would be any bad landscape. He has shown.</comment>
+      <in>912.7</in>
+      <out>929.21</out>
+    </marker>
+    <marker>
+      <name>speaker_1:</name>
+      <comment>Oh, we are going to move very aggressively into this disease and drive to see all week and then we walk by 2035.</comment>
+      <in>929.68</in>
+      <out>939.929</out>
+    </marker>
+    <marker>
+      <name>speaker_1:</name>
+      <comment>Maybe even a before that. Is a chasm with which I find a party so that I can assure you, act as OK off your feet.</comment>
+      <in>940.51</in>
+      <out>952.299</out>
+    </marker>
+    <marker>
+      <name>speaker_1:</name>
+      <comment>All of us who are looking at the city of tuberculosis not only did not institute, not only in the state of Delhi, throughout the country, we are with you in this battle. And I'm sure we ran away before.</comment>
+      <in>952.72</in>
+      <out>969.37</out>
+    </marker>
+    <marker>
+      <name>speaker_1:</name>
+      <comment>You know, I come to this specific session. I will invite some questions from, you know, that we are actually sort of having about 48 sports right now and opening about hundred participants who you will have been hitting, who have been getting you during the past 15 minutes. So if there is any question, I'm most welcome.</comment>
+      <in>970.12</in>
+      <out>996.539</out>
+    </marker>
+    <marker>
+      <name>speaker_1:</name>
+      <comment>I know they will take that. Please raise your hand.</comment>
+      <in>996.88</in>
+      <out>1000.219</out>
+    </marker>
+    <marker>
+      <name>speaker_1:</name>
+      <comment>My question to you is what purpose made money by a specific person to up with?</comment>
+      <in>1010.26</in>
+      <out>1017.119</out>
+    </marker>
+    <marker>
+      <name>speaker_2:</name>
+      <comment>But there are no questions. And we can conclude this didactic. And we can move to the next stage. And we would once again want to tango comparative for this very enlightening lecture that he took. The case presentation next would be with Dr. Arnon. He's from.</comment>
+      <in>1032.49</in>
+      <out>1054.549</out>
+    </marker>
+    <marker>
+      <name>speaker_2:</name>
+      <comment>They start to agree with that, just like certainly welcome commute once more. And we now request you to please present your.</comment>
+      <in>1056.14</in>
+      <out>1063.19</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>Thank you, sir.</comment>
+      <in>1071.15</in>
+      <out>1073.15</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>I didn't I. I'm glad I did. I love you.</comment>
+      <in>1072.66</in>
+      <out>1076.059</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>Yes, they do.</comment>
+      <in>1081.2</in>
+      <out>1083.2</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>I shall be presenting at the BBC basement severe anemia and totally getting lost. This is a 26 year old married man with no known history of any contact with a tuberculosis is.</comment>
+      <in>1086.1</in>
+      <out>1101.199</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>She is the family she is. She is about to maintain Ted Bundy six years and the other one is eight years old.</comment>
+      <in>1103</in>
+      <out>1109.99</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>J.B. Staples is a negative. I'll be sharing the screen video with the all these. I think you can see the screen also.</comment>
+      <in>1111.22</in>
+      <out>1121.029</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>So you need to share your screen. Please go on the shared screen.</comment>
+      <in>1124.76</in>
+      <out>1129.21</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>The green button on your laptop. And then open the folder.</comment>
+      <in>1129.63</in>
+      <out>1134.609</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>You know what, his position is that clear?</comment>
+      <in>1141.69</in>
+      <out>1146.859</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>She's a moderate. You mean she's got to jive with logistics and maybe state this is negative? The basic idea is you get a for Category 1 as it's put on plastic is for at least more than eight months from the prior practitioners. Although we do not have the records. But as for these, it's quite reliable. And after getting no improvement, she presented it to us and asked for the program for everyone. We'd get the grades, not as the case of Category 2 PDB and others, because I put them separate down with us. It would be negative. So she was getting ready to defect on May 2014. She continued to have fever, golf and weakness. And the cheekbones will turn you at the end of the month. So we had to extend this for another month. In the meantime, ambition to be a writer and she was did it not give you a beat when the NBA was done in August 2014? She was revealed to be this since it's. Now, the Category 4 was targeted on an August 2014 for the treatment equals under my skin. Do you have Fluoxetine if you're not? If you don't find it's in no way closing in for four months. And then she done some getting problem thereafter indicated she was not. She was given the conservation of the IP. I'll be saying the audio problems there. But she does twist on to prosper. Let's put. So IP fees have extended for about two months because of these issues. She continued their treatment on CBS from upgrade to December, but she wasn't going to for. I'd be happy with herself for a fourth month for no job, which is all negative. But the six months total was positive and subsequently another eight months. There was also posting, but she was gone. Did you not love beef? Is the 11 months that followed sought us economizing, insensitivity and also also the distance Lucy was declared to be a desert failure. That's okay. I didn't know it was decided that she would be given category five treatment, which was targeted on December 2015 on energy, which included DiCaprio Miocene, Moxie Francis and I in its mock slap as a mean little late, awesome planet through my sea. She continued then, and donated all the medicines ICP was for. The expired treatment started on August 2016, with lots of rocks in its box block, as in until this awesome planet relies on all people, just not during this period on holiday. Get to guess I've seen it. Because when you see the results of the lab edition of The Globe and with six point eight percent, the table finishes an IBM background briefing which improved because of the orbital mechanics only given up. So it right. That shut him up. What Robin was eight point nine percent. Lucas gave Congress better than six under the split level, 75 percent lymphocytes. It wasn't used in a heartbeat. It's impossible to point out what 1 1 3. I take his status as I this distance is negative is 40 and greater minutes. 1. The city had an idea. We did notice. I'm just setting the plastic city. This is the end. You see these sexy.</comment>
+      <in>1149.13</in>
+      <out>1374.04</out>
+    </marker>
+    <marker>
+      <name>speaker_2:</name>
+      <comment>Yes, yes. So we can see.</comment>
+      <in>1375.4</in>
+      <out>1377.4</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>So this city is basically this is the first one many in the US, the left on holiday, August 18 for kitchen and one of the left and the right to say it also has not legion. Then as we did religion. The second exit also saw these, Denise, on the dangers of improved. This was done in April 15th when she was with us during the treatment. We thought it was done in December 2015. This will be of the beginning.</comment>
+      <in>1380.41</in>
+      <out>1421.939</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>But that is very minimal change in the exhibition. As you can see clearly, the thing that.</comment>
+      <in>1423.47</in>
+      <out>1428.95</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>And this is the latest exiting not in a few days back.</comment>
+      <in>1432.18</in>
+      <out>1437.419</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>Betty Chambers and all of the people that busy. Good. Let's do that. In the middle, don't let the disability or do you get reports on so. This was the first audio room back in December 2004 in. I think the especially since they were able to do this and this was the January 2016, not.</comment>
+      <in>1438</in>
+      <out>1464.93</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>Now, the issue that we would like to discuss. On whether we're dealing with the frequent but rapidly changing nature of the victim, because it make from the beginning the patient did not have significant improvement category, you might not get on Category 4. She continues to harbor the weakness of other things and now she is losing weight by the face and there is some swelling on the face, but there is no futility. The other issue is the hearing loss. Although the Category 2 treatment was given for only three months, she had luck. Some love. He had a problem, but not to the extent that we had to stop because he was basically simply not itemizing the food. The.</comment>
+      <in>1468.23</in>
+      <out>1517.529</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>The also would like for this does not sit vacant for creating this anemia.</comment>
+      <in>1518.96</in>
+      <out>1527.21</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>During the heated replacement, it will give a lot of time. I mean, it's too good. We have given not any black coffee. Other investigators would have basically put this patient. So I will now open the case for discussion.</comment>
+      <in>1528.26</in>
+      <out>1543.14</out>
+    </marker>
+    <marker>
+      <name>speaker_3:</name>
+      <comment>Anybody. I mean, if somebody wants to see the x rays, not would be more than willing to say.</comment>
+      <in>1544</in>
+      <out>1551.099</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>Thank you, Linda. It's a beautiful presentation. Almost a fifth visitation, I should say. Thanks a lot. Or just a fig leaf could be made that you don't have to say nothing other than de Dios for a case of a masochist.</comment>
+      <in>1552.63</in>
+      <out>1568.289</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>Yeah. Gays in. You'll keep their I for 48 now.</comment>
+      <in>1568.72</in>
+      <out>1571.47</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>It is not my native land that I'm the only one.</comment>
+      <in>1571.87</in>
+      <out>1574.499</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>You're negative with Donna, but it's my project and it will come out in less positive. I am it or you see on this point eleven months off explode this. Did you do it? Yes. And then I'm doing. What do you think? I can get a five minute period. What are you, patient, Abby? I can get a five minute negative gender issues is my discussion. Don't you use patient should use it any minute. Don't you move. You open it consistently. Consistently. Gotta do Sunday school the most open, getting lost in it goes a 90 day number that I just give a discount. Yeah, it is. Use getting it.</comment>
+      <in>1574.52</in>
+      <out>1609.829</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>So now I request that Mr. Tate go and.</comment>
+      <in>1610.35</in>
+      <out>1613.91</out>
+    </marker>
+    <marker>
+      <name>speaker_2:</name>
+      <comment>Thank you, Mr. Mayor.</comment>
+      <in>1615.55</in>
+      <out>1617.55</out>
+    </marker>
+    <marker>
+      <name>speaker_2:</name>
+      <comment>It was a very concise and complete his presentation. A lot of I will welcome Dr. Levy as the EMT specialist from LNG. So we are grateful to you that you have taken time to join us and give us your valuable opinion. So I would request you to give your opening to guiding this particular.</comment>
+      <in>1617.74</in>
+      <out>1640.319</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>And Cuba.</comment>
+      <in>1643.66</in>
+      <out>1645.66</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>The automakers. And I am deeply indebted to see all the rules and the TV centers connected and said, really good. Very good. I get to d I I must say this.</comment>
+      <in>1646.1</in>
+      <out>1659.93</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>What I will do, I will just go to for slaves because I was told to go to someone I.</comment>
+      <in>1661.13</in>
+      <out>1668.839</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>The argument we ought to be. But there are problems with the eating of the argument, these reports. So I would just tell you something about not making the boxes and the amount of the less something about the argument. So I reported to the presentation. Next. OK, so I was going through the data and I found that you do see a lot of variation in the incidence and it is the incidence of over of the feedback on my thing in my duties is a simple closer to being full 2.5 percent. And this is because of the fact that many of the studies that you did, the complete hitting lot of it at the top is a bit older. But there are few reports which take that even if vision has some degree of getting off there, because as a positive and it is taken, it would also be because the incident is very variable. It is this drug is primarily automatic and it affects that in here sense of the copier. So the inner self, which are responsible for conversion on the sound energy and electrical energy and then putting this energy to the brain. And there is a genetic predisposition and some sensitivity because all of the patients who are sitting on my feet are getting lost. It is only certain patients wanted it to be predisposed on what's acceptable. Navigating. And I must tell you aboard the association that the patient is diabetic or if the patient is hypertensive. The incidence of an oxidative economizing increases as well. If we didn't history of life induced trauma. So if the patient is working in noisy surrounding and he's on my team, he has more to do. Regarding fuel, do not be whatever you want to be working order within the next length.</comment>
+      <in>1669.15</in>
+      <out>1797.859</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>So this is a documentary. And if you see you can see it, there are two things.</comment>
+      <in>1800.68</in>
+      <out>1810.069</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>One is the frequency. And that is the eating level. So we actually calculate the intensity of the song with the patient is able to be at that particular frequency. Right. And if you see that the intensity of the song and. So we'll see if you can see from minus 10 to 20 decibels. If you have the bone conduction, an ear conduction in this liver from from. That's 10 to 20 decibels. The bone conduction and the metal device. The bed is indicating that idea and the left cut off the blood. You've got ideas presenting the left ear. So if we have the graph, we didn't. Within this range from minus 10 to 20 decibel, it is normal hearing. So these are the frequency 125 to fifty five on the top of the 2000 full time in a program that indeed is the intensity of song from minus 10 to 120 decibels. So if the hearing personal, it's like we didn't want to keep this simple. This is considered normal getting. OK. So when the patient deceives canonizing. And he has some order toxicity, you will have a high frequency one. So you can see that the healing level has been eased off, is actually going down in the range of 2002 a frequency. So this probably important hope is that high frequency rings and lead diagnosis can be done by using a high frequency or be made. And you can have a bit in the high frequency region in a blue box. So these are blue boxes with the and if you see the speech frequency, which is people call them to call them. This is normal. If God is laying in. Normally in the speech frequency. So the patient would not have any hearing loss. He would have been diagnosed only on a high frequency organ. So this is only over toxicity in which you can have high frequency hearing loss patient in of low doses. David Mark complained of hearing loss, but he knew he might have denied this. So he would say that I'm having something in sensation or some tended not in the media. And this is going to be later than me being present. And then this is a warning sign that he is being damaged. So this is the point at which it for a moment. Then we have a moderate hearing loss in which you can have environmental speech frequency, and at this time the patient would say that I'm hearing loss is a big reason. Meeting in would be if you believe in 147 day. And is the flag go up on a severe hearing loss in which you can see the sequence, the intensity of it. Is the heating level is down to almost 90 disabled and in higher frequency, you can see it is going up 210, 220 decibels. So this is a severe or profound hearing loss in which the patient would have almost negligible getting and he will be totally deaf. And these patients can not be treated with high powered hearing and then they might require a cochlear implant.</comment>
+      <in>1810.15</in>
+      <out>2031.049</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>So this would be a small presentation of what came out, I think.</comment>
+      <in>2032.82</in>
+      <out>2036.63</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>I wonder if you won't be a management, but if the patient has been bankrolls was that older profits would be because of the chemo, medicine or with history. Again, I'm I think is a drug, which I mean, I'm told that thing is a very, very modern drug for business people to close it and stopping it might actually endanger the life of the patient. So it has to be actually the treatment has to be in the lead and the patients would be concerned about that. I've ordered the but that this drug is causing over toxicity and the patient must be concerned regarding the increase in the getting lost because of the. If patient is having problems and getting lost and it is like it is continuing and this progressing, obviously there is no other choice then to stop the that. You have to stop the drug and stop some of that regimen. There have been few reports about the use of antioxidants and management of toxicity.</comment>
+      <in>2036.96</in>
+      <out>2102.69</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>These are a I must say that I did not know it would be available right now. But there have been some studies in anyone's Advil in humans that the older hostility is because of the oxygen free radicals and antioxidants have some little. So what the patient. Be started on by many? Or if I took acid as well as my pregnancy.</comment>
+      <in>2104.01</in>
+      <out>2128.01</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>So if you are supposed to be protective order.</comment>
+      <in>2128.4</in>
+      <out>2133.19</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>I would like to have any questions. I mean, if there are any questions, I would like to answer them. Thank you very much.</comment>
+      <in>2134.4</in>
+      <out>2142.079</out>
+    </marker>
+    <marker>
+      <name>speaker_2:</name>
+      <comment>Thank you, Dr. Darby. It was a it was a wonderful and you clarified a lot of doubts, which we all had regarding the toxicity. So now I would request all present and that has a question.</comment>
+      <in>2142.63</in>
+      <out>2157.9</out>
+    </marker>
+    <marker>
+      <name>speaker_6:</name>
+      <comment>My question is, is this the doctor do do with the good lord is not enough.</comment>
+      <in>2159.39</in>
+      <out>2164.849</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>It's really. My mom wanted us to give.</comment>
+      <in>2165.91</in>
+      <out>2167.91</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>So it is not possible of an older possibility, which is which is a definite but no, I think it's not reversible. You cannot do anything to reverse it.</comment>
+      <in>2169.97</in>
+      <out>2178.76</out>
+    </marker>
+    <marker>
+      <name>speaker_6:</name>
+      <comment>I mean, the second question of the same position we did, which is made the more day seem good at least. Do they know? The patient is complaining not only to make this is not new, but even demo time.</comment>
+      <in>2180.38</in>
+      <out>2194.8</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>Actually, what happens in the United is a very, very ugly symptom. And if a patient has to know that that means the page business involvement of the high frequency event and his involvement at the base of the economy and very few says more than the page will not have any eating log. So if you stopped the thread at this moment, obviously officials would likely not be sympathetic.</comment>
+      <in>2196.57</in>
+      <out>2217.82</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>Is it clear?</comment>
+      <in>2219.81</in>
+      <out>2221.81</out>
+    </marker>
+    <marker>
+      <name>speaker_2:</name>
+      <comment>Dr. Abbas now has a question.</comment>
+      <in>2222.86</in>
+      <out>2224.86</out>
+    </marker>
+    <marker>
+      <name>speaker_7:</name>
+      <comment>Yes, my doctor, to me, I'm the medical specialists that then notice I have a question about this office to be usually patients who have gone beyond the stage of it does. Then they are given these. I mean, no, Blackwell's aides usually get on my feet. We have a few patients who would say that I can hear what you are saying, but I cannot understand.</comment>
+      <in>2225.49</in>
+      <out>2245.76</out>
+    </marker>
+    <marker>
+      <name>speaker_7:</name>
+      <comment>I cannot make up the words that you are speaking, but I can hear you speaking. Is that a manifestation? High frequency those.</comment>
+      <in>2246.12</in>
+      <out>2253.75</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>Yes. Actually, this is a manifestation of any sentimental hearing loss. To what happens in any central meaning of the speech. Discrimination also caused so many would be the popular involvement. And we say that with the popular involvement, but probably nothing, no cell damage. This discrimination also was done. So he's not a little bit made this speech. And this is. This is there in any popular religion. So that is because the older boxes be up because because of the northern new living longer because of the West Bank. If any of your damn damage, it will go off. Big reason, speech, discrimination and negative. My is that it will say that I'm able to hear you, but I'm not able to make out what you are feeling.</comment>
+      <in>2255.47</in>
+      <out>2296.949</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>So there's this quality for speech discrimination. And this can be seen with Mike and also.</comment>
+      <in>2297.11</in>
+      <out>2303.159</out>
+    </marker>
+    <marker>
+      <name>speaker_2:</name>
+      <comment>I think the doctor has a question. Can you track.</comment>
+      <in>2305.52</in>
+      <out>2310.889</out>
+    </marker>
+    <marker>
+      <name>speaker_8:</name>
+      <comment>If someone suddenly gets into my head, I know I thought that if he started it, we didn't want him to be a.</comment>
+      <in>2315.16</in>
+      <out>2321.21</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>Yes. OK. That would even even offer a single body the patient can have symptoms. Eat it simply to escape, but keep it simple. In the end, even even not was up with you. If this indeed was perceptibly beat you to General Electric would be a. There is if we could have predicted the genetic disposition also. And indeed with the Security Council, the elements.</comment>
+      <in>2323.02</in>
+      <out>2347.46</out>
+    </marker>
+    <marker>
+      <name>speaker_9:</name>
+      <comment>This academy is stopping this, the student body went missing. The companies need this.</comment>
+      <in>2349.41</in>
+      <out>2354.44</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>I would say this like I'm told that I think is very, very important. Important and stopping might endanger the life of the patient. So it has to be I mean, you have to actually balance the pros and cons of stopping the drugs. I would not suggest that you stop even at the start of this thing. So it has to be. I mean, you have to see the pros and cons if you can actually stop and you can give some alternate therapy off, the if stopping will actually cost one of the big fees and patient might endanger the life of the patient. I mean, obviously, I would not suggest to stop the defense and meeting like the decision is more important, I think and hearing can be getting lost in with technology. So if we can save the life of the patient, by my advice on dealing with my son, I would suggest that you do do the same. And do that and leave it on. The patient can get he had little to do with eating it. If you would just mind the moderate eating lot and everything that is good here. And obviously the patient required a cochlear implant implant in these patient, mostly male patients, has a very, very good prognosis. And almost all the patients wonderful cochlear implant in porcelain with patients like patients having the possibility of action with my be getting lost or some other causes. They do very well with Cochlear.</comment>
+      <in>2356.27</in>
+      <out>2444.959</out>
+    </marker>
+    <marker>
+      <name>speaker_9:</name>
+      <comment>I guess.</comment>
+      <in>2446.74</in>
+      <out>2448.74</out>
+    </marker>
+    <marker>
+      <name>speaker_2:</name>
+      <comment>Doctor Bindu. Do you have a question, please?</comment>
+      <in>2450.11</in>
+      <out>2452.809</out>
+    </marker>
+    <marker>
+      <name>speaker_10:</name>
+      <comment>I'm not proposing just based on. My question is that is it the debt is any better, though it might not be. If we can do more to stop the government. The chief said the state of toxicity has been like this one, who I believe the idea that. On any other dates to prevent this sort of donation of getting old.</comment>
+      <in>2456.38</in>
+      <out>2490.429</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>Actually, it is more liberal to actually prevent or remotely talk to the iMac. Amazing. And there have been few reports of use of antioxidants, but there is no clear cut but legal evidence available. Right. So did you add a few full reports in animals? We see that the antioxidants can have a role in.</comment>
+      <in>2491.62</in>
+      <out>2521.439</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>So lucky.</comment>
+      <in>2525.57</in>
+      <out>2527.57</out>
+    </marker>
+    <marker>
+      <name>speaker_11:</name>
+      <comment>Dr. Martin, I'm not. But I did not serve them something else.</comment>
+      <in>2530.01</in>
+      <out>2537.38</out>
+    </marker>
+    <marker>
+      <name>speaker_11:</name>
+      <comment>I want to get into position.</comment>
+      <in>2538.2</in>
+      <out>2540.2</out>
+    </marker>
+    <marker>
+      <name>speaker_11:</name>
+      <comment>And he was more concerned about the idea of the patient because she ordered six point intervene. She was instructed that he would then be the demon.</comment>
+      <in>2540.33</in>
+      <out>2551.809</out>
+    </marker>
+    <marker>
+      <name>speaker_11:</name>
+      <comment>And after giving her the debt in, it was blowing up.</comment>
+      <in>2551.95</in>
+      <out>2558.61</out>
+    </marker>
+    <marker>
+      <name>speaker_11:</name>
+      <comment>I think it.</comment>
+      <in>2559.37</in>
+      <out>2561.37</out>
+    </marker>
+    <marker>
+      <name>speaker_11:</name>
+      <comment>What E.D. gives is what do we do need of the patient for the blood transfusion, all anything is included in studies because we know it.</comment>
+      <in>2562.08</in>
+      <out>2571.249</out>
+    </marker>
+    <marker>
+      <name>speaker_2:</name>
+      <comment>So these type of cases will be coming next to this topic. First, we're discussing about the autopsy expected. And we have invited the specialist to pass that. She'll be answering the questions first.</comment>
+      <in>2571.28</in>
+      <out>2587.94</out>
+    </marker>
+    <marker>
+      <name>speaker_2:</name>
+      <comment>Are there any more questions anyone would like to come up with, says Dr. Levy.</comment>
+      <in>2588.67</in>
+      <out>2594.35</out>
+    </marker>
+    <marker>
+      <name>speaker_12:</name>
+      <comment>Oh, sir, I wanted to ask. Once we have started my whole life with age, would you recommend a screening period that the which circuit patient. So you just put, in fact, as a director. What did you think you did or draw on? You did it through that particular time period when you regularly screened these patients. And will it have any effect from preventing such overdoses suffering? They can still have visions that ought to be good with regiment out there then. Did I mention I know Blake with a. Is that possible possibility be a particular speeding period can be attributed to this.</comment>
+      <in>2597.93</in>
+      <out>2634.479</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>I'm going to do that.</comment>
+      <in>2638.57</in>
+      <out>2640.57</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>I couldn't find any guidelines regarding the screening of any other patient. What could possibly be. But I would suggest that any patient we've started on can, I might think, will never be. Is there not gimmickry because something might happen. These patient might have preexisting suits and getting local to use a local priest has been lost in these patients. And then after you stop economics in print, then you should have a maybe monthly argument which can be done to see for medical boxes. It is very important that the oncologist does a high frequency screening because high frequency screening will be diagnostic in a positive way. So the ordinary patients will be doing that. You will be getting best at full. Tell them to stop going to need poking holes because ugly or not particularly would be demonstrative only in high frequency. And if the patient has a has a notice, if you have left a note, does he have the hearing loss looking, then obviously you have presented the patient portal or automated.</comment>
+      <in>2639.75</in>
+      <out>2703.98</out>
+    </marker>
+    <marker>
+      <name>speaker_11:</name>
+      <comment>One question.</comment>
+      <in>2708.45</in>
+      <out>2710.45</out>
+    </marker>
+    <marker>
+      <name>speaker_11_5_2:</name>
+      <comment>Yes. Yes. Not call me that, can you? Yes. Yes. Having said. Yes. Because I'm up to your IP. My question is that is getting lost even more, especially by getting close. Yes, the company said that they plan to this Naples, Florida, in plantation before getting plantation bioethical bleeding plantation one with the success of it.</comment>
+      <in>2712.05</in>
+      <out>2738.57</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>OK. Basically a piece of the pie pineapple involvement in mobile will application and you will have it by your turn. You didn't want to make popular blog is educated only in patients who have profound symphony hearing loss. With more improvement than hitting. So if a patient had a profound sense of hearing loss and he hasn't even admitting it, there's no improvement in healing with eating it. If only the patient is based on the cochlear implant, he was lead to a unilateral cochlear implant. Fall off off the court board in disability as well as implanted blind to be possible. Also on April 6 lakh rupees. But in the financial space. And then secondly, we all need to assume electric bottom line because that will solve the was the result of pocket money in these patients is good. It is better than dealing with deafness because these patients have already loved the speech and language. They are already speaking. They already have developed their language skills. So in these patients, if you do a cochlear implant hearing, their heating improves and they have an already developed speech in language. So they had a good prognosis. Almost I would say almost all division will do good with a cochlear implant and Defoe proposed giving.</comment>
+      <in>2739.49</in>
+      <out>2819.139</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>Thank you, Debbie. It was an excellent, excellent interaction with you is the first thing we ask people in the field have come across with so much information on window boxes, video of a second language, your daily do ready to review.</comment>
+      <in>2820.36</in>
+      <out>2836.59</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>I would just like to know. As you know, there are many field workers who were attending the clinic.</comment>
+      <in>2838.12</in>
+      <out>2843.28</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>What is the take home message? But then again, I demand because I know we're going to miss it on Monday, but I'm going to keep getting it done at the end of May.</comment>
+      <in>2844</in>
+      <out>2853.44</out>
+    </marker>
+    <marker>
+      <name>speaker_5:</name>
+      <comment>But I'm not I'm looking just the Afghan on my team, but on the stock of a patient photo. Call him back on up to you. I mean, I mean, when I listen to you. He you know, that's not the way it is. Let's say I move. I suppose that the patient must be very patient with performance and been equal to be. It got us talking. This happened to him on not to you. Oh, yes. There was something. See, in terms the combatant, not what he had the opportunity to deport them all your name. And they never could have told you that. So that I thank you for all the modern patient plummet that I mustn't stop them as. But energy of all that's all about. That'll get him his name. I'll give it to me. That's OK. And this.</comment>
+      <in>2853.48</in>
+      <out>2897.62</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>Thank you so much, Dr. Robi. Or do you have any information on me? All operations which make mom and dad, there are many people who want to ask questions.</comment>
+      <in>2901.35</in>
+      <out>2909.579</out>
+    </marker>
+    <marker>
+      <name>speaker_4:</name>
+      <comment>Do I think I'm not going to listen for a selection of nanobots to take care of all the other questions that we get? So the doctor was not making that a weakening to the.</comment>
+      <in>2909.94</in>
+      <out>2928.69</out>
+    </marker>
+    <marker>
+      <name>speaker_2:</name>
+      <comment>No, we conduct almost no medical specialist. She will be taking care of the medical aspects in the management of this case.</comment>
+      <in>2930.12</in>
+      <out>2938.64</out>
+    </marker>
+    <marker>
+      <name>speaker_7:</name>
+      <comment>Thank you, Dr. Ivan, for an excellent presentation. And I think one of the problems that you'll face patient is having we'll see that you have 3 4 reports of hemoglobin here in Asia.</comment>
+      <in>2939.18</in>
+      <out>2949.969</out>
+    </marker>
+    <marker>
+      <name>speaker_7:</name>
+      <comment>Let's exploit it then. That is a point. And then that is eight point seven.</comment>
+      <in>2950.15</in>
+      <out>2955.679</out>
+    </marker>
+    <marker>
+      <name>speaker_7:</name>
+      <comment>What we have to treat anemia. I know you did very well.</comment>
+      <in>2956.12</in>
+      <out>2958.85</out>
+    </marker>
+    <marker>
+      <name>speaker_7:</name>
+      <comment>You did with all of the mechanics. But just to add to what you did, I would just request everyone, given a lovely half of. It's beautiful. We should get the benefits. We're not. A faceless meal is a simple test. It would be available from the lab for me. You are getting your HP also done for the simple reason that anemia in tuberculosis can be found before it can be a combination of different reasons. Of course, this is a female. She's a young female. She has just born two children. So there will be an element of added deficiency anemia so that this kind of anemia would be most likely of Michael to be normal. It might also be hypothermic anemia. But then you have to understand that into what the look closely at this very moment. The.</comment>
+      <in>2958.93</in>
+      <out>3004.4</out>
+    </marker>
+  </sequence>
+</xmeml>
