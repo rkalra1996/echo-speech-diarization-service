@@ -510,6 +510,34 @@ debugger;
 
     }
 
+    function setupCIgraph(dataToConsume) {
+        // this function will iterate from all the node entries and 
+        // assign incremental ci_graph to all the speakers, irrespective if it is in correct sequence or not
+        const ciGraphData = {};
+        dataToConsume.forEach((element, i) => {
+            if (Object.keys(ciGraphData).length) {
+                // if the ci_graph of element is already present, increment it by 1
+                // else add a new entry
+                if (Object.keys(ciGraphData).indexOf(element.pname) > -1) {
+                    // element present
+                    ciGraphData[element.pname] = +ciGraphData[element.pname] + 1;
+                    // assign it back
+                    dataToConsume[i]['ci_graph'] = ciGraphData[element.pname].toString();
+                }
+                else {
+                    // new entry
+                    dataToConsume[i]['ci_graph'] = '1';
+                    ciGraphData[element.pname] = 1;
+                }
+            }
+            else {
+                // first entry
+                ciGraphData[element.pname] = 1;
+            }
+        });
+        return dataToConsume;
+    }
+
     var getData = function (video_id, graphContainerHeight, graphContainerWidth, cb) {
         console.log('video id recieved is ', video_id);
         if (d3) {
@@ -525,7 +553,9 @@ debugger;
                     if (fetchedData !== -1) {
                         var originaldata = fetchedData[0].data;
 
-                        originaldata = reduceSumCiGraph(originaldata)
+                        // originaldata = reduceSumCiGraph(originaldata)
+                        // alternate to the above function is , setupCIgraph
+                        originaldata = setupCIgraph(originaldata);
                         console.log("whole data: ", originaldata)
 
                         // set appropriate variables

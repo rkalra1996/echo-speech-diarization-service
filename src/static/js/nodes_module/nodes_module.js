@@ -32,13 +32,13 @@ var nodeModule = (function (d3) {
                 })
                 .attr("stroke-width", 2)
                 .attr("r", function (d) {
-                    return +d.original_radius > varConfig.TRANSITION.RADIUS.MAX ? varConfig.TRANSITION.RADIUS.MAX : d.original_radius;
+                    return (+d.original_radius > varConfig.TRANSITION.RADIUS.MAX) ? varConfig.TRANSITION.RADIUS.MAX : d.original_radius;
                 })
                 .transition()
                 .duration(function (d) {
                     return (varConfig.TRANSITION.DURATION / parseInt(d.ci_graph)) + varConfig.TRANSITION.DURATION_OFFSET
                 })
-                .attr("stroke-width", 3)
+                .attr("stroke-width", 2)
                 .attr("r", function (d) {
                     return (d.original_radius > varConfig.TRANSITION.RADIUS.MAX ? varConfig.TRANSITION.RADIUS.MAX+varConfig.TRANSITION.RADIUS.OFFSET : +d.original_radius + varConfig.TRANSITION.RADIUS.OFFSET);
 
@@ -92,7 +92,8 @@ var nodeModule = (function (d3) {
             .attr("cy", nodeDetails.y)
             .attr('class', nodeDetails.ptype.toLowerCase())
             .attr("r", function (d) {
-                return !d.cdoi || (d.cdoi / 100 < varConfig.NODE_SIZE.MIN) ? varConfig.NODE_SIZE.MIN : (d.cdoi >= varConfig.NODE_SIZE.MAX ? varConfig.NODE_SIZE.MAX : d.cdoi / 100)
+
+                return decidenewRadius(d)
             })
             .attr('fill', function(d){
                 if (d.ptype.toLowerCase() == varConfig.SPOKE) {
@@ -189,6 +190,25 @@ var nodeModule = (function (d3) {
         _renderToGraph(circle, activeCircle, miniCircle, nodeDetails);
     }
 
+    function decidenewRadius(nodeDetails) {
+        // this will return a new radius for showing increment, if any
+        if (nodeDetails.cdoi) {
+            // cdoi is either -1 or more than 0
+            if (((nodeDetails.cdoi / 50)*10) < varConfig.NODE_SIZE.MIN) {
+                return varConfig.NODE_SIZE.MIN;
+            }
+            else if (((nodeDetails.cdoi / 50)*10) >= varConfig.NODE_SIZE.MAX) {
+                return varConfig.NODE_SIZE.MAX
+            } else return ((nodeDetails.cdoi /50)*10);
+        }
+        else {
+            // cdoi is either null or 0
+            return varConfig.NODE_SIZE.MIN;
+
+        }
+
+    }
+
 
     var _handleHubBehaviour = function (currentNodeData, svgContainer) {
         console.log('handle hub behaviour called', currentNodeData);
@@ -221,7 +241,9 @@ var nodeModule = (function (d3) {
                 .attr('cy', uniqueHub.data()[0].y)
                 .attr('r', varConfig.ACTIVE_CIRCLE.RADIUS)
                 .attr('fill', colorCodes.activeColor);
-            hubCircle.data()[0]['original_radius'] = !currentNodeData.cdoi || (currentNodeData.cdoi / 100 < varConfig.NODE_SIZE.MIN) ? varConfig.NODE_SIZE.MIN : (currentNodeData.cdoi >= varConfig.NODE_SIZE.MAX ? varConfig.NODE_SIZE.MAX : currentNodeData.cdoi / 100)
+            // hubCircle.data()[0]['original_radius'] = !currentNodeData.cdoi || (currentNodeData.cdoi / 100 < varConfig.NODE_SIZE.MIN) ? varConfig.NODE_SIZE.MIN : (currentNodeData.cdoi >= varConfig.NODE_SIZE.MAX ? varConfig.NODE_SIZE.MAX : currentNodeData.cdoi / 100)
+            hubCircle.data()[0]['original_radius'] = decidenewRadius(currentNodeData);
+            
             hubCircle.data()[0]['ci_graph'] = currentNodeData.ci_graph;
             hubCircle.data()[0]['cdoi'] = currentNodeData.cdoi;
 
