@@ -12,10 +12,12 @@ import { AutomateAccessTokenModule } from './modules/automate-access-token/autom
 import { AsyncReaderModule } from './modules/async-reader/async-reader.module';
 import { SpeakerMergerModule } from './modules/speaker-merger/speaker-merger.module';
 import { ZoomParserModule } from './modules/zoom-parser/zoom-parser.module';
+import { YoutubeDlModule } from './modules/youtube-dl/youtube-dl.module';
+
 @Module({
   // serve static files in the server
   imports: [
-  ServeStaticModule.forRoot({
+ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'src', 'static'),
     }),
     NetworkParserModule,
@@ -25,6 +27,7 @@ import { ZoomParserModule } from './modules/zoom-parser/zoom-parser.module';
     SpeakerMergerModule,
     AsyncReaderModule,
     ZoomParserModule,
+    YoutubeDlModule,
   ],
   controllers: [AppController],
   providers: [AppService, CommonRequestValidatorService],
