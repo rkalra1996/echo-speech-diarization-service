@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as child_process from 'child_process';
+import { FfmpegUtilityService } from '../ffmpeg-utility/ffmpeg-utility.service';
 
 const YDL_db_path = './../../../../assets/youtubeDL_db';
 
@@ -10,6 +11,7 @@ export class YoutubeDlCoreService {
 
     public destFolderName = path.resolve(__dirname, YDL_db_path);
 
+    constructor(private ffmpegUSrvc: FfmpegUtilityService) {}
     /**
      * Initiates youtube dl core service
      * @description The function will pick the urls provided and start executing the youtube-dl commands
@@ -30,34 +32,34 @@ export class YoutubeDlCoreService {
         // a folder with the name of file will be created
         const wavFolderName = fileDataToConsume.name;
         const currentFolderAddr = path.resolve(this.destFolderName, wavFolderName);
-        this.createOrUpdateCurrentFolder(currentFolderAddr);
-        const tempFileAddr = this.createTempUrlFile(currentFolderAddr, wavFolderName, urls);
+        if (this.createOrUpdateCurrentFolder(currentFolderAddr)) {
+            const tempFileAddr = this.createTempUrlFile(currentFolderAddr, wavFolderName, urls);
 
-        this.runProcess(currentFolderAddr, tempFileAddr)
-        .then(response => {
-            console.log('wav files extracted successfully for ', wavFolderName);
-            // delete the temporary url file created
-            this.deleteTempUrlFile(currentFolderAddr, wavFolderName);
-        })
-        .catch(reject => {
-             console.log('Aborting the extraction process!');
+            this.runProcess(currentFolderAddr, tempFileAddr)
+            .then(response => {
+                console.log('wav files extracted successfully for ', wavFolderName);
+                // delete the temporary url file created
+                this.deleteTempUrlFile(currentFolderAddr, wavFolderName);
+                // convert the wav files into mono channel
+                this.ffmpegUSrvc.convertStereo2Mono(currentFolderAddr)
+                .then(conversionRes => {
+                    console.log(conversionRes);
+                });
+            })
+            .catch(reject => {
+                 console.log('Aborting the extraction process!');
             });
-        // youtubeDL.getInfo(urls, options, this.callback);
+        } else {
+            console.log(`Cannot proceed for this resource file ${wavFolderName}, ABORT`);
+        }
     }
 
     deleteTempUrlFile(parentDir, fileName) {
         const tempFileName = path.resolve(parentDir, fileName + '.txt');
-        fs.access(tempFileName, fs.constants.F_OK, (err) => {
-            if (err) {
-                // file does not exist
-                return true;
-            } else {
-                // it does
-                fs.unlinkSync(tempFileName);
-                return true;
-            }
-        });
-
+        if (fs.existsSync(tempFileName)) {
+            fs.unlinkSync(tempFileName);
+        }
+        return true;
     }
 
     createTempUrlFile(parentDir, fileName, DataToWrite) {
@@ -73,37 +75,27 @@ export class YoutubeDlCoreService {
             // create the file
             try {
                 fs.mkdirSync(folderAddress);
+                return true;
             } catch (e) {
                 console.error('An error occured while creating a new directory ', e);
+                return false;
+            }
+        } else {
+            // clean the folder
+            try {
+                const directoryFilesNames = fs.readdirSync(folderAddress);
+                for (const file of directoryFilesNames) {
+                    fs.unlinkSync(path.join(folderAddress, file));
+                }
+                return true;
+            } catch (e) {
+                console.error('An error occured while clearing the folder ', e);
+                return false;
             }
         }
     }
 
     runProcess(destFolderToUse, FileAddr) {
-        /* return new Promise((resolve, reject) => {
-            const commandToExecute = `youtube-dl -x -i --audio-format wav -a ${FileAddr}`;
-            child_process.exec(commandToExecute, {
-                cwd: destFolderToUse}, (err, stdout, stderr) => {
-                    if (err == null) {
-                        if (!!stdout) {
-                            console.log('resolved');
-                            resolve(stdout);
-                        } else {
-                            const errMsg = 'did not recieve any auth key after execution, check manually';
-                            reject(errMsg);
-                        }
-                    } else {
-                        const errMsg = 'An error occured while executing the command to generate new auth key';
-                        console.log(err);
-                        reject(errMsg);
-                    }
-                    if (stderr) {
-                        const errMsg = 'An error occured after execuing the command for generating a new auth key';
-                        console.log(stderr);
-                        reject(errMsg);
-                    }
-                });
-        }); */
 
         return new Promise((resolve, reject) => {
             const spawn = child_process.spawn;
