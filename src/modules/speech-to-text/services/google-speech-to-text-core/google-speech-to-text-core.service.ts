@@ -1,9 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
+import { GcloudTokenProviderService } from 'src/modules/automate-access-token/services/gcloud-token-provider/gcloud-token-provider.service';
+import { AccessTokenGeneratorService } from 'src/modules/automate-access-token/services/access-token-generator/access-token-generator.service';
+import { DiarizationSpeakerService } from 'src/modules/google-speaker-diarization/services/diarization-speaker/diarization-speaker.service';
 
 @Injectable()
 export class GoogleSpeechToTextCoreService {
 
-
+    constructor(
+        private tokenProvider: GcloudTokenProviderService,
+        private httpSrvc: HttpService,
+        private atgSrvc: AccessTokenGeneratorService,
+        private diarizationSpkSrvc: DiarizationSpeakerService,
+    ) { }
     validateBodyForSpeech2Text(requestBody): boolean {
         let isValid = false;
         if (requestBody && requestBody.constructor === Object) {
@@ -31,10 +39,184 @@ export class GoogleSpeechToTextCoreService {
         return isValid;
     }
 
-    initiate(dataToConsume): Promise<object> {
+    async startInititateCallback2(diarizationID) {
+
+        const res = await this.diarizationSpkSrvc.checkStatusFromDiarizationID(diarizationID);
+        if (res.hasOwnProperty('error')) {
+                console.log(`\nAn error occured while reading status of diarization id ${diarizationID} . Error : ${res.error.message} \n status : ${res.error.response.status}`);
+                return -1;
+            } else {
+                return this.checkStatusAndProceed2(res.resp.data, diarizationID);
+            }
+
+    }
+
+    checkStatusAndProceed2(response, diarizationID) {
+        // to check if the status has changed from pending / progress to complete / error
+        if (response.name === diarizationID) {
+            if (response.metadata.hasOwnProperty('progressPercent')) {
+                if (response.metadata.progressPercent.toString() === '100' && response.hasOwnProperty('done') && response.done ===  true) {
+                    // call ahead
+                    // global.clearInterval(globalIteratorID);
+                    console.log('\ncompleted... for ', diarizationID);
+                    return response;
+                    // add logic
+                    // this.sendTranscribedAudio(response, videoDetailsForVis);
+                }
+                console.log(`\nTotal ${response.metadata.progressPercent}% complete.... for ${diarizationID}`);
+                return 0;
+            } else {
+                console.log('0% complete... for ', diarizationID);
+                return 0;
+            }
+        }
+    }
+
+    async initiate(googleBucketWAVUrls): Promise<object> {
         // collect urls, check if they are of google-cloud bucket types
         // start making requests to google cloud apis, also keep refreshing token whenever needed
         // collect response of all the apis and then dump them into one json file with the parent name being the same name as the youtubeDL_db folder name
-        // const request = this.getSpeechToTextRequestData(dataToConsume);
+        const processCollectionArray = [];
+        for (const url of googleBucketWAVUrls) {
+            const processIDResponse = await this.handleMultiFilesRequest(url);
+            processCollectionArray.push(processIDResponse.response.name);
+        }
+        console.log('out of for');
+        if (processCollectionArray.length !== googleBucketWAVUrls.length) {
+            // something went wrong
+            console.log('something went wrong which hiiting google speech to text apis, check manually');
+            return Promise.resolve({ok: false, error: 'something went wrong which hiiting google speech to text apis, check manually'});
+        }
+        this.trackDiarizationStatus(processCollectionArray);
+    }
+
+    trackDiarizationStatus(allFilesData) {
+
+        // Create 1 object with iterator for Each ID'S status and Json response
+        //
+        const checkStatus = {};
+        const iterator = [];
+        for (let i = 0; i < allFilesData.length; i++) {
+            ( function(i, allFilesData) {
+                const diarizationProcessId = allFilesData[i];
+                checkStatus[diarizationProcessId] = {
+                    status: 0,
+                };
+                console.log('timestamp ->', new Date());
+                checkStatus[diarizationProcessId]['intervalId'] = setInterval(() => {
+                    this.initiate2(diarizationProcessId).then((response) => {
+                        if (response === -1) {
+                            console.log('\nAn error occured while reading status of diarization id : ' + diarizationProcessId);
+                            // global.clearInterval(iterator[i]);
+                            checkStatus[diarizationProcessId]['status'] = 2;
+                        } else if (response === 0) {
+                            // do nothing for now
+                        } else {
+                            checkStatus[diarizationProcessId]['status'] = 1;
+                            allFilesData[i]['diarized_data'] = response;
+                            console.log('AllFilesData : ', allFilesData);
+                            global.clearInterval(checkStatus[diarizationProcessId]['intervalId']);
+
+                            const diarizationIds = Object.keys(checkStatus);
+                            let check = false;
+                            // console.log(diarizationIds);
+                            diarizationIds.forEach(element => {
+                                const status = checkStatus[element]['status'];
+                                // console.log('status : ',status);
+                                if (status === 0) {
+                                check = true;
+                                }
+                            });
+                            console.log('Check : ', check);
+                            if (!check) {
+                                console.log('calling write files to json db');
+                                // thisRef.databaseCommSrvc.writeFilesToDiarizationDB({data: allFilesData});
+                            }
+
+                            console.log('Process Completed for ID : ', diarizationProcessId);
+                            // global.clearInterval(iterator[i]);
+
+                        }
+                        // console.log("data : ", checkStatus)
+                    });
+                }, 5000);
+
+            })(i, allFilesData);
+
+        }
+    }
+
+    getSpeechToTextRequestData(url) {
+        const googleSpeechToTextEndpoint = ' https://speech.googleapis.com/v1p1beta1/speech:longrunningrecognize';
+        const newToken = this.tokenProvider.process_token;
+        const DEFAULT_AUTHORIZATION = 'Bearer ' + newToken;
+        const data = {
+            config: {
+                encoding: 'LINEAR16',
+                languageCode: 'en-US',
+                model: 'video',
+            },
+            audio: {
+                uri: url || null,
+            },
+        };
+
+        const requestConfig = {
+            headers: {
+                post: {
+                    'Authorization': DEFAULT_AUTHORIZATION,
+                    'Content-Type': 'application/json',
+                },
+            },
+        };
+
+        return {
+            url: googleSpeechToTextEndpoint, data, requestConfig,
+        };
+    }
+
+    hitSpeechToTextApi(requestDetails, bodyData): Promise<any> {
+        console.log('sending initiate speech-2-text request at ', new Date().toTimeString());
+        const Response = this.httpSrvc.post(requestDetails.url, requestDetails.data, requestDetails.requestConfig).toPromise()
+        .then((response: any) => {
+            console.log('recieved response from initiate diarization request at ', new Date().toTimeString());
+            // capture the current diarization id and go further
+            return Promise.resolve({response: {message: `Process started successfully`, data: {process_id: response.data.name}}});
+        })
+        .catch(err => {
+            console.log('recieved error from initiate diarization request at ', new Date().toTimeString());
+            console.log(err);
+            // this.Emitter.triggerEvent('INITIATE_DIARIZATION', {data: '698255031310955052'});
+            return Promise.resolve({error: err.message, status: err.response.status});
+        });
+        return Response;
+    }
+
+    async handleMultiFilesRequest(url) {
+        console.log('recieved handleRequest request at ', new Date().toTimeString());
+        const requestDetails = this.getSpeechToTextRequestData(url);
+        console.log('Request Details : ', requestDetails);
+        if (!!requestDetails) {
+            console.log('request details created as ', requestDetails);
+            // hit the official url and wait for response
+            const diarizationIDResponse = await this.hitSpeechToTextApi(requestDetails, null);
+            if (diarizationIDResponse.hasOwnProperty('error')) {
+                // check for unauthorized access
+                if (diarizationIDResponse.status.toString() === '401') {
+                    console.log('token has expired, refreshing the token');
+                    console.log('sending refresh code request at ', new Date().toTimeString());
+                    const isRefreshed = await this.atgSrvc.refreshAuthKey();
+                    if (isRefreshed) {
+                        console.log('sending handleRequest request at ', new Date().toTimeString());
+                        return this.handleMultiFilesRequest(url);
+                    } else {
+                        console.log('unable to refresh auth key for gcloud, check manually');
+                    }
+                }
+            } else if (diarizationIDResponse.hasOwnProperty('response')) {
+                return diarizationIDResponse;
+            }
+        }
+
     }
 }

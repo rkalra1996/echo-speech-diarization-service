@@ -26,7 +26,7 @@ export class DiarizationSpeakerService {
     /**
      * Gets diarization request data
      * @description This function creates a proper format in which data is to be sent to the speaker-diarization apis by google
-     * @param dataToUse 
+     * @param dataToUse
      * @returns diarization request data
      */
     getDiarizationRequestData(dataToUse: DIARIZATION_REQUEST_INTERFACE): object {
