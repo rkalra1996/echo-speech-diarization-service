@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as child_process from 'child_process';
 import { FfmpegUtilityService } from '../ffmpeg-utility/ffmpeg-utility.service';
 
+// tslint:disable-next-line: variable-name
 const YDL_db_path = './../../../../assets/youtubeDL_db';
 
 @Injectable()
@@ -64,7 +65,7 @@ export class YoutubeDlCoreService {
 
     createTempUrlFile(parentDir, fileName, DataToWrite) {
         const dataString = DataToWrite.join('\n');
-        const tempFileName = path.resolve(parentDir, fileName+'.txt');
+        const tempFileName = path.resolve(parentDir, fileName + '.txt');
         fs.writeFileSync(tempFileName, dataString, {encoding: 'utf-8'});
         return tempFileName;
     }
