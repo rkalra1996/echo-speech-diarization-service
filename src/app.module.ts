@@ -13,6 +13,7 @@ import { AsyncReaderModule } from './modules/async-reader/async-reader.module';
 import { SpeakerMergerModule } from './modules/speaker-merger/speaker-merger.module';
 import { ZoomParserModule } from './modules/zoom-parser/zoom-parser.module';
 import { YoutubeDlModule } from './modules/youtube-dl/youtube-dl.module';
+import { SpeechToTextModule } from './modules/speech-to-text/speech-to-text.module';
 
 @Module({
   // serve static files in the server
@@ -28,6 +29,7 @@ ServeStaticModule.forRoot({
     AsyncReaderModule,
     ZoomParserModule,
     YoutubeDlModule,
+    SpeechToTextModule,
   ],
   controllers: [AppController],
   providers: [AppService, CommonRequestValidatorService],

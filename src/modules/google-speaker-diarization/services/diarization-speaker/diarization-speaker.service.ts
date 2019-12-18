@@ -23,6 +23,12 @@ export class DiarizationSpeakerService {
             this.DEFAULT_AUTHORIZATION = 'Bearer ' + this.tokenProvider.process_token;
     }
 
+    /**
+     * Gets diarization request data
+     * @description This function creates a proper format in which data is to be sent to the speaker-diarization apis by google
+     * @param dataToUse 
+     * @returns diarization request data
+     */
     getDiarizationRequestData(dataToUse: DIARIZATION_REQUEST_INTERFACE): object {
         const googleSpeechDiarizationEndpoint = ' https://speech.googleapis.com/v1p1beta1/speech:longrunningrecognize';
         // access the default provider token for gcloud
