@@ -103,7 +103,8 @@ export class GoogleSpeechToTextCoreService {
         //
         const checkStatus = {};
         for (let i = 0; i < allFilesData.length; i++) {
-            ( function(thisRef, i, allFilesData) {
+            // tslint:disable-next-line: no-shadowed-variable
+            ((thisRef, i, allFilesData) => {
                 const diarizationProcessId = allFilesData[i].process_id;
                 checkStatus[diarizationProcessId] = {
                     status: 0,
@@ -179,7 +180,7 @@ export class GoogleSpeechToTextCoreService {
         };
     }
 
-    hitSpeechToTextApi(requestDetails, bodyData): Promise<any> {
+    hitSpeechToTextApi(requestDetails): Promise<any> {
         console.log('sending initiate speech-2-text request at ', new Date().toTimeString());
         const Response = this.httpSrvc.post(requestDetails.url, requestDetails.data, requestDetails.requestConfig).toPromise()
         .then((response: any) => {
@@ -188,9 +189,8 @@ export class GoogleSpeechToTextCoreService {
             return Promise.resolve({response: {message: `Process started successfully`, data: {process_id: response.data.name, audio_url: requestDetails.data.audio.uri}}});
         })
         .catch(err => {
-            console.log('recieved error from initiate diarization request at ', new Date().toTimeString());
+            console.log('recieved error from initiate speech-2-text request at ', new Date().toTimeString());
             console.log(err);
-            // this.Emitter.triggerEvent('INITIATE_DIARIZATION', {data: '698255031310955052'});
             return Promise.resolve({error: err.message, status: err.response.status});
         });
         return Response;
@@ -202,7 +202,7 @@ export class GoogleSpeechToTextCoreService {
         if (!!requestDetails) {
             console.log('request details created as ', requestDetails);
             // hit the official url and wait for response
-            const diarizationIDResponse = await this.hitSpeechToTextApi(requestDetails, null);
+            const diarizationIDResponse = await this.hitSpeechToTextApi(requestDetails);
             if (diarizationIDResponse.hasOwnProperty('error')) {
                 // check for unauthorized access
                 if (diarizationIDResponse.status.toString() === '401') {
