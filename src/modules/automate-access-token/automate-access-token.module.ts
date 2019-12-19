@@ -4,6 +4,6 @@ import { GcloudTokenProviderService } from './services/gcloud-token-provider/gcl
 
 @Module({
     providers: [AccessTokenGeneratorService, GcloudTokenProviderService],
-    exports: [AccessTokenGeneratorService]
+    exports: [AccessTokenGeneratorService, GcloudTokenProviderService]
 })
 export class AutomateAccessTokenModule {}

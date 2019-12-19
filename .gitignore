@@ -395,3 +395,4 @@ package-lock.json
 ./dist/**/*
 /dist/**/*
 */package-lock.json
+*/gcloud_config.json

@@ -10,9 +10,9 @@ export class GoogleSpeechToTextController {
     async processGoogleSpeechToText(@Body() requestbody, @Res() res): Promise<any> {
         console.log('/google-speech-to-text/v1 POST hit');
         if (this.GS2TCsrvc.validateBodyForSpeech2Text(requestbody)) {
-            const response = await this.GS2TCsrvc.initiate(requestbody.urls);
+            const response = await this.GS2TCsrvc.initiate(requestbody.urls, requestbody.resource_file);
             if (response['ok']) {
-                res.status(200).send({status: 200, data: 'Some data will be here'});
+                res.status(200).send({status: 200, message: `Your process id is same as your resource_file key`, data: {process_id: requestbody.resource_file}});
             } else {
                 res.status(500).send({status: 500, message: 'Something went wrong in the server, contact later!'});
             }

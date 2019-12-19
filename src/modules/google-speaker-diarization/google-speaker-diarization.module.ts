@@ -12,7 +12,8 @@ import { ReadDbModule } from '../read-db/read-db.module';
 @Module({
     imports: [HttpModule, ReadDbModule],
     controllers: [DiarizationBetaController],
-    providers: [DiarizationSpeakerService, InitiateDiarizationHandlerService, GoogleSpeakerDiarizationEventHandlerService, WriteConvertedDataToJsonService, GcloudTokenProviderService, AccessTokenGeneratorService,GcsBucketFetcherService],
+    providers: [DiarizationSpeakerService, InitiateDiarizationHandlerService, GoogleSpeakerDiarizationEventHandlerService, WriteConvertedDataToJsonService, GcloudTokenProviderService, AccessTokenGeneratorService, GcsBucketFetcherService],
+    exports: [DiarizationSpeakerService, GcloudTokenProviderService, AccessTokenGeneratorService, GcsBucketFetcherService, ReadDbModule],
 })
 export class GoogleSpeakerDiarizationModule {
 }

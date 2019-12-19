@@ -18,8 +18,11 @@ export class DiarizationSpeakerService {
 
     private _bearer_token = '';
     private DEFAULT_AUTHORIZATION = '';
-    constructor(private httpSrvc: HttpService, private Emitter: GoogleSpeakerDiarizationEventHandlerService,
-        private tokenProvider: GcloudTokenProviderService) {
+    constructor(
+        private httpSrvc: HttpService, 
+        private Emitter: GoogleSpeakerDiarizationEventHandlerService,
+        private tokenProvider: GcloudTokenProviderService,
+        ) {
             this.DEFAULT_AUTHORIZATION = 'Bearer ' + this.tokenProvider.process_token;
     }
 
@@ -116,6 +119,7 @@ export class DiarizationSpeakerService {
         const url = `https://speech.googleapis.com/v1/operations/${id}`;
         const response = await this.httpSrvc.get(url, requestConfig).toPromise()
         .then((resp) => {
+            console.log('recieved response for diarization id ', id);
             return Promise.resolve({resp});
         })
         .catch(err => {
