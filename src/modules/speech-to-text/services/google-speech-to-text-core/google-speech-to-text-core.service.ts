@@ -223,7 +223,13 @@ export class GoogleSpeechToTextCoreService {
 
     }
 
-    dumpDataToCorpusDB(dataToConsume, parentFolderName?: string) {
+    async dumpDataToCorpusDB(dataToConsume, parentFolderName?: string) {
        const parsedData = this.gsttuSrvc.parseDataForCorpusDB(dataToConsume, parentFolderName);
+       const writeRes = await this.databaseCommSrvc.writeFileToyoutubeDLdb(parsedData);
+       if (writeRes['ok']) {
+           console.log('success updating the database');
+       } else {
+           console.log('failure updating the database');
+       }
     }
 }

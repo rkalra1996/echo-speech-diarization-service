@@ -1,6 +1,6 @@
 {
-    "gcloud_installation_path": "/home/aditya/Downloads/google-cloud-sdk/bin/",
+    "gcloud_installation_path": "C:/Users/rishabh.kalra/AppData/Local/Google/Cloud SDK/google-cloud-sdk/bin/",
     "env": {
-        "GOOGLE_AUTHENTICATION_CREDENTIALS": "/home/aditya/project/echo-speech-diarization-service/src/assets/dummy_auth/auth.json"
+        "GOOGLE_AUTHENTICATION_CREDENTIALS": "C:/Users/rishabh.kalra/Desktop/auth.json"
     }
 }

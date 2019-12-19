@@ -20,6 +20,7 @@ export class DatabseCommonService {
 
     public DB_URL = path.resolve(__dirname, './../../../../../assets/vis_db');
     public DIARIZATION_DB_URL = path.resolve(__dirname, './../../../../../assets/diarization_db');
+    public YOUTUBE_DL_DB_URL = path.resolve(__dirname, './../../../../../assets/youtubeDL_db');
     /**
      * Reads jsondb
      * @description Read the databse from the common json file recorded
@@ -164,5 +165,32 @@ export class DatabseCommonService {
             ok: true,
             error: '',
         };
+    }
+
+    /**
+     * Writes file to youtubeDL_db
+     * @description The method will write the given set of data to the youtubeDL_db folder under the name of parent_folder_name
+     * key provided. The folder of this name will be created if not already present and if it is already there
+     * then just a json file named "<parent_folder_name>_speech_to_text.json" will be created
+     * @param dataObjectToWrite Should contain two keys, parent_folder_name and data
+     */
+    writeFileToyoutubeDLdb(dataObjectToWrite): Promise<object> {
+        const parentFolderName = dataObjectToWrite.parent_folder_name;
+        const parentFolderAddr = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolderName);
+        const targetFileName = `${parentFolderName}_speech_to_text.json`;
+        const targetFileAddr = path.resolve(parentFolderAddr, targetFileName);
+        console.log('writing data at ', targetFileAddr);
+        if (!fs.existsSync(parentFolderAddr)) {
+            fs.mkdirSync(parentFolderAddr);
+        }
+        return new Promise((resolve,reject) => {
+            fs.writeFile(targetFileAddr, JSON.stringify({data: dataObjectToWrite.data}), {encoding: 'utf-8'}, err => {
+                if (err) {
+                    console.log('An error occured while writing data to youtubeDL db', err);
+                    resolve({ok: false, error: 'An error occured while writing data to youtubeDL db'});
+                }
+                resolve({ok: true});
+            });
+        });
     }
 }
