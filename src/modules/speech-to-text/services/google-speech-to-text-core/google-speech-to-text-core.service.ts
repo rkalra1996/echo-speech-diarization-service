@@ -159,7 +159,8 @@ export class GoogleSpeechToTextCoreService {
             config: {
                 encoding: 'LINEAR16',
                 languageCode: 'en-US',
-                model: 'video',
+                model: 'default',
+                alternativeLanguageCodes: ['hi-IN'],
             },
             audio: {
                 uri: url || null,
