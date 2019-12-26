@@ -14,6 +14,7 @@ import { SpeakerMergerModule } from './modules/speaker-merger/speaker-merger.mod
 import { ZoomParserModule } from './modules/zoom-parser/zoom-parser.module';
 import { YoutubeDlModule } from './modules/youtube-dl/youtube-dl.module';
 import { SpeechToTextModule } from './modules/speech-to-text/speech-to-text.module';
+import { GoogleCloudModule } from './modules/google-cloud/google-cloud.module';
 
 @Module({
   // serve static files in the server
@@ -30,6 +31,7 @@ ServeStaticModule.forRoot({
     ZoomParserModule,
     YoutubeDlModule,
     SpeechToTextModule,
+    GoogleCloudModule,
   ],
   controllers: [AppController],
   providers: [AppService, CommonRequestValidatorService],
