@@ -77,10 +77,21 @@ export class FfmpegUtilityService {
 
     countVerifiedCallback(err, res) {
         if (res) {
-            console.log('Procedd to google speech to text now');
+            console.log('Proceed to google speech to text now');
         }
     }
 
+    // countVerifiedCallback(err, res, directoryAddr, totalFilesPresent) {
+    //     if (res) {
+    //         console.log('Procedd to google speech to text now');
+    //         totalFilesPresent.forEach(fileName => {
+    //            let completeFilePath = path.resolve(directoryAddr, fileName);
+    //                            // folderAddress.split('/')[-1]
+
+    //         });
+
+    //     }
+    // }
     checkMonoFilesCount(directoryAddr, originalFilesCount, cb) {
         console.log('recieved global file count as ', this.globalFilesCount);
         if (originalFilesCount === this.globalFilesCount) {
@@ -90,6 +101,7 @@ export class FfmpegUtilityService {
             if (totalFilesPresent.length === originalFilesCount) {
                 console.log('All files are properly converted and deleted');
                 cb(null, true);
+                cb(null, true, directoryAddr, totalFilesPresent);
             } else {
                 console.log('An error occured while successfully processing one of the files, check manually');
                 cb(true, null);

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import * as fs from 'fs';
 
 @Injectable()
 export class GoogleSpeechToTextUtilityService {
@@ -23,8 +24,8 @@ export class GoogleSpeechToTextUtilityService {
                 return finalText + (currentTranscript.alternatives[0].transcript ? currentTranscript.alternatives[0].transcript : '');
             }, '');
             // push it as the last entry in the results array
-            transcriptArray.push({ combined_transcript: combinedText });
-            urlResponse.diarized_data.response.results = transcriptArray;
+            urlResponse['transcript'] = {combined_transcript: combinedText};
+            // urlResponse.diarized_data.response.results = transcriptArray;
             return urlResponse;
         } else {
             return undefined;
@@ -48,5 +49,25 @@ export class GoogleSpeechToTextUtilityService {
             console.log('Error while validating urlResponse body, sending false forward', e);
             return false;
         }
+    }
+
+    getGoogleBucketFileUris(filePath) {
+
+        const filePaths = this.readDataFromFile(filePath);
+        console.log('File Paths : ' + filePaths);
+        return filePaths;
+    }
+
+
+    readDataFromFile(filePath) {
+        try {
+        if (fs.existsSync(filePath)) {
+            return fs.readFileSync(filePath, { encoding: 'utf-8' }).split(',');
+        } else {
+            return new Error('Unable to locate the file at the specified path : ' + filePath);
+        }
+    } catch (e) {
+        console.log('Some Error Occured while reading file : ', e);
+    }
     }
 }

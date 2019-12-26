@@ -21,8 +21,8 @@ export class GoogleSpeechToTextCoreService {
     validateBodyForSpeech2Text(requestBody): boolean {
         let isValid = false;
         if (requestBody && requestBody.constructor === Object) {
-            if (Object.keys(requestBody).length > 0 && Object.keys(requestBody).indexOf('urls') > -1) {
-                if (Array.isArray(requestBody.urls) && requestBody.urls.length > 0) {
+            if (Object.keys(requestBody).length > 0 && Object.keys(requestBody).indexOf('uris') > -1) {
+                if (Array.isArray(requestBody.uris) && requestBody.uris.length > 0) {
                     if (Object.keys(requestBody).indexOf('resource_file') > -1) {
                         console.log('body is validated');
                         isValid = true;
@@ -34,6 +34,9 @@ export class GoogleSpeechToTextCoreService {
                     console.error('Either url key is not of aray type or it is empty');
                     isValid = false;
                 }
+            } else if (Object.keys(requestBody).indexOf('filePath') > -1 && requestBody.filePath) {
+                console.log('body is validated');
+                isValid = true;
             } else {
                 console.error('body object does not have a key named urls');
                 isValid = false;
@@ -78,17 +81,20 @@ export class GoogleSpeechToTextCoreService {
         }
     }
 
-    async initiate(googleBucketWAVUrls, parentFolderName?: string): Promise<object> {
+    async initiate(filePath, googleBucketWAVUris, parentFolderName?: string): Promise<object> {
         // collect urls, check if they are of google-cloud bucket types
         // start making requests to google cloud apis, also keep refreshing token whenever needed
         // collect response of all the apis and then dump them into one json file with the parent name being the same name as the youtubeDL_db folder name
         const processCollectionArray = [];
-        for (const url of googleBucketWAVUrls) {
+        if (filePath) {
+            googleBucketWAVUris = this.gsttuSrvc.getGoogleBucketFileUris(filePath);
+        }
+        for (const url of googleBucketWAVUris) {
             const processIDResponse = await this.handleMultiFilesRequest(url);
             console.log('recieved response as ', processIDResponse);
             processCollectionArray.push({process_id: processIDResponse.response.data.process_id, source_url: url});
         }
-        if (processCollectionArray.length !== googleBucketWAVUrls.length) {
+        if (processCollectionArray.length !== googleBucketWAVUris.length) {
             // something went wrong
             console.log('something went wrong which hiiting google speech to text apis, check manually');
             return Promise.resolve({ok: false, error: 'something went wrong which hiiting google speech to text apis, check manually'});
@@ -226,11 +232,16 @@ export class GoogleSpeechToTextCoreService {
 
     async dumpDataToCorpusDB(dataToConsume, parentFolderName?: string) {
        const parsedData = this.gsttuSrvc.parseDataForCorpusDB(dataToConsume, parentFolderName);
-       const writeRes = await this.databaseCommSrvc.writeFileToyoutubeDLdb(parsedData);
-       if (writeRes['ok']) {
+       const writeRes = [];
+       writeRes.push(this.databaseCommSrvc.writeFileToyoutubeDLdb(parsedData));
+    //    writeRes.push(this.databaseCommSrvc.writeTextFileToyoutubeDLdb(parsedData));
+
+       Promise.all(writeRes).then((res) => {
+       if (res[0]['ok'] && res[0]['ok']) {
            console.log('success updating the database');
        } else {
            console.log('failure updating the database');
        }
+    });
     }
 }

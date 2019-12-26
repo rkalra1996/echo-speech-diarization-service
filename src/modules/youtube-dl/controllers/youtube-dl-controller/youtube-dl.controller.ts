@@ -18,7 +18,7 @@ export class YoutubeDlController {
         if (Array.isArray(fileObject.data)) {
             // send the file object with data to youtube-dl processor
             this.ydlCoreSrvc.initiate(fileObject);
-            response.status(200).send({response: 'ok', message: `Corpus generation process started for ${fileObject.data.length} urls`});
+            response.status(200).send({response: 'ok', message: 'Corpus generation process started for ' + fileObject.data.length + ' urls'});
         } else {
             response.status(400).send({status: 400, error: `Empty file cannot be read`});
         }

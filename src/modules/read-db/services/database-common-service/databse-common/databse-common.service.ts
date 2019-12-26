@@ -183,7 +183,7 @@ export class DatabseCommonService {
         if (!fs.existsSync(parentFolderAddr)) {
             fs.mkdirSync(parentFolderAddr);
         }
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve, reject) => {
             fs.writeFile(targetFileAddr, JSON.stringify({data: dataObjectToWrite.data}), {encoding: 'utf-8'}, err => {
                 if (err) {
                     console.log('An error occured while writing data to youtubeDL db', err);
@@ -192,5 +192,43 @@ export class DatabseCommonService {
                 resolve({ok: true});
             });
         });
+    }
+
+    writeTextFileToyoutubeDLdb(dataObjectToWrite) {
+        const parentFolderName = dataObjectToWrite.parent_folder_name;
+        const parentFolderAddr = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolderName);
+        const textFolderName = 'speech-to-text';
+        const textFolderAddr = path.resolve(parentFolderAddr, textFolderName);
+
+        if (!fs.existsSync(textFolderAddr)) {
+            fs.mkdirSync(textFolderAddr);
+        }
+        const writeTextDataPromise = [];
+        for (const dataEach of dataObjectToWrite.data) {
+            const sourceUrl = dataEach.source_url;
+            const fileLocArray = sourceUrl.split('/');
+            let fileName = fileLocArray[fileLocArray.length - 1];
+            fileName = fileName.replace('.wav', '.txt');
+            console.log('Writing the text data to ' + fileName);
+            const fileLocation = path.resolve(textFolderAddr, fileName);
+            if (fs.existsSync(fileLocation)) {
+                fs.unlinkSync(fileLocation);
+            }
+            const resultData = dataEach.diarized_data.response.results;
+            const dataTextOnly = resultData[resultData.length - 1].combined_transcript;
+            console.log('Test Data is : ' + dataTextOnly);
+
+            writeTextDataPromise.push(new Promise((resolve, reject) => {
+                fs.writeFile(fileLocation, dataTextOnly, {encoding: 'utf-8'}, err => {
+                    if (err) {
+                        console.log('An error occured while writing speech Text to ', err);
+                        resolve({ok: false, error: 'An error occured while text data to the speech-to-text folder'});
+                    }
+                    resolve({ok: true});
+                });
+            }));
+        }
+        return writeTextDataPromise;
+
     }
 }
