@@ -40,18 +40,6 @@ export class YoutubeSearchCoreService {
             return this.searchYoutubeForVideos(requestDetails)
                 .catch(async err => {
                     console.log('Error in initiateSearch : ' + err);
-                    // if (err.response.status === '401' || err.response.code === '401') {
-                    //     console.log('token has expired, refreshing the token');
-                    //     console.log('sending refresh code request at ', new Date().toTimeString());
-                    //     const isRefreshed = await this.atgSrvc.refreshAuthKey();
-                    //     if (isRefreshed) {
-                    //         console.log('sending handleRequest request at ', new Date().toTimeString());
-                    //         return this.initiateSearch(requestBody);
-                    //     } else {
-                    //         console.log('unable to refresh auth key for gcloud, check manually');
-                    //         return new Error('Unable to refresh the Google Auth Token. Try again later');
-                    //     }
-                    // }
                 });
         }
     }

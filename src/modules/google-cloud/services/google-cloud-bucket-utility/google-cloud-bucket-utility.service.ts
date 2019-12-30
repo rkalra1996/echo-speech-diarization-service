@@ -146,11 +146,17 @@ export class GoogleCloudBucketUtilityService {
         }
     }
 
+    /**
+     * Writes google uri to file
+     * @description The function is responsible to create a new file google-cloud-uris and save the cloud-bucket urls of uploaded audio files
+     * @param response 
+     * @param filePaths Where to store the google-cloud-uris
+     */
     writeGoogleUriToFile(response, filePaths) {
         const filePath: string = filePaths[0];
         const toGetFolderPath = filePath.lastIndexOf('/');
         const folderPath = filePath.substring(0, toGetFolderPath);
-        const textFileName = 'google-cloud-uris';
+        const textFileName = 'google-cloud-uris.txt';
         const textFileAddress = path.resolve(folderPath, textFileName);
         if (fs.existsSync(textFileAddress)) {
             fs.unlinkSync(textFileAddress);

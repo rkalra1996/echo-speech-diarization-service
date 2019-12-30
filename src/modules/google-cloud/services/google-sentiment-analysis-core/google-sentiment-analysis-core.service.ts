@@ -46,7 +46,7 @@ export class GoogleSentimentAnalysisCoreService {
             return Promise.resolve({ error: 'No such file exists at path : ' + filePath, status: 400 });
         }
         const fileData = this.gsauSrvc.getFileData(filePath);
-        console.log(fileData);
+        // console.log(fileData);
         return this.handleMultipleRequests(JSON.parse(fileData), filePath);
     }
 

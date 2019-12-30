@@ -19,7 +19,7 @@ export class YoutubeSearchUtilityService {
         searchUrl = searchUrl + 'key=AIzaSyCHzvvYdbNvsKcFBNo4ZqfI1ierbK658Dg';
         searchUrl = searchUrl + '&q=' + searchKeys;
         // Acceptable values are 0 to 50, inclusive. The default value is 5.
-        searchUrl += this.getQueryParameter('maxResults', 'videoCount', +(requestBody.count), 20, [0, 50]);
+        searchUrl += this.getQueryParameter('maxResults', 'videoCount', +(requestBody.count), 20, [, 50]);
 
         /*
         Acceptable values are:
