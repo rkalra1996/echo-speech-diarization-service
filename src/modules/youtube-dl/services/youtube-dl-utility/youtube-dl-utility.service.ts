@@ -7,7 +7,8 @@ export class YoutubeDlUtilityService {
     getVideoUrlsArray(fileData) {
         const fileString = fileData.buffer.toString();
         if (fileString.length) {
-            return fileData.buffer.toString().replace(/\r\n/g, 'EOF').split('EOF').map(url => url.trim());
+            // return fileData.buffer.toString().replace(/\r\n/g, 'EOF').split('EOF').map(url => url.trim());
+            return fileData.buffer.toString().split(',').map(url => url.trim());
 
         } else {
             return undefined;

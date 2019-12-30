@@ -15,6 +15,7 @@ import { ZoomParserModule } from './modules/zoom-parser/zoom-parser.module';
 import { YoutubeDlModule } from './modules/youtube-dl/youtube-dl.module';
 import { SpeechToTextModule } from './modules/speech-to-text/speech-to-text.module';
 import { GoogleCloudModule } from './modules/google-cloud/google-cloud.module';
+import { YoutubeModule } from './modules/youtube/youtube.module';
 
 @Module({
   // serve static files in the server
@@ -32,6 +33,7 @@ ServeStaticModule.forRoot({
     YoutubeDlModule,
     SpeechToTextModule,
     GoogleCloudModule,
+    YoutubeModule,
   ],
   controllers: [AppController],
   providers: [AppService, CommonRequestValidatorService],

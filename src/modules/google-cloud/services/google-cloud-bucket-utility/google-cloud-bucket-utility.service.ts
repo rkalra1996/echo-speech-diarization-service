@@ -77,7 +77,7 @@ export class GoogleCloudBucketUtilityService {
         if (!fs.existsSync(publicFile)) {
             fs.mkdirSync(publicFile);
         }
-        await new Promise((resolve,reject) => {
+        await new Promise((resolve, reject) => {
             fs.writeFile(publicFile, JSON.stringify({data}), {encoding: 'utf-8'}, err => {
                 if (err) {
                     console.log('An error occured while writing data to youtubeDL db', err);
@@ -149,7 +149,7 @@ export class GoogleCloudBucketUtilityService {
     writeGoogleUriToFile(response, filePaths) {
         const filePath: string = filePaths[0];
         const toGetFolderPath = filePath.lastIndexOf('/');
-        const folderPath = filePath.substring(0,toGetFolderPath);
+        const folderPath = filePath.substring(0, toGetFolderPath);
         const textFileName = 'google-cloud-uris';
         const textFileAddress = path.resolve(folderPath, textFileName);
         if (fs.existsSync(textFileAddress)) {
@@ -157,11 +157,15 @@ export class GoogleCloudBucketUtilityService {
         }
         const textDataToWrite = [];
         for (const res of response)  {
+            if (res) {
             const responseData = res.data;
             let googleBucketFileUri = 'gs://';
             googleBucketFileUri = googleBucketFileUri + responseData.bucket + '/';
             googleBucketFileUri = googleBucketFileUri + responseData.name;
             textDataToWrite.push(googleBucketFileUri);
+            } else {
+                console.log('Failed to upload some of the files. Please check manually.');
+            }
         }
 
         fs.writeFileSync(textFileAddress, textDataToWrite, {encoding: 'utf-8'});
