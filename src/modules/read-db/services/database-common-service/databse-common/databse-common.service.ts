@@ -194,6 +194,26 @@ export class DatabseCommonService {
         });
     }
 
+    writeYoutubeUrlsToFile(parentFolder, fileName, dataArray) {
+        if (!fs.existsSync(path.resolve(this.YOUTUBE_DL_DB_URL))) {
+            fs.mkdirSync(path.resolve(this.YOUTUBE_DL_DB_URL));
+        }
+        const parentFolderAddr = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolder);
+        if (!fs.existsSync(parentFolderAddr)) {
+            fs.mkdirSync(parentFolderAddr);
+        }
+        const targetFileAddr = path.resolve(parentFolderAddr, `${fileName}.txt`);
+        try {
+            const commaSeperatedData = dataArray.join(',').toString();
+            fs.writeFileSync(targetFileAddr, commaSeperatedData, {encoding: 'utf-8'});
+            console.log('file written successfully');
+            return {parentFolder, fileName: `${fileName}.txt`};
+        } catch (e) {
+            console.log(e);
+            throw new Error(`An error occured while writing youtube urls to file ${fileName}.txt`);
+        }
+    }
+
     writeTextFileToyoutubeDLdb(dataObjectToWrite) {
         const parentFolderName = dataObjectToWrite.parent_folder_name;
         const parentFolderAddr = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolderName);
@@ -230,5 +250,41 @@ export class DatabseCommonService {
         }
         return writeTextDataPromise;
 
+    }
+
+    isYTDirectoryPresent(directoryToVerify) {
+        const parentDirAddr = path.resolve(this.YOUTUBE_DL_DB_URL, directoryToVerify);
+        return fs.existsSync(parentDirAddr);
+    }
+
+    readFromYT_DB(parentFolder, fileNameToRead) {
+        const FileAddress = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolder, fileNameToRead);
+        try {
+            const fileData = fs.readFileSync(FileAddress, {encoding: 'utf-8'});
+            return fileData;
+        } catch (e) {
+            console.log('An error occured while reading the file from YT_DB', e);
+            return null;
+        }
+    }
+
+    getuploadSourcePath(parentFolder) {
+        // get directory address from youtube db
+        const parentAddress = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolder);
+        if (fs.existsSync(parentAddress)) {
+            return parentAddress;
+        } else {
+            return null;
+        }
+    }
+
+    getbucketUrlsFile(parentFolder) {
+        const bucketFileAddr = path.resolve(this.getuploadSourcePath(parentFolder), 'google-cloud-uris.txt');
+        return bucketFileAddr;
+    }
+
+    getSpeechToTextSourcePath(parentFolder) {
+        const googleSpeechToTextAddr = path.resolve(this.getuploadSourcePath(parentFolder), `${parentFolder}_speech_to_text.json`);
+        return googleSpeechToTextAddr;
     }
 }

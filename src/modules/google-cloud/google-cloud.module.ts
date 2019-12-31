@@ -6,6 +6,7 @@ import { AutomateAccessTokenModule } from '../automate-access-token/automate-acc
 import { GoogleSentimentAnalysisController } from './controllers/google-sentiment-analysis/google-sentiment-analysis.controller';
 import { GoogleSentimentAnalysisCoreService } from './services/google-sentiment-analysis-core/google-sentiment-analysis-core.service';
 import { GoogleSentimentAnalysisUtilityService } from './services/google-sentiment-analysis-utility/google-sentiment-analysis-utility.service';
+import { ReadDbModule } from '../read-db/read-db.module';
 
 @Module({
   controllers: [
@@ -21,6 +22,7 @@ import { GoogleSentimentAnalysisUtilityService } from './services/google-sentime
 imports: [
   HttpModule,
   AutomateAccessTokenModule,
+  ReadDbModule,
 ]
 })
 export class GoogleCloudModule {}

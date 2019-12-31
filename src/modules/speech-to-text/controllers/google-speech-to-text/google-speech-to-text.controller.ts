@@ -10,7 +10,12 @@ export class GoogleSpeechToTextController {
     async processGoogleSpeechToText(@Body() requestbody, @Res() res): Promise<any> {
         console.log('/google-speech-to-text/v1 POST hit');
         if (this.GS2TCsrvc.validateBodyForSpeech2Text(requestbody)) {
-            const response = await this.GS2TCsrvc.initiate(requestbody.filePath, requestbody.uris, requestbody.resource_file);
+            let response;
+            if (requestbody.hasOwnProperty('parent_folder')) {
+                response = await this.GS2TCsrvc.initiate(requestbody.parent_folder, requestbody.uris, requestbody.resource_file, 'dir');
+            } else {
+                response = await this.GS2TCsrvc.initiate(requestbody.filePath, requestbody.uris, requestbody.resource_file);
+            }
             if (response['ok']) {
                 res.status(200).send({status: 200, message: `Your process id is same as your resource_file key`, data: {process_id: requestbody.resource_file}});
             } else {

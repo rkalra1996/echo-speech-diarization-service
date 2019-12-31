@@ -10,7 +10,13 @@ export class GoogleCloudBucketController {
     async processGoogleSpeechToText(@Body() requestbody, @Res() res): Promise<any> {
         console.log('/google-cloud/bucket/upload POST hit');
         if (this.GCBCsrvc.validateBodyForBuketFileUpload(requestbody)) {
-            const response = await this.GCBCsrvc.initiateUpload(requestbody.folderPath, requestbody.filePaths, requestbody.folderName, requestbody.bucketName);
+            let response;
+            if (requestbody.hasOwnProperty('parent_folder')) {
+                response = await this.GCBCsrvc.initiateUpload(requestbody.parent_folder, requestbody.filePaths, requestbody.folderName, requestbody.bucketName, 'dir');
+            } else {
+                response = await this.GCBCsrvc.initiateUpload(requestbody.folderPath, requestbody.filePaths, requestbody.folderName, requestbody.bucketName);
+
+            }
             if (response['ok']) {
                 res.status(200).send({status: 200, message: `Uploading files to the Google Storage Bucket. Process started successfully.`});
             } else {

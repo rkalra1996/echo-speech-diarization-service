@@ -2,6 +2,7 @@ import { Injectable, HttpService } from '@nestjs/common';
 import { GoogleCloudBucketUtilityService } from '../google-cloud-bucket-utility/google-cloud-bucket-utility.service';
 import { AccessTokenGeneratorService } from '../../../automate-access-token/services/access-token-generator/access-token-generator.service';
 import { response } from 'express';
+import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
 
 @Injectable()
 export class GoogleCloudBucketCoreService {
@@ -10,6 +11,7 @@ export class GoogleCloudBucketCoreService {
         private gcbuSrvc: GoogleCloudBucketUtilityService,
         private httpSrvc: HttpService,
         private atgSrvc: AccessTokenGeneratorService,
+        private dbcSrvc: DatabseCommonService,
     ) { }
 
     validateBodyForBuketFileUpload(requestBody): boolean {
@@ -30,6 +32,9 @@ export class GoogleCloudBucketCoreService {
                     console.error('Either filePaths key is not of aray type or it is empty');
                     isValid = false;
                 }
+            } else if (Object.keys(requestBody).length > 0 && Object.keys(requestBody).indexOf('parent_folder') > -1) {
+                console.log('body is validated');
+                isValid = true;
             } else if (Object.keys(requestBody).length > 0 && Object.keys(requestBody).indexOf('folderPath') > -1) {
                 if (requestBody.folderPath) {
                     console.log('body is validated');
@@ -49,11 +54,15 @@ export class GoogleCloudBucketCoreService {
         return isValid;
     }
 
-    async initiateUpload(folderPath, filePaths, folderName, bucketName): Promise<object> {
+    async initiateUpload(folderPath, filePaths, folderName, bucketName, dirType = 'path'): Promise<object> {
         // collect urls, check if they are of google-cloud bucket types
         // start making requests to google cloud apis, also keep refreshing token whenever needed
         // collect response of all the apis and then dump them into one json file with the parent name being the same name as the youtubeDL_db folder name
         const processCollectionArray = [];
+        if (dirType === 'dir') {
+            // folderPath cotaines name of the parent folder
+            folderPath = this.dbcSrvc.getuploadSourcePath(folderPath);
+        }
         if (folderPath) {
             filePaths = this.gcbuSrvc.getAllFilesPath(folderPath);
         }
@@ -73,7 +82,7 @@ export class GoogleCloudBucketCoreService {
             .then((res: any) => {
                 console.log('recieved response from initiate Upload File to Google Storage Bucket request at ', new Date().toTimeString());
                 console.log(res);
-                this.gcbuSrvc.writeGoogleUriToFile(res, filePaths);
+                this.gcbuSrvc.writeGoogleUriToFile(res, folderPath);
                 // return Promise.resolve({response: {message: `Process completed successfully`, data: {name: res.name, id: res.id}}});
             })
             .catch(err => {
@@ -93,6 +102,8 @@ export class GoogleCloudBucketCoreService {
             console.log('request details created as ', requestDetails);
             return this.uploadFileToGoogleStorageBucket(requestDetails)
                 .catch(async err => {
+                    console.log('Got an error in final promise');
+                    console.log(err);
                     if (err.response.status === '401' || err.response.code === '401') {
                         console.log('token has expired, refreshing the token');
                         console.log('sending refresh code request at ', new Date().toTimeString());

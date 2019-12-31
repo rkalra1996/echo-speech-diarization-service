@@ -9,8 +9,13 @@ export class GoogleSentimentAnalysisController {
     @Post('v1/analyse')
     async processGoogleSpeechToText(@Body() requestbody, @Res() res): Promise<any> {
         console.log('/google-cloud/v1/analyze POST hit');
+        let response;
         if (this.GSACsrvc.validateBodyForSentimentAnalysis(requestbody)) {
-            const response = await this.GSACsrvc.initiateAnalysis(requestbody.data, requestbody.filePath);
+            if (requestbody.hasOwnProperty('parent_folder')) {
+                response = await this.GSACsrvc.initiateAnalysis(requestbody.data, requestbody.parent_folder, 'dir');
+            } else {
+                response = await this.GSACsrvc.initiateAnalysis(requestbody.data, requestbody.filePath);
+            }
             if (response['ok']) {
                 res.status(200).send({status: 200, message: `Sentiment analysis started successfully.`});
             } else {

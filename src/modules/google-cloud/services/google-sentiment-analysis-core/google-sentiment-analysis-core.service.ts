@@ -1,6 +1,7 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { GoogleSentimentAnalysisUtilityService } from '../google-sentiment-analysis-utility/google-sentiment-analysis-utility.service';
 import { AccessTokenGeneratorService } from '../../../automate-access-token/services/access-token-generator/access-token-generator.service';
+import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
 
 @Injectable()
 export class GoogleSentimentAnalysisCoreService {
@@ -9,6 +10,7 @@ export class GoogleSentimentAnalysisCoreService {
         private gsauSrvc: GoogleSentimentAnalysisUtilityService,
         private httpSrvc: HttpService,
         private atgSrvc: AccessTokenGeneratorService,
+        private dbCSrvc: DatabseCommonService,
     ) { }
 
     validateBodyForSentimentAnalysis(requestBody): boolean {
@@ -18,7 +20,10 @@ export class GoogleSentimentAnalysisCoreService {
                 if (Object.keys(requestBody).indexOf('data') > -1 && requestBody.data.length > 0) {
                     console.log('body is validated');
                     isValid = true;
-                } else if (Object.keys(requestBody).indexOf('filePath') > -1 && requestBody.filePath) {
+                } else if (
+                    (Object.keys(requestBody).indexOf('filePath') > -1 && requestBody.filePath) || 
+                    (Object.keys(requestBody).indexOf('parent_folder') > -1 && requestBody.parent_folder)
+                ) {
                     console.log('body is validated');
                     isValid = true;
                 } else {
@@ -35,10 +40,12 @@ export class GoogleSentimentAnalysisCoreService {
         return isValid;
     }
 
-    async initiateAnalysis(data, filePath): Promise<object> {
-
+    async initiateAnalysis(data, filePath, dirType= 'path'): Promise<object> {
         if (data) {
             console.log('Raw data is not supported. Please provide a json file path.');
+        }
+        if (dirType === 'dir') {
+            filePath = this.dbCSrvc.getSpeechToTextSourcePath(filePath);
         }
         const checkFilePath = this.gsauSrvc.checkIfFileExists(filePath);
 

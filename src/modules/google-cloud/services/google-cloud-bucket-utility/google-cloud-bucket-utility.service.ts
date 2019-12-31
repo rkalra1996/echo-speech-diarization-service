@@ -25,18 +25,34 @@ export class GoogleCloudBucketUtilityService {
         }
     }
 
+    breakFilePath(filePathToSplit: string) {
+        // To propoerly spit the file path depending on os platform
+        if (process.platform === 'win32') {
+            return filePathToSplit.split('\\');
+        }
+        return filePathToSplit.split('/');
+    }
+
+    cleanFileName(fileName) {
+        // This function removes commas in the file name and replaces them with _
+        const newFileName = fileName.split(',').join('_');
+        return newFileName;
+    }
+
     getGoogleStorageRequestData(filePath, folderName, bucketName) {
 
         const bucket = bucketName ? bucketName : 'corpus-audio';
-        const breakFilePath = filePath.split('/');
+        const breakFilePath = this.breakFilePath(filePath);
         const fileName = breakFilePath[breakFilePath.length - 1];
+        const cleanedFileName = this.cleanFileName(fileName);
+        console.log('cleaned file name is ', cleanedFileName);
         folderName = folderName ? folderName : breakFilePath[breakFilePath.length - 2];
         const googleStorageBucketUploadFileEndpoint = 'https://storage.googleapis.com/upload/storage/v1/b/' +
         bucket +
         '/o?uploadType=media&name=' +
         folderName +
         '/' +
-        fileName;
+        cleanedFileName;
         const newToken = this.tokenProvider.process_token;
         const DEFAULT_AUTHORIZATION = 'Bearer ' + newToken;
         const data = this.readBinaryDataFromFile(filePath);
@@ -149,13 +165,12 @@ export class GoogleCloudBucketUtilityService {
     /**
      * Writes google uri to file
      * @description The function is responsible to create a new file google-cloud-uris and save the cloud-bucket urls of uploaded audio files
-     * @param response 
+     * @param response
      * @param filePaths Where to store the google-cloud-uris
      */
-    writeGoogleUriToFile(response, filePaths) {
-        const filePath: string = filePaths[0];
-        const toGetFolderPath = filePath.lastIndexOf('/');
-        const folderPath = filePath.substring(0, toGetFolderPath);
+    writeGoogleUriToFile(response, folderPath) {
+        console.log('recieved something to write in google-uris');
+        console.log(response);
         const textFileName = 'google-cloud-uris.txt';
         const textFileAddress = path.resolve(folderPath, textFileName);
         if (fs.existsSync(textFileAddress)) {

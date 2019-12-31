@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { GcloudTokenProviderService } from '../../../../automate-access-token/services/gcloud-token-provider/gcloud-token-provider.service';
-import { strict } from 'assert';
+import * as path from 'path';
 
 @Injectable()
 export class YoutubeSearchUtilityService {
@@ -19,7 +18,7 @@ export class YoutubeSearchUtilityService {
         searchUrl = searchUrl + 'key=AIzaSyCHzvvYdbNvsKcFBNo4ZqfI1ierbK658Dg';
         searchUrl = searchUrl + '&q=' + searchKeys;
         // Acceptable values are 0 to 50, inclusive. The default value is 5.
-        searchUrl += this.getQueryParameter('maxResults', 'videoCount', +(requestBody.count), 20, [, 50]);
+        searchUrl += this.getQueryParameter('maxResults', 'videoCount', +(requestBody.videoCount), 20, [1, 50]);
 
         /*
         Acceptable values are:
@@ -36,7 +35,7 @@ export class YoutubeSearchUtilityService {
         searchUrl += this.getQueryParameter('part', 'part', requestBody.part, 'snippet', ['snippet']);
 
         // Acceptable values are: channel, playlist and video
-        searchUrl += this.getQueryParameter('type', 'type', null, 'video', ['video', 'channel', 'playlist']);
+        searchUrl += this.getQueryParameter('type', 'type', requestBody.type, 'video', ['video', 'channel', 'playlist']);
 
         if (searchUrl.indexOf('type=video') > -1) {
             searchUrl += this.getQueryParameter('videoDuration', 'videoDuration', requestBody.videoDuration, 'any', ['any', 'long', 'medium', 'short']);
@@ -99,5 +98,20 @@ export class YoutubeSearchUtilityService {
             queryParameter += defaultValue;
         }
         return queryParameter;
+    }
+
+    getTargetParentFolderName(requestBody) {
+        let targetFolderName = '';
+        console.log(requestBody);
+        console.log(requestBody.hasOwnProperty('parent_folder') && requestBody.parent_folder);
+        if (requestBody.hasOwnProperty('parent_folder') && requestBody.parent_folder && (typeof requestBody.parent_folder === 'string') && requestBody.parent_folder.length > 0) {
+            targetFolderName = requestBody.parent_folder;
+            console.log('new folder name is ', targetFolderName);
+            return targetFolderName;
+        }
+        const dateObj = new Date();
+        targetFolderName = ` yts_${dateObj.getUTCDate()}_${dateObj.getUTCMonth()}_${dateObj.getUTCFullYear()}_${dateObj.getUTCHours()}_${dateObj.getUTCMinutes()}_${dateObj.getUTCSeconds()}_${dateObj.getUTCMilliseconds()}`;
+        console.log('new folder name is ', targetFolderName);
+        return targetFolderName;
     }
 }

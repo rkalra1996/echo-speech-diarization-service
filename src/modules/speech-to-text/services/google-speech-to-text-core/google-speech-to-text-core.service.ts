@@ -34,11 +34,11 @@ export class GoogleSpeechToTextCoreService {
                     console.error('Either url key is not of aray type or it is empty');
                     isValid = false;
                 }
-            } else if (Object.keys(requestBody).indexOf('filePath') > -1 && requestBody.filePath) {
+            } else if ((Object.keys(requestBody).indexOf('filePath') > -1 && requestBody.filePath) || (Object.keys(requestBody).indexOf('parent_folder') > -1 && requestBody.parent_folder)) {
                 console.log('body is validated');
                 isValid = true;
             } else {
-                console.error('body object does not have a key named urls');
+                console.error('body object does not have a key named uris');
                 isValid = false;
             }
         } else {
@@ -81,12 +81,18 @@ export class GoogleSpeechToTextCoreService {
         }
     }
 
-    async initiate(filePath, googleBucketWAVUris, parentFolderName?: string): Promise<object> {
+    async initiate(filePath, googleBucketWAVUris, parentFolderName?: string, dirType = 'path'): Promise<object> {
         // collect urls, check if they are of google-cloud bucket types
         // start making requests to google cloud apis, also keep refreshing token whenever needed
         // collect response of all the apis and then dump them into one json file with the parent name being the same name as the youtubeDL_db folder name
         const processCollectionArray = [];
+
+        if (dirType === 'dir') {
+            // folderPath cotaines name of the parent folder
+            filePath = this.databaseCommSrvc.getbucketUrlsFile(filePath);
+        }
         if (filePath) {
+            console.log('file path is ', filePath);
             googleBucketWAVUris = this.gsttuSrvc.getGoogleBucketFileUris(filePath);
         }
         for (const url of googleBucketWAVUris) {
@@ -166,7 +172,7 @@ export class GoogleSpeechToTextCoreService {
                 encoding: 'LINEAR16',
                 languageCode: 'en-US',
                 model: 'default',
-                alternativeLanguageCodes: ['hi-IN'],
+                // alternativeLanguageCodes: ['hi-IN'],
             },
             audio: {
                 uri: url || null,
