@@ -43,9 +43,8 @@ export class GoogleCloudBucketUtilityService {
 
         const bucket = bucketName ? bucketName : 'corpus-audio';
         const breakFilePath = this.breakFilePath(filePath);
-        const fileName = breakFilePath[breakFilePath.length - 1];
+        const fileName = encodeURI(breakFilePath[breakFilePath.length - 1]);
         const cleanedFileName = this.cleanFileName(fileName);
-        console.log('cleaned file name is ', cleanedFileName);
         folderName = folderName ? folderName : breakFilePath[breakFilePath.length - 2];
         const googleStorageBucketUploadFileEndpoint = 'https://storage.googleapis.com/upload/storage/v1/b/' +
         bucket +
