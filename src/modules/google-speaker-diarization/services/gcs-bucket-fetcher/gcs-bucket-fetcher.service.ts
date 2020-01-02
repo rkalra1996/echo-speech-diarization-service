@@ -57,6 +57,7 @@ export class GcsBucketFetcherService {
                     // call ahead
                     // global.clearInterval(globalIteratorID);
                     console.log('\ncompleted... for ', diarizationID);
+                    console.log('Response : ' + response);
                     return response;
                     // add logic
                     // this.sendTranscribedAudio(response, videoDetailsForVis);

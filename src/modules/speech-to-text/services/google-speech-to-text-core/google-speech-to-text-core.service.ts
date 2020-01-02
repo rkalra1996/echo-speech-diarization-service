@@ -124,6 +124,7 @@ export class GoogleSpeechToTextCoreService {
                 console.log('timestamp ->', new Date());
                 checkStatus[diarizationProcessId]['intervalId'] = setInterval(() => {
                     thisRef.gcsbfSrvc.initiate2(diarizationProcessId).then((response) => {
+                        console.log('Response : ' + response);
                         // thisRef.diarizationSpkSrvc.checkStatusFromDiarizationID(diarizationProcessId).then((response) => {
                         if (response === -1) {
                             console.log('\nAn error occured while reading status of diarization id : ' + diarizationProcessId);

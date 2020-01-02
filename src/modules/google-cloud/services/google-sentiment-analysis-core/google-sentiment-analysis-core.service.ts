@@ -69,9 +69,13 @@ export class GoogleSentimentAnalysisCoreService {
             // } else {
             //     speechToTextLastData = speechToTextResponseData[speechToTextResponseData.length - 1];
             // }
-            const speechData = dataEach.transcript.combined_transcript;
+            const speechData = dataEach['transcript'];
             console.log('Speech Data : ' + speechData);
-            sentimentAnalysisPromises.push(this.startSentimentAnalysisProcess(speechData));
+            if(speechData && speechData['combined_transcript']) {
+            sentimentAnalysisPromises.push(this.startSentimentAnalysisProcess(speechData['combined_transcript']));
+            } else {
+                sentimentAnalysisPromises.push(Promise.resolve({data: null}));
+            }
         }
         Promise.all(sentimentAnalysisPromises)
             .then((res: any) => {

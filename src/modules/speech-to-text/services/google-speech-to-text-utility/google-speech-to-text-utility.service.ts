@@ -10,24 +10,43 @@ export class GoogleSpeechToTextUtilityService {
         if (typeof parentFolderName === 'string') {
             // the combined file will be saved in a particular folder
             finalObject['parent_folder_name'] = parentFolderName;
+
         }
         // collect all the text properly
-        finalObject['data'] = responseData.map(this.reducer.bind(this));
+
+        finalObject['data'] = responseData.map((urlResponse) => {
+            const res = this.reducer(urlResponse);
+            if (res) {
+                return res;
+            } else {
+                urlResponse.diarized_data.response['results'] = [];
+                urlResponse['transcript'] = null;
+                return urlResponse;
+            }
+        });
         return finalObject;
     }
 
     reducer(urlResponse) {
         if (this.validateUrlResponse(urlResponse)) {
-            const transcriptArray = urlResponse.diarized_data.response.results;
-            const combinedText = transcriptArray.reduce((finalText, currentTranscript) => {
-                // pick the transcript and add it in the final Text
-                return finalText + (currentTranscript.alternatives[0].transcript ? currentTranscript.alternatives[0].transcript : '');
-            }, '');
-            // push it as the last entry in the results array
-            urlResponse['transcript'] = {combined_transcript: combinedText};
+            const transcriptArray = urlResponse.diarized_data.response.results || [];
+            if (transcriptArray.length) {
+                console.log('6');
+
+                const combinedText = transcriptArray.reduce((finalText, currentTranscript) => {
+                    // pick the transcript and add it in the final Text
+                    return finalText + (currentTranscript.alternatives[0].transcript ? currentTranscript.alternatives[0].transcript : '');
+                }, '');
+                // push it as the last entry in the results array
+                console.log('7');
+
+                urlResponse['transcript'] = {combined_transcript: combinedText};
+            }
             // urlResponse.diarized_data.response.results = transcriptArray;
             return urlResponse;
         } else {
+            console.log('8');
+
             return undefined;
         }
     }
