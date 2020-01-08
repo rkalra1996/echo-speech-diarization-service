@@ -1,6 +1,6 @@
 {
     "gcloud_installation_path": "C:/Users/rishabh.kalra/AppData/Local/Google/Cloud SDK/google-cloud-sdk/bin/",
     "env": {
-        "GOOGLE_AUTHENTICATION_CREDENTIALS": "C:/Users/rishabh.kalra/Desktop/auth.json"
+        "GOOGLE_AUTHENTICATION_CREDENTIALS": "C:/Users/rishabh.kalra/Desktop/fine-harbor_auth.json"
     }
 }

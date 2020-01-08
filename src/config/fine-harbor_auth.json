@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "fine-harbor-258106",
+  "private_key_id": "4d50b8b6466c626cd7ea7b321d06345f51e993c9",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC1Dkg+ITEY7Lg4\nJV7F2bvYj09E0zv3xjW6WjRXlHnUIQ6fT4jEw99Yw+izDmlchIqY93eq8Ior0u47\nKjAJgxZU2hxXNU1QJWtAYsjP23V6wqLrPlYwshSC+0vZzpdfOukUDw3GhdImJHsz\nD/WFH75YvhUnM4fHUMZFO3v1ww0aEMnHdoJFa8s9KwqvsZSwAt4wUabNdtJgd0Mi\nzwvTqYGkBcYWYUefRUu0WyCaLQoc7uzKdnmrxGkwaeDjAvaq0sOhDlFLI9GEzx1z\n23ghuwaj0D2j12O4DFiKegZCi2suTXNJz+H2e03RPwbINfIw43wR3Q/4fs5ff6Vi\nxs+S/RzDAgMBAAECggEAOWs+HfYIzA7GnYe8dqKGoDdSvFEBQ6LohyD0WJIN0Ohq\n6rsedMhpnI0Ez0RSxbSC/9/7Y4rFRwCt7LWEZn/cJSzGsCGHU1OKn/C0HrdKmpP/\ndvtd+jN/rcpkU77g4qKcKHBdvgfSjaYkLB1zj7RxeVNPAg+lj+BeALbMqTQig5Em\nwWM5LCoqBzI0fWv8bMBDteuaokcTAhAKp2zQVtzrnqGmi79dtR3oeAZIIOQpp9d9\nz98cz9MvXBAF4VZc25R4+Dyvw5K4MmDjCiFqDXybmMBQjBTtv2Bsnbih9iiPrpzZ\nLGDAas+xLPAlbdcH/ZG4r47pfilbTpbua0vMB4Q+gQKBgQDgUevkWEWB8HYLm3Wk\nA+QnDW675vqXRpPoal1UX6eiVeeG4NMqEzknpCazVyM82KphNB27hwFFi8xnrpJc\nMrYIpFOmJXFK0kRir32hxcrbvmLdUoOe0AcEqC1cwyzxxLFsCVvSD0CejKV34z8R\nP8M2KDIsJrpCZ3xcw/EnYc9ClwKBgQDOoC8LT3LfQbeci9pEUktyFX5nFV413Vk+\n10r+jURBgMzKkrLaF6FbK8+Fzs9WetfjMeBe+DkybtJD+lle7b/aKmF+A5Km9HM2\nAAZ7Uvzdk7EOLpMbLAi6MEbA9t0fEGCc6jWhAT3jI96BUi/1YYk8om4UVfhCwZe3\nvj2fSG44tQKBgHPlX38GrELKPfMZStqGuCYFJqUmXWozKM/3xGiHU1DoGUrydadT\nb0Av617VMnuJZd360zHEOr/3zo/y/eNsv+gPHrjEt5f0syhZiws96eVGpEW9EAvJ\nZxbc3TMEFACFozUyUKJjBvvjpsoeOsNqsi0U73coOyt71CEJi1rRigfZAoGAdtK3\nOxHdRXZNWME0K8YHjPu/TRiErQU1pWW5wtkKP4EKRBRIthKQwBVZqeFcaqcKL6Un\nGnY0rkP8twrpCiY/Bf8JQaZcV5aMCqnJEHKQ5/te/oDaJ+4Str+8cIuGba7FYHdv\nj79fD5g5BLV2zu3gNfZSx28I7ZrW3NuSJF9Kw2ECgYEAxoyw9HKUExMWf0TCXq/G\n9yTlVuZ4gIQHpebJsdu296eo6Yqsp9p7JQaBYpKUgeyKoT/DEd4kQake942/FJOG\ngQG8baJpmydhA6Wku7r29QYNEdwWpIdwV587+gfDuvEzZWv/9kbB+NXUD5J4n2NR\n/13M0bBpjV6vYHK3hiRHaRM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "rishabh-diarization@fine-harbor-258106.iam.gserviceaccount.com",
+  "client_id": "100322058644367821072",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/rishabh-diarization%40fine-harbor-258106.iam.gserviceaccount.com"
+}
