@@ -173,7 +173,8 @@ export class GoogleSpeechToTextCoreService {
                 encoding: 'LINEAR16',
                 languageCode: 'en-US',
                 model: 'default',
-                // alternativeLanguageCodes: ['hi-IN'],
+                alternativeLanguageCodes: ['hi-IN'],
+                enableAutomaticPunctuation: true,
             },
             audio: {
                 uri: url || null,
@@ -204,8 +205,8 @@ export class GoogleSpeechToTextCoreService {
         })
         .catch(err => {
             console.log('recieved error from initiate speech-2-text request at ', new Date().toTimeString());
-            console.log(err);
-            return Promise.resolve({error: err.message, status: err.response.status});
+            console.log({error_status: err.response.status, status_text: err.response.statusText});
+            return Promise.resolve({error: err.message, status: err.response.status, message: err.response.message || ''});
         });
         return Response;
     }
