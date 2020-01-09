@@ -2,6 +2,7 @@ import { Injectable, HttpService } from '@nestjs/common';
 import { GoogleSentimentAnalysisUtilityService } from '../google-sentiment-analysis-utility/google-sentiment-analysis-utility.service';
 import { AccessTokenGeneratorService } from '../../../automate-access-token/services/access-token-generator/access-token-generator.service';
 import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
+import { response } from 'express';
 
 @Injectable()
 export class GoogleSentimentAnalysisCoreService {
@@ -41,23 +42,96 @@ export class GoogleSentimentAnalysisCoreService {
     }
 
     async initiateAnalysis(data, filePath, dirType= 'path'): Promise<object> {
-        if (data) {
-            console.log('Raw data is not supported. Please provide a json file path.');
-        }
-        if (dirType === 'dir') {
-            filePath = this.dbCSrvc.getSpeechToTextSourcePath(filePath);
-        }
-        const checkFilePath = this.gsauSrvc.checkIfFileExists(filePath);
+        let fileData;
+        if (dirType === 'data' && data) {
+            // raw data is provided, directly proceed with it
+            if (this.gsauSrvc.validateDataObject(data)) {
+                fileData = data;
+            } else {
+                return {ok: false, error: 'data object is not valid', status: 400};
+            }
+        } else if (dirType === 'dir' || dirType === 'path') {
 
-        if (!checkFilePath) {
-            return Promise.resolve({ error: 'No such file exists at path : ' + filePath, status: 400 });
+            if (dirType === 'dir') {
+                console.log('inside dir type');
+                // if parent_folder key is supplied
+                filePath = this.dbCSrvc.getSpeechToTextSourcePath(filePath);
+            }
+            // check for the path
+            const checkFilePath = this.gsauSrvc.checkIfFileExists(filePath);
+
+            if (!checkFilePath) {
+                return Promise.resolve({ error: 'No such file / folder exists', status: 400 });
+            }
+            fileData = this.gsauSrvc.getFileData(filePath);
+            if (fileData.constructor === String) {
+                fileData = JSON.parse(fileData);
+            }
+            return this.handleMultipleRequestsForTypeFile(fileData, filePath);
         }
-        const fileData = this.gsauSrvc.getFileData(filePath);
-        // console.log(fileData);
-        return this.handleMultipleRequests(JSON.parse(fileData), filePath);
+        return this.handleMultipleRequests(fileData);
     }
 
-    async handleMultipleRequests(fileData, filePath): Promise<any> {
+    async handleMultipleRequests(fileData): Promise<any> {
+
+        const sentimentAnalysisPromises = [{}];
+        for (const dataEach of fileData) {
+            // const speechToTextResponseData = dataEach.diarized_data.response.results;
+            // const checkSentimentIfPresent = speechToTextResponseData[speechToTextResponseData.length - 1];
+            // let speechToTextLastData;
+            // if (checkSentimentIfPresent.documentSentiment) {
+            //     speechToTextLastData = speechToTextResponseData[speechToTextResponseData.length - 2];
+            // } else {
+            //     speechToTextLastData = speechToTextResponseData[speechToTextResponseData.length - 1];
+            // }
+            const speechData = Object.entries(dataEach)[0][1];
+            console.log('Speech Data : ' + speechData);
+            let speeckDataCombined ;
+            if (Array.isArray(speechData)) {
+            console.log('initital speech data ', speechData);
+            const cleanedSpeechData = speechData.map(sentence => {
+                sentence = sentence.trim()[0].toUpperCase() + sentence.trim().slice(1);
+                return sentence;
+            });
+            speeckDataCombined = cleanedSpeechData.join('. ');
+            } else {
+                console.log('Speech Data Not an array : ' + speechData);
+            }
+            const resp = await this.startSentimentAnalysisProcess(speeckDataCombined);
+            if (resp) {
+                const keyName = Object.keys(dataEach)[0];
+                console.log('keyname is ', keyName);
+                const dataObj = {};
+                dataObj[keyName] = resp.data;
+                sentimentAnalysisPromises[0][keyName] = resp.data;
+            }
+        }
+        console.log('hie there ', sentimentAnalysisPromises);
+        console.log('recieved response from Google Sentiment Analysis.', new Date().toTimeString());
+        console.log("Resposeeee : ");
+        console.log(sentimentAnalysisPromises);
+        return Promise.resolve({ ok: true, message: 'Perform Sentiment Analysis. Process started successfully.', response: sentimentAnalysisPromises });
+
+                // console.log('Data :::::::: ' , JSON.stringify(fileData));
+                // for (let i = 0; i < fileData.length; i++) {
+                //     // console.log('Res : ' + JSON.stringify(res[i]));
+                //     // console.log('Res : ' + res[i].data);
+                //     console.log('Response from Sentiment Analysis : ' + JSON.stringify(res[i].data));
+                //     // const results = fileData.data[i].diarized_data.response.results;
+                //     // const checkSentimentIfPresent = results[results.length - 1];
+                //     fileData.data[i]['sentiment'] = res[i].data;
+                    // if (checkSentimentIfPresent.documentSentiment) {
+                    //     fileData.data[i].diarized_data.response.results[results.length - 1] = res[i].data;
+                    //  } else {
+                    //      fileData.data[i].diarized_data.response.results.push(res[i].data);
+                    //  }
+                // }
+                // this.gsauSrvc.writeSentimentToFileData(filePath, fileData);
+                // return Promise.resolve({response: {message: `Process completed successfully`, data: {name: res.name, id: res.id}}});
+
+    }
+
+    async handleMultipleRequestsForTypeFile(fileData, filePath): Promise<any> {
 
         const sentimentAnalysisPromises = [];
         for (const dataEach of fileData['data']) {
@@ -112,6 +186,8 @@ export class GoogleSentimentAnalysisCoreService {
             console.log('request details created as ', requestDetails);
             return this.performSentimentAnalysis(requestDetails)
                 .catch(async err => {
+                    console.log('some error occured while hitting api, going inside refresh block');
+                    console.log(err.toJSON());
                     if (err.response.status === '401' || err.response.code === '401') {
                         console.log('token has expired, refreshing the token');
                         console.log('sending refresh code request at ', new Date().toTimeString());

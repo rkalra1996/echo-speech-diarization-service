@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import { GcloudTokenProviderService } from '../../../automate-access-token/services/gcloud-token-provider/gcloud-token-provider.service';
+import e = require('express');
 
 @Injectable()
 export class GoogleSentimentAnalysisUtilityService {
@@ -10,7 +11,12 @@ export class GoogleSentimentAnalysisUtilityService {
         ) {}
 
         checkIfFileExists(filePath) {
-            return fs.existsSync(filePath);
+            try {
+                return fs.existsSync(filePath);
+            } catch (e) {
+                console.log('Catched error while checking file path', e);
+                return false;
+            }
         }
 
         getFileData(filePath) {
@@ -37,9 +43,33 @@ export class GoogleSentimentAnalysisUtilityService {
                     },
                 },
             };
-
             return {
                 url: googleSentimentAnalysisEndpoint, data, requestConfig,
             };
+        }
+
+        /**
+         * Validates data object, The object must contain an array of objects with atleast one element
+         * @param dataToValidate
+         * @returns  true if valid
+         */
+        validateDataObject(dataToValidate) {
+            let isValid = false;
+            if (dataToValidate) {
+                if (Array.isArray(dataToValidate) && dataToValidate.length > 0) {
+                    // check only the first entry type , assuming rest will be same
+                    if (dataToValidate[0] && (dataToValidate[0].constructor === Object)) {
+                        console.log('data is valid');
+                        isValid = true;
+                    } else {
+                        console.log('type of array elements inside data key is not object');
+                    }
+                } else {
+                    console.log('data key is not of type array of is empty array');
+                }
+            } else {
+                console.log('data object does not contain data key');
+            }
+            return isValid;
         }
 }

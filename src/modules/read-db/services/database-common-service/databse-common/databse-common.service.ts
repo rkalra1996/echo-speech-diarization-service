@@ -284,7 +284,13 @@ export class DatabseCommonService {
     }
 
     getSpeechToTextSourcePath(parentFolder) {
-        const googleSpeechToTextAddr = path.resolve(this.getuploadSourcePath(parentFolder), `${parentFolder}_speech_to_text.json`);
-        return googleSpeechToTextAddr;
+        const parentFolderAddress = this.getuploadSourcePath(parentFolder);
+        if (parentFolderAddress) {
+            const googleSpeechToTextAddr = path.resolve(parentFolderAddress, `${parentFolder}_speech_to_text.json`);
+            return googleSpeechToTextAddr;
+        } else {
+            console.log('parent folder does not exist');
+            return null;
+        }
     }
 }
