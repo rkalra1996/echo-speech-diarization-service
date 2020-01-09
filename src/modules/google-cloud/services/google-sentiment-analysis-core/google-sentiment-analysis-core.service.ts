@@ -2,7 +2,6 @@ import { Injectable, HttpService } from '@nestjs/common';
 import { GoogleSentimentAnalysisUtilityService } from '../google-sentiment-analysis-utility/google-sentiment-analysis-utility.service';
 import { AccessTokenGeneratorService } from '../../../automate-access-token/services/access-token-generator/access-token-generator.service';
 import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
-import { response } from 'express';
 
 @Injectable()
 export class GoogleSentimentAnalysisCoreService {

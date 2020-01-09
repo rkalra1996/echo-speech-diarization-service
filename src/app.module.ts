@@ -16,6 +16,7 @@ import { YoutubeDlModule } from './modules/youtube-dl/youtube-dl.module';
 import { SpeechToTextModule } from './modules/speech-to-text/speech-to-text.module';
 import { GoogleCloudModule } from './modules/google-cloud/google-cloud.module';
 import { YoutubeModule } from './modules/youtube/youtube.module';
+import { GoogleTranslateModule } from './modules/google-translate/google-translate.module';
 
 @Module({
   // serve static files in the server
@@ -34,6 +35,7 @@ ServeStaticModule.forRoot({
     SpeechToTextModule,
     GoogleCloudModule,
     YoutubeModule,
+    GoogleTranslateModule,
   ],
   controllers: [AppController],
   providers: [AppService, CommonRequestValidatorService],
