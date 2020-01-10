@@ -45,7 +45,8 @@ export class GoogleTranslateUtilityService {
         return isValid;
     }
 
-    getTransctiptContents(fileData) {
+    getTransctiptContents(fileDataString) {
+        const fileData = JSON.parse(fileDataString);
         const transctiptArrayObj = {};
         if (fileData.hasOwnProperty('data') && fileData.data && Array.isArray(fileData.data) && fileData.data.length > 0) {
             fileData.data.forEach(dataObj => {
@@ -66,14 +67,24 @@ export class GoogleTranslateUtilityService {
         }
     }
 
-    mergeTranslatedDataToFileData(newTranslations, previousFileData) {
-        const newFileData = previousFileData.data.map(dataObj => {
+    getTranslatedCombinedTranscript(translatedResults) {
+        const translatedCombinedTranscript = translatedResults.map(translatedObject => translatedObject.alternatives[0].transcript).join(' ');
+        console.log('original combined transcript is ', translatedCombinedTranscript);
+        return translatedCombinedTranscript;
+    }
+
+    mergeTranslatedDataToFileData(newTranslations, previousFileDataString) {
+
+        const oldeFileData = JSON.parse(previousFileDataString);
+        const newFileData = oldeFileData.data.map(dataObj => {
             const originalProcessID = dataObj.process_id;
             console.log('checking ', originalProcessID);
             Object.keys(newTranslations).forEach((translationProcessID, index) => {
                 if (translationProcessID === originalProcessID) {
                     console.log(originalProcessID + ' matched');
-                    dataObj['diarized_data']['response']['results_en'] = Object.entries(newTranslations)[index][1];
+                    dataObj['diarized_data']['response']['results'] = Object.entries(newTranslations)[index][1];
+                    // also update the combined_transcript key with english version
+                    dataObj['transcript']['combined_transcript'] = this.getTranslatedCombinedTranscript(Object.entries(newTranslations)[index][1]);
                 }
             });
             return dataObj;
@@ -87,18 +98,20 @@ export class GoogleTranslateUtilityService {
             // read the file
             const fileDataString = this.dbcSrvc.readFromYT_DB(parentFolderName, `${parentFolderName}_speech_to_text.json`);
             if (fileDataString) {
-                const JSONFileData = JSON.parse(fileDataString);
-                const transcriptContents = this.getTransctiptContents(JSONFileData);
+                const transcriptContents = this.getTransctiptContents(fileDataString);
                 const translatedContents = await this.handleMultipleTextTranslations(transcriptContents);
-                const newDataObject = await this.mergeTranslatedDataToFileData(translatedContents, JSONFileData);
+                const newDataObject = await this.mergeTranslatedDataToFileData(translatedContents, fileDataString);
                 // write back to the original file
-                const isWritten = await this.writeTranslatedDataToFile({data: newDataObject, parent_folder_name: parentFolderName});
+                const isWritten = await this.dbcSrvc.backupAndWriteTranslatedFile(fileDataString, newDataObject, parentFolderName);
+                 // = await this.writeTranslatedDataToFile({data: newDataObject, parent_folder_name: parentFolderName});
                 if (isWritten['ok']) {
                     console.log('successfully written');
                     return Promise.resolve({ok: true, message: 'Data has been translated to english successfully'});
                 }
+                return Promise.resolve({ok: false, error: isWritten['error']});
             } else {
                 // did not recieve file contents
+                return Promise.resolve({ok: false, error: 'empty contents in speech to text file cannot be translated'});
             }
         } else {
             console.log('the parent folder does not exists, or maybe the path is malformed');
@@ -155,7 +168,8 @@ export class GoogleTranslateUtilityService {
     }
 
     extractDestTranscript(transcriptObj, transcriptObjIndex) {
-        return {alternatives: [{transcript: transcriptObj['translatedText']}]};
+        const translatedTrancript = transcriptObj['translatedText'].split('&#39;').join(`'`);
+        return {alternatives: [{transcript: translatedTrancript}]};
     }
 
     getGoogleTranslateRequestData(contentArray) {

@@ -72,4 +72,22 @@ export class GoogleSentimentAnalysisUtilityService {
             }
             return isValid;
         }
+
+        getTranslatedCombinedTranscriptData(dataObj) {
+            console.log('dataObj is ', dataObj);
+            const finalData = {
+                transcript: {
+                    combined_transcript: '',
+                },
+            };
+            const transArray = [];
+            dataObj.diarized_data.response.results_en.forEach(transcriptObj => {
+                // replacing ascii code representation of ' with original '
+                transArray.push(transcriptObj.alternatives[0].transcript);
+            });
+            console.log('trans array looks like ', transArray);
+            finalData.transcript.combined_transcript = transArray.join(' ');
+            console.log('finalData looks like ', finalData);
+            return finalData;
+        }
 }

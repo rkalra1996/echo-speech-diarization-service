@@ -257,6 +257,55 @@ export class DatabseCommonService {
         return fs.existsSync(parentDirAddr);
     }
 
+    createSpeechToTextFileBackup(dataToBackup, languageCode, parentFolderName): Promise<object> {
+        if (languageCode && parentFolderName) {
+            // create a file inside parentFolderName/language_backup/ with name speech_to_text_languageCode.json
+            // write the contents to the file
+            if (this.isYTDirectoryPresent(parentFolderName)) {
+                const backupFolderName = 'language_backup';
+                const backupFolderAddress = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolderName, backupFolderName);
+                const backupFileAddress = path.resolve(backupFolderAddress, `speech_to_text_${languageCode}.json`);
+                if (!fs.existsSync(backupFolderAddress)) {
+                    fs.mkdirSync(backupFolderAddress);
+                }
+                try {
+                    // convert to string if it is in JSON
+                    if (dataToBackup.constructor === Object) {
+                        dataToBackup = JSON.stringify(dataToBackup);
+                    }
+                    fs.writeFileSync(backupFileAddress, dataToBackup, {encoding: 'utf-8'});
+                    console.log('backup file created successfully');
+                    return Promise.resolve({ok: true});
+                } catch (e) {
+                    console.log('Error occured', e);
+                    return Promise.resolve({ok: false, error: `An Error occured while creating / writing to backup file ${`speech_to_text_${languageCode}.json`}`});
+                }
+            } else {
+                return Promise.resolve({ok: false, error: `parent directory ${parentFolderName} does not exist!`});
+
+            }
+        } else {
+            return Promise.resolve({ok: false, error: 'Cannot create a backup file if language code / parent Folder is not provided'});
+        }
+    }
+
+    async backupAndWriteTranslatedFile(originalFileDataString, newFileData, parentFolder = null) {
+        // detect the source language, target language is english only
+        const originalFileData = JSON.parse(originalFileDataString);
+        const sourceLang = originalFileData.data[0].diarized_data.response.results[0].languageCode;
+        console.log(`source language code detected in the file for creating backup is ${sourceLang}`);
+        const isBackedUp = await this.createSpeechToTextFileBackup(originalFileData, sourceLang, parentFolder);
+        if (!isBackedUp['ok']) {
+            return {ok: false, error: isBackedUp['error']};
+        }
+        const isWritten = await this.writeFileToyoutubeDLdb({data: newFileData, parent_folder_name: parentFolder});
+        if (isWritten['ok']) {
+            console.log('successfully written new contents to original file');
+            return Promise.resolve({ok: true, message: 'Data has been translated to english successfully'});
+        }
+        return Promise.resolve({ok: true, message: `An Error occured while writing new file data in original file ${parentFolder}_speech_to_text_${sourceLang}.json`});
+    }
+
     readFromYT_DB(parentFolder, fileNameToRead) {
         const FileAddress = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolder, fileNameToRead);
         try {

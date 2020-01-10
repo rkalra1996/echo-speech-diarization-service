@@ -142,9 +142,18 @@ export class GoogleSentimentAnalysisCoreService {
             // } else {
             //     speechToTextLastData = speechToTextResponseData[speechToTextResponseData.length - 1];
             // }
-            const speechData = dataEach['transcript'];
-            console.log('Speech Data : ' + speechData);
-            if(speechData && speechData['combined_transcript']) {
+            let speechData;
+            if (dataEach['diarized_data']['response'].hasOwnProperty('results_en')) {
+                console.log('detected translated results');
+                // create the combined transcript from new translated data
+                speechData = this.gsauSrvc.getTranslatedCombinedTranscriptData(dataEach);
+                speechData = speechData['transcript'];
+            } else {
+                speechData = dataEach['transcript'];
+            }
+            console.log('Speech Data File Type: ' + speechData);
+            console.log(speechData);
+            if (speechData && speechData['combined_transcript']) {
             sentimentAnalysisPromises.push(this.startSentimentAnalysisProcess(speechData['combined_transcript']));
             } else {
                 sentimentAnalysisPromises.push(Promise.resolve({data: null}));
