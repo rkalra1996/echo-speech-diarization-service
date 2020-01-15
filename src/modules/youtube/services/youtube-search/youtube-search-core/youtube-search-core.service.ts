@@ -22,8 +22,17 @@ export class YoutubeSearchCoreService {
         if (requestBody && requestBody.constructor === Object) {
             if (Object.keys(requestBody).length > 0 && Object.keys(requestBody).indexOf('search') > -1) {
                 if (requestBody.search.length > 0) {
-                    console.log('body is validated');
-                    isValid = true;
+                    // if body is valid, look for demography object too
+                    if (requestBody.hasOwnProperty('demography') && !!requestBody.demography) {
+                        if (requestBody.demography.hasOwnProperty('state') && requestBody.demography.hasOwnProperty('district') && requestBody.demography.hasOwnProperty('sub-district') && requestBody.demography.hasOwnProperty('village')) {
+                            console.log('body is validated');
+                            isValid = true;
+                        } else {
+                            console.log('either of state, district, sub-district or village is not present, cannot save properly');
+                        }
+                    } else {
+                        console.log('demography object is not present / invalid, cannot save the results in a specific village');
+                    }
                 } else {
                     console.error('search key is empty');
                     isValid = false;
@@ -41,18 +50,19 @@ export class YoutubeSearchCoreService {
 
     async initiateSearch(requestBody): Promise<object> {
         const requestDetails = this.ytsuSrvc.getSearchRequestData(requestBody);
+        const villageLocationObj = requestBody.demography;
         const targetParentFolderName = this.ytsuSrvc.getTargetParentFolderName(requestBody);
         const targetFileName = targetParentFolderName;
         if (!!requestDetails) {
             console.log('request details created as ', requestDetails);
-            return this.searchYoutubeForVideos(requestDetails, targetParentFolderName, targetFileName)
+            return this.searchYoutubeForVideos(requestDetails, targetParentFolderName, targetFileName, villageLocationObj)
                 .catch(async err => {
                     console.log('Error in initiateSearch : ' + err);
                 });
         }
     }
 
-    searchYoutubeForVideos(requestDetails, parentFolderName, targetFileName): Promise<any> {
+    searchYoutubeForVideos(requestDetails, parentFolderName, targetFileName, villageDetails?: object): Promise<any> {
         console.log('request to search videos on youtube inititated at ', new Date().toTimeString());
         return this.httpSrvc.get(requestDetails.url, requestDetails.requestConfig).toPromise()
             .then((res: any) => {
@@ -66,9 +76,9 @@ export class YoutubeSearchCoreService {
                     // videoUrls.push('https://www.youtube.com/watch?v=' + videoId);
                 }
                 // write the url into the file also
-                const createdFolder = this.dbCSrvc.writeYoutubeUrlsToFile(parentFolderName, targetFileName, videoUrls);
+                const createdFolder = this.dbCSrvc.writeYoutubeUrlsToFile(parentFolderName, targetFileName, videoUrls, villageDetails);
                 // return the data too
-                return { Youtube_video_urls: videoUrls.join(','), parentFolder: createdFolder.parentFolder, fileName: createdFolder.fileName};
+                return { Youtube_video_urls: videoUrls, parentFolder: createdFolder.parentFolder, fileName: createdFolder.fileName};
             });
     }
 }

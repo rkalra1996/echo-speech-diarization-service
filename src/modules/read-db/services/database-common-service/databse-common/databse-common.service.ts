@@ -21,6 +21,7 @@ export class DatabseCommonService {
     public DB_URL = path.resolve(__dirname, './../../../../../assets/vis_db');
     public DIARIZATION_DB_URL = path.resolve(__dirname, './../../../../../assets/diarization_db');
     public YOUTUBE_DL_DB_URL = path.resolve(__dirname, './../../../../../assets/youtubeDL_db');
+    public YOUTUBE_DOWNLOAD_FOLDER = 'youtube-download';
     /**
      * Reads jsondb
      * @description Read the databse from the common json file recorded
@@ -194,23 +195,46 @@ export class DatabseCommonService {
         });
     }
 
-    writeYoutubeUrlsToFile(parentFolder, fileName, dataArray) {
+    get getTodayDate() {
+        const todayDate = new Date();
+        const dd = String(todayDate.getDate()).padStart(2, '0');
+        const mm = String(todayDate.getMonth() + 1).padStart(2, '0'); // January is 0!
+        const yyyy = todayDate.getFullYear();
+
+        return (mm + '_' + dd + '_' + yyyy);
+    }
+
+    getYoutubeDownloadFileAddress(villageDetails, parentFolderAddr) {
+        // return the path of the targetfile name to use
+        villageDetails['country'] = villageDetails['country'] ? villageDetails['country'] : 'india';
+        const targetFileName = `${villageDetails.village}__${this.getTodayDate}.json`;
+        const targetFileAddr = path.resolve(parentFolderAddr, targetFileName);
+        console.log('file created at ', targetFileAddr);
+        return {address: targetFileAddr, file: targetFileName};
+    }
+
+    writeYoutubeUrlsToFile(parentFolder, fileName, dataArray, villageDetailsObj?: object) {
         if (!fs.existsSync(path.resolve(this.YOUTUBE_DL_DB_URL))) {
             fs.mkdirSync(path.resolve(this.YOUTUBE_DL_DB_URL));
         }
-        const parentFolderAddr = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolder);
+        const parentFolderAddr = path.resolve(this.YOUTUBE_DL_DB_URL, this.YOUTUBE_DOWNLOAD_FOLDER);
+        console.log('parent folder to use is ', parentFolderAddr);
         if (!fs.existsSync(parentFolderAddr)) {
             fs.mkdirSync(parentFolderAddr);
         }
-        const targetFileAddr = path.resolve(parentFolderAddr, `${fileName}.txt`);
+        // const targetFileAddr = path.resolve(parentFolderAddr, `${fileName}.txt`);
+        const targetDetails = {...this.getYoutubeDownloadFileAddress(villageDetailsObj, parentFolderAddr)};
+        const targetFileAddr = targetDetails.address;
         try {
-            const commaSeperatedData = dataArray.join(',').toString();
-            fs.writeFileSync(targetFileAddr, commaSeperatedData, {encoding: 'utf-8'});
+            // const commaSeperatedData = dataArray.join(',').toString();
+            const dataToWrite = {...villageDetailsObj};
+            dataToWrite['audio_urls'] = [...dataArray];
+            fs.writeFileSync(targetFileAddr, JSON.stringify(dataToWrite), {encoding: 'utf-8'});
             console.log('file written successfully');
-            return {parentFolder, fileName: `${fileName}.txt`};
+            return {parentFolder: this.YOUTUBE_DOWNLOAD_FOLDER, fileName: `${targetDetails.file}`};
         } catch (e) {
             console.log(e);
-            throw new Error(`An error occured while writing youtube urls to file ${fileName}.txt`);
+            throw new Error(`An error occured while writing youtube urls to file ${targetDetails.file}`);
         }
     }
 
