@@ -366,4 +366,16 @@ export class DatabseCommonService {
             return null;
         }
     }
+
+    readYTDFolderDetails(extensionToRead) {
+        // if extension is provided , simply return the names and count of .extension files
+        // else return names of everything inside the youtube-download folder
+        const parentFolderAddr = path.resolve(this.YOUTUBE_DL_DB_URL, this.YOUTUBE_DOWNLOAD_FOLDER);
+        const directoryDetails = fs.readdirSync(parentFolderAddr);
+        if (extensionToRead && extensionToRead.length > 0) {
+            return directoryDetails.filter(fileNames => {
+                return path.extname(fileNames).toLocaleLowerCase() === `.${extensionToRead}`;
+            });
+        }
+    }
 }

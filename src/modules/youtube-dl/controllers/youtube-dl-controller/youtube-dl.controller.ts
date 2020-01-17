@@ -16,16 +16,21 @@ export class YoutubeDlController {
         if (requestBody && requestBody.hasOwnProperty('parent_folder') && typeof requestBody.parent_folder === 'string' && requestBody.parent_folder.length > 0) {
             // read the folder name from body and fetch the file
             fileObject = this.ydlUtilitySrvc.getFileObject(requestBody.parent_folder, 'path');
-        } else {
+        } else if (file) {
             // read from file
             fileObject = this.ydlUtilitySrvc.getFileObject(file);
+        } else {
+            console.log('empty body code is executing');
+            fileObject = null;
         }
-
-        console.log(fileObject);
-        if (Array.isArray(fileObject.data)) {
+        if (fileObject && Array.isArray(fileObject.data)) {
             // send the file object with data to youtube-dl processor
             this.ydlCoreSrvc.initiate(fileObject);
             response.status(200).send({response: 'ok', message: 'Corpus generation process started for ' + fileObject.data.length + ' urls'});
+        } else if (fileObject === null) {
+            // send the file object with data to youtube-dl processor
+            this.ydlCoreSrvc.autoInitiate();
+            response.status(200).send({response: 'ok', message: 'Corpus generation process started'});
         } else {
             response.status(400).send({status: 400, error: `Empty file cannot be read`});
         }

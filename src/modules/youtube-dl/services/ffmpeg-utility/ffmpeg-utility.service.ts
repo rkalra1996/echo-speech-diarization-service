@@ -2,9 +2,11 @@ import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 import {spawn} from 'child_process';
+import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
 @Injectable()
 export class FfmpegUtilityService {
     public globalFilesCount = 0;
+    constructor(private dbcSrvc: DatabseCommonService) {}
 
     /**
      * Converts stereo2 mono
@@ -21,16 +23,18 @@ export class FfmpegUtilityService {
         }
     }
 
-    startS2MConversion(folderAddress): Promise<object> {
+    startS2MConversion(folderAddress) {
+        console.log('folder to scan stereo files is ', folderAddress);
         // resolve with true if all the files are converted else resolve with false
         // pick files one by one and convert them
         fs.readdir(folderAddress, (err, files) => {
             // handling error
             if (err) {
                 console.log('Unable to scan directory for wav stereo files', err);
-                return Promise.resolve({ok: false, error: 'Unable to scan directory for wav stereo files'});
+                return {ok: false, error: 'Unable to scan directory for wav stereo files'};
             }
             // listing all files using forEach
+
             const originalWAVFilesCount = files.length;
             this.globalFilesCount = 0;
             files.forEach((fileName) => {
@@ -38,11 +42,9 @@ export class FfmpegUtilityService {
                 this.runProcess(folderAddress, fileName, originalWAVFilesCount);
             });
         });
-        // const commandToExecute = `ffmpeg -i ${sourceFileName} -ac 1 ${destinationFileName}`;
-        return Promise.resolve({ok: true});
     }
 
-    runProcess(parentFolderName, fileName, originalFilesCount) {
+    async runProcess(parentFolderName, fileName, originalFilesCount) {
         const commadToExecute = 'ffmpeg';
 
         const args = [
@@ -62,12 +64,25 @@ export class FfmpegUtilityService {
             console.log('conversion stdErr data ', data.toString());
         });
 
-        proc.on('close', () => {
-            console.log('must have converted at ', parentFolderName);
+        proc.on('close', async () => {
             // check if the file is created successfully, if yes, delete the original else prompt error
-            this.verifyConvertedFile(parentFolderName, fileName);
-            // check if all the files are converted, this marks that conversion is successfull
-            this.checkMonoFilesCount(parentFolderName, originalFilesCount, this.countVerifiedCallback);
+            const verifiedFileRes = await this.verifyConvertedFile(parentFolderName, fileName);
+            if (verifiedFileRes) {
+                console.log('triggering check mono files');
+                // check if all the files are converted, this marks that conversion is successfull
+                this.checkMonoFilesCount(parentFolderName, originalFilesCount, async (err, res) => {
+                    if (res && !err) {
+                        // once verfied that original files have been moved,
+                        // copy the village file name from youtube-download to audio=download
+                        this.moveProcessedFile(parentFolderName).then(moved => {
+                            if (moved['ok']) {
+                                console.log('All files are properly converted and moved');
+                                console.log('proceed to google speech to text');
+                            }
+                        });
+                    }
+                });
+            }
         });
 
         proc.on('error', (data) => {
@@ -75,23 +90,6 @@ export class FfmpegUtilityService {
         });
     }
 
-    countVerifiedCallback(err, res) {
-        if (res) {
-            console.log('Proceed to google speech to text now');
-        }
-    }
-
-    // countVerifiedCallback(err, res, directoryAddr, totalFilesPresent) {
-    //     if (res) {
-    //         console.log('Procedd to google speech to text now');
-    //         totalFilesPresent.forEach(fileName => {
-    //            let completeFilePath = path.resolve(directoryAddr, fileName);
-    //                            // folderAddress.split('/')[-1]
-
-    //         });
-
-    //     }
-    // }
     checkMonoFilesCount(directoryAddr, originalFilesCount, cb) {
         console.log('recieved global file count as ', this.globalFilesCount);
         if (originalFilesCount === this.globalFilesCount) {
@@ -99,13 +97,14 @@ export class FfmpegUtilityService {
             console.log('Conversion is completed, verifying converted files');
             const totalFilesPresent = fs.readdirSync(directoryAddr);
             if (totalFilesPresent.length === originalFilesCount) {
-                console.log('All files are properly converted and deleted');
                 cb(null, true);
-                cb(null, true, directoryAddr, totalFilesPresent);
+                // cb(null, true, directoryAddr, totalFilesPresent);
             } else {
                 console.log('An error occured while successfully processing one of the files, check manually');
                 cb(true, null);
             }
+        } else {
+            console.log('original files count does not match with converted files count');
         }
     }
 
@@ -114,12 +113,50 @@ export class FfmpegUtilityService {
         const monoFileAddr = path.resolve(parentDir, monoFileName);
         const originalFileAddr = path.resolve(parentDir, originalFileName);
         if (fs.existsSync(monoFileAddr)) {
+            // move the original file to the same folder inside processed folder
             // delete the original
-            fs.unlinkSync(originalFileAddr);
+            const parentDirName = path.basename(parentDir);
+            const processedFolderAddress = path.resolve(parentDir, '../', 'processed');
+            if (!fs.existsSync(processedFolderAddress)) {
+                fs.mkdirSync(processedFolderAddress);
+            }
+            // fs.unlinkSync(originalFileAddr);
+            const processedParentFolder = path.resolve(processedFolderAddress, parentDirName);
+
+            if ( !fs.existsSync(processedParentFolder)) {
+                fs.mkdirSync(processedParentFolder);
+            }
+            const processedFilePath = path.resolve(processedParentFolder, originalFileName);
+            console.log(`moving file from \n${originalFileAddr} ----> ${processedFilePath}`);
+            fs.renameSync(originalFileAddr, processedFilePath);
             // increment global filesCount for verification
             this.globalFilesCount += 1;
+            return Promise.resolve(true);
         } else {
             console.error(`COULD NOT CONVERT ${originalFileName} TO MONO FOR SOME REASON`);
+            return Promise.resolve(false);
         }
+    }
+
+    moveProcessedFile(fileNamePath): Promise<any> {
+    // extract the file name by splitting the folder path, since folder and file name will be same
+    return new Promise((resolve, reject) => {
+        const sourceFileName = `${path.basename(fileNamePath)}.json`;
+        this.dbcSrvc.readYTDFolderDetails('json').forEach(fileName => {
+            if (fileName === sourceFileName) {
+                console.log('file is present in the source directory');
+                const sourceFilePath = path.resolve(__dirname, `./../../../../assets/youtubeDL_db/youtube-download/${sourceFileName}`);
+                const destFilePath = path.resolve(__dirname, `./../../../../assets/youtubeDL_db/Audio_download/${sourceFileName}`);
+                try {
+                    fs.renameSync(sourceFilePath, destFilePath);
+                    resolve({ok: true});
+                } catch (e) {
+                    console.log(`Error occured while moving the processed json file ${sourceFileName} from youtube-download folder to Audio_download folder`);
+                    console.log(e);
+                    resolve({ok: false});
+                }
+            }
+        });
+        });
     }
 }
