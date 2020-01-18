@@ -29,4 +29,19 @@ export class GcloudTokenProviderService {
         const newKey = keyString.replace('c', 'x');
         return newKey;
     }
+
+    updateAuthTokenInRequest(requestDetails) {
+        const newRequest = {...requestDetails};
+        const requestType = this.getRequestType(newRequest.requestConfig.headers);
+        newRequest['requestConfig']['headers'][requestType]['Authorization'] = `Bearer ${this.process_token}`;
+        return newRequest;
+    }
+
+    getRequestType(headers) {
+        if (headers.hasOwnProperty('post') || headers.hasOwnProperty('POST')) {
+            return 'post';
+        } else if (headers.hasOwnProperty('get') || headers.hasOwnProperty('GET')) {
+            return 'get';
+        }
+    }
 }
