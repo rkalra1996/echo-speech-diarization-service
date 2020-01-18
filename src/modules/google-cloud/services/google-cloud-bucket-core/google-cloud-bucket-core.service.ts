@@ -1,7 +1,6 @@
 import { Injectable, HttpService } from '@nestjs/common';
 import { GoogleCloudBucketUtilityService } from '../google-cloud-bucket-utility/google-cloud-bucket-utility.service';
 import { AccessTokenGeneratorService } from '../../../automate-access-token/services/access-token-generator/access-token-generator.service';
-import { response } from 'express';
 import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
 
 @Injectable()
@@ -21,13 +20,6 @@ export class GoogleCloudBucketCoreService {
                 if (Array.isArray(requestBody.filePaths) && requestBody.filePaths.length > 0) {
                     console.log('body is validated');
                     isValid = true;
-                    // if (Object.keys(requestBody).indexOf('folderName') > -1) {
-                    //     console.log('body is validated');
-                    //     isValid = true;
-                    // } else {
-                    //     console.error('folderName key is not present or it is empty');
-                    //     isValid = false;
-                    // }
                 } else {
                     console.error('Either filePaths key is not of aray type or it is empty');
                     isValid = false;
@@ -44,8 +36,8 @@ export class GoogleCloudBucketCoreService {
                     isValid = false;
                 }
             } else {
-                console.error('body object does not have a key named filePaths');
-                isValid = false;
+                console.log('body is valid');
+                isValid = true;
             }
         } else {
             console.error('request body is not of type object');
@@ -93,6 +85,32 @@ export class GoogleCloudBucketCoreService {
 
         // this.trackDiarizationStatus(processCollectionArray, parentFolderName);
         return Promise.resolve({ ok: true, message: 'Uploading files to the Google Storage Bucket. Process started successfully.' });
+    }
+
+    autoInitiateUpload() {
+        // check if there is any json file in Audio_download folder
+        // if yes, start execution
+        if (!this.dbcSrvc.isYTDirectoryPresent('Google_Cloud_Bucket')) {
+            // create google cloud bucket folder first
+            if (this.dbcSrvc.creteNewFolderInYTD_DB('Google_Cloud_Bucket')) {
+                console.log('dir Google_Cloud_Bucket created');
+            } else {
+                throw new Error('An error occured while creating directory Google_Cloud_Bucket folder');
+            }
+        }
+        const jsonFilesToProcess = this.dbcSrvc.readYTDFolderDetails('json', 'Audio_download');
+        if (jsonFilesToProcess.length > 0) {
+            this.gcbuSrvc.processJSONFiles(jsonFilesToProcess).then(allProcessed => {
+                if (allProcessed['ok']) {
+                    console.log(`All JSON Files ${jsonFilesToProcess} have been processed and uploaded successfully`);
+                } else {
+                    console.log('An Error occured while processing all the json files', allProcessed['error']);
+                }
+            });
+        } else {
+            console.log('No files to process inside youtube_download folder');
+        }
+        return {ok: true};
     }
 
     async handleMultiFileUpload(filePath, folderName, bucketName) {

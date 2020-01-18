@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 import { GcloudTokenProviderService } from '../../../automate-access-token/services/gcloud-token-provider/gcloud-token-provider.service';
+import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
+import { AccessTokenGeneratorService } from './../../../automate-access-token/services/access-token-generator/access-token-generator.service';
 
 const publicFileJsonFolder = './../../../../assets/bucketPublicAccess';
 const publicFileName = 'publicAccess.json';
@@ -11,6 +13,10 @@ export class GoogleCloudBucketUtilityService {
 
     constructor(
         private tokenProvider: GcloudTokenProviderService,
+        private dbcSrvc: DatabseCommonService,
+        private httpSrvc: HttpService,
+        private atgSrvc: AccessTokenGeneratorService,
+        private atpSrvc: GcloudTokenProviderService,
         ) {}
 
         checkIfFileExists(filePath) {
@@ -168,28 +174,203 @@ export class GoogleCloudBucketUtilityService {
      * @param filePaths Where to store the google-cloud-uris
      */
     writeGoogleUriToFile(response, folderPath) {
-        console.log('recieved something to write in google-uris');
-        console.log(response);
         const textFileName = 'google-cloud-uris.txt';
         const textFileAddress = path.resolve(folderPath, textFileName);
         if (fs.existsSync(textFileAddress)) {
             fs.unlinkSync(textFileAddress);
         }
         const textDataToWrite = [];
-        for (const res of response)  {
+        for (const res of response) {
             if (res) {
-            const responseData = res.data;
-            let googleBucketFileUri = 'gs://';
-            googleBucketFileUri = googleBucketFileUri + responseData.bucket + '/';
-            googleBucketFileUri = googleBucketFileUri + responseData.name;
-            textDataToWrite.push(googleBucketFileUri);
+                const responseData = res.data;
+                let googleBucketFileUri = 'gs://';
+                googleBucketFileUri = googleBucketFileUri + responseData.bucket + '/';
+                googleBucketFileUri = googleBucketFileUri + responseData.name;
+                textDataToWrite.push(googleBucketFileUri);
             } else {
-                console.log('Failed to upload some of the files. Please check manually.');
+                throw new Error('Failed to upload some of the files. Please check manually.');
+            }
+        }
+        try {
+            fs.writeFileSync(textFileAddress, textDataToWrite, { encoding: 'utf-8' });
+            console.log('Google Bucket File Uris sucessfully generated at location : ' + textFileAddress);
+            return true;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
+
+        async processJSONFiles(jsonFilesToProcess) {
+            const JSONFilePromises = [];
+            jsonFilesToProcess.forEach(jsonFile => {
+                const folderDetails = {};
+                const JSONFolderName = jsonFile.split('.json')[0];
+                // get the wav parent folder corresponding to json file
+                const folderPath = this.dbcSrvc.getuploadSourcePath(`Audio_download/${JSONFolderName}`);
+                if (folderPath) {
+                    const filePaths = this.getAllFilesPath(folderPath);
+                    if (filePaths.length > 0) {
+                        folderDetails['folderPath'] = folderPath;
+                        folderDetails['filePaths'] = filePaths;
+                        folderDetails['folderName'] = JSONFolderName;
+                        folderDetails['bucketName'] = 'corpus-audio12345';
+
+                        const JSONFilePromise = this.inititateJSONFileUpload(folderDetails);
+                        JSONFilePromises.push(JSONFilePromise);
+                    } else {
+                        return new Error('Did not find any wav files inside ' + folderPath);
+                    }
+                } else {
+                    throw new Error('An Error occured while reading parent folder ' +  JSONFolderName);
+                }
+            });
+            if (JSONFilePromises.length > 0) {
+                return Promise.all(JSONFilePromises)
+                        .then(allFilesResponse => {
+                            console.log('All FILES RESPONSE RECIEVED');
+                            return this.handleAllFileResponses(allFilesResponse);
+                        })
+                        .catch(error => {
+                            console.log('An error occured while uploading all the files to cloud');
+                            console.log(error);
+                            return Promise.resolve({ok: false});
+                        });
+            } else {console.log(false)}
+            return {ok: true};
+        }
+
+        handleAllFileResponses(responseObj): Promise<object> {
+            return new Promise((resolve, reject) => {
+                responseObj.forEach(JSONFileResponse => {
+                    const parentFolderName = JSONFileResponse.folderDetails.folderName;
+                    const sourceJSONFolderPathArray = JSONFileResponse.folderDetails.folderPath.split(path.sep);
+                    // come one directory up to look for source json files
+                    sourceJSONFolderPathArray.pop();
+                    // create corresponding folders inside Google_Cloud_Bucket
+                    const sourceJSONFolderPath = sourceJSONFolderPathArray.join(path.sep);
+                    this.dbcSrvc.creteNewFolderInYTD_DB(`Google_Cloud_Bucket/${parentFolderName}`);
+                    const GCBFolderAddr = this.dbcSrvc.getuploadSourcePath(`Google_Cloud_Bucket`);
+                    const GCBParentFolderAddr = path.resolve(GCBFolderAddr, parentFolderName);
+                    if (this.writeGoogleUriToFile(JSONFileResponse['allwavResponse'], GCBParentFolderAddr)) {
+                        // remove the json file from Audio_download folder and move it to processed folder
+                        const sourceGCUTxtFileAddr = path.resolve(GCBParentFolderAddr, 'google-cloud-uris.txt');
+                        const sourceProcessFileAddr = path.resolve(sourceJSONFolderPath, `${parentFolderName}.json`);
+                        const processUpdated = this.updateGCUrlsInOriginalJSON(sourceGCUTxtFileAddr, sourceProcessFileAddr);
+                        if (processUpdated) {
+                            if (this.dbcSrvc.updateProcessJSON(`${parentFolderName}.json`, sourceJSONFolderPath, GCBFolderAddr)) {
+                                console.log(`${parentFolderName}.json in Audio_download has been processed and moved successfully\n`);
+                            } else {
+                                reject({ok: false, error: 'An Error occured while moving file into processed folder for ' + parentFolderName});
+                            }
+                        } else {
+                            console.log('unable to update the process file from Audio_download');
+                            reject({ok: false, error: 'unable to update the process file from Audio_download'});
+                        }
+                    }
+                });
+                // all files have been moved, resolve
+                resolve({ok: true});
+            });
+        }
+
+        /**
+         * Updates gcurls in original json
+         * @description To read the google cloud urls from gcsourceAddress and add them in the object of sourceProcessAddr
+         * @param sourceGCUTxtFileAddr text file path from where to read
+         * @param sourceProcessFileAddr process file path where to append the data (json)
+         * @param keyName (optional) keyName under which the entry will be saved
+         */
+        updateGCUrlsInOriginalJSON(gcsourceAddress, sourceProcessFileAddr, keyName?: string) {
+            try {
+                if (fs.existsSync(gcsourceAddress) && fs.existsSync(sourceProcessFileAddr)) {
+                    let processData = fs.readFileSync(sourceProcessFileAddr, {encoding: 'utf-8'});
+                    const gcUrlData = fs.readFileSync(gcsourceAddress, {encoding: 'utf-8'});
+                    const gcUrlDataArr = gcUrlData.split(',');
+                    processData = JSON.parse(processData);
+
+                    keyName = keyName ? keyName : 'google_cloud_uris';
+                    processData[keyName] = [...gcUrlDataArr];
+
+                    fs.writeFileSync(sourceProcessFileAddr, JSON.stringify(processData), {encoding: 'utf-8'});
+                    return true;
+                }
+            } catch(e) {
+                console.log(e);
+                return false;
             }
         }
 
-        fs.writeFileSync(textFileAddress, textDataToWrite, {encoding: 'utf-8'});
-        console.log('Google Bucket File Uris sucessfully generated at location : ' + textFileAddress);
+        async inititateJSONFileUpload(folderDetails) {
+            console.log('initiating file upload for JSON config ', folderDetails);
+            return new Promise((resolve, reject) => {
+                const wavPromises = [];
+                // this will be reolved only if all the wav files of this json are uploaded
+                folderDetails.filePaths.forEach((wavFilePath) => {
+                    const requestDetails = this.getGoogleStorageRequestData(wavFilePath, folderDetails['folderName'], folderDetails['bucketName']);
+                    if (requestDetails) {
+                        console.log('request details created as ', requestDetails['url']);
+                        wavPromises.push(this.uploadFileToGoogleStorageBucket(requestDetails));
+                    }
+                });
+
+                Promise.all(wavPromises)
+                .then(allwavResponse => {
+                    console.log('recieved all file upload response for ', folderDetails);
+                    const consoleObject = {
+                        urls: allwavResponse.map(wavResponse => wavResponse['config']['url']),
+                        urlStatuses: allwavResponse.map(wavResponse => wavResponse['status']),
+                    };
+                    console.log(consoleObject);
+                    resolve({allwavResponse, folderDetails});
+                })
+                .catch(allwavError => {
+                    console.log('An Error occured while uploading all wav files for ', folderDetails);
+                    console.log(allwavError);
+                    reject(allwavError);
+                });
+            });
+        }
+
+        uploadFileToGoogleStorageBucket(requestDetails): Promise<any> {
+            return new Promise((resolve, reject) => {
+                console.log('request to Upload File to Google Storage Bucket initiated at ', new Date().toTimeString());
+                this.httpSrvc.post(requestDetails.url, requestDetails.data, requestDetails.requestConfig).toPromise()
+                .then(res => {
+                    resolve(res);
+                })
+                .catch(async error => {
+                    console.log('An error detected while hitting http apis');
+                    if (error.hasOwnProperty('response')) {
+                        if (error.response.status.toString() === '401' || error.response.code.toString() === '401') {
+                            console.log('unauthorized for api ', requestDetails.url);
+                            console.log('sending refresh code request at ', new Date().toTimeString());
+                            this.atgSrvc.refreshAuthKey()
+                            .then(refreshed => {
+                                if (refreshed) {
+                                    // setting new auth key
+                                    requestDetails = this.atpSrvc.updateAuthTokenInRequest(requestDetails);
+                                    console.log(`sending handleRequest request again for ${requestDetails.url} at ${new Date().toTimeString()}\n with refresh key as ${requestDetails.requestConfig.headers.post.Authorization}`);
+                                    this.httpSrvc.post(requestDetails.url, requestDetails.data, requestDetails.requestConfig).toPromise()
+                                    .then(resp => {
+                                        resolve(resp);
+                                    })
+                                    .catch(e => {
+                                        console.log('recieved error while hitting api with refresh token');
+                                        console.log(e);
+                                        reject(e);
+                                    });
+                            }});
+                        } else {
+                            console.log('request is not 401, something else');
+                            reject(error);
+                        }
+                    } else {
+                        console.log('it is not a response based error');
+                        reject(error);
+                    }
+                });
+            });
         }
 
 }

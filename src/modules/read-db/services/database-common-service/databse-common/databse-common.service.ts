@@ -367,15 +367,69 @@ export class DatabseCommonService {
         }
     }
 
-    readYTDFolderDetails(extensionToRead) {
+    /**
+     * Reads youtubeDL_DB/ folder details
+     * @description The function allows to get the list of file names of provided extension inside the youtubeDL_DB/youtube_download folder
+     * if no second arguent is provided, or provides files list inside specific folderPath inside of youtubeDL_DB if second option is provided
+     * @param extensionToRead
+     * @param [folderPath] The path of the folder inside youtubeDL_DB which you want to read
+     * @returns  An array containing 0 or more file names
+     */
+    readYTDFolderDetails(extensionToRead, folderPath?: string) {
         // if extension is provided , simply return the names and count of .extension files
         // else return names of everything inside the youtube-download folder
-        const parentFolderAddr = path.resolve(this.YOUTUBE_DL_DB_URL, this.YOUTUBE_DOWNLOAD_FOLDER);
+        let parentFolderAddr = this.YOUTUBE_DL_DB_URL;
+        if (folderPath && folderPath.length > 0) {
+            parentFolderAddr = path.resolve(parentFolderAddr, folderPath);
+        } else {
+            parentFolderAddr = path.resolve(parentFolderAddr, this.YOUTUBE_DOWNLOAD_FOLDER);
+        }
+        console.log('checking details of ', parentFolderAddr);
         const directoryDetails = fs.readdirSync(parentFolderAddr);
         if (extensionToRead && extensionToRead.length > 0) {
             return directoryDetails.filter(fileNames => {
                 return path.extname(fileNames).toLocaleLowerCase() === `.${extensionToRead}`;
             });
+        } else {
+            throw new Error('extension keyword is mandatory to search files');
+        }
+    }
+
+    creteNewFolderInYTD_DB(folderPath) {
+        try {
+            // this will always create a new folder in youtubeDL_db/
+            const newFolders = folderPath.split('/');
+            let newFolderPath = this.YOUTUBE_DL_DB_URL;
+            newFolders.forEach(folder => {
+                const folderPartialPath = path.resolve(newFolderPath, folder);
+                if (!fs.existsSync(folderPartialPath)) {
+                    fs.mkdirSync(folderPartialPath);
+                }
+                newFolderPath = folderPartialPath;
+            });
+            // all folders created
+            return true;
+        } catch (e) {
+            console.log('error while creating new folders');
+            console.log(e);
+            return false;
+        }
+    }
+
+    /**
+     * Moves json to processed folder of the parent
+     * @param fileName The name of the file to move into processed folder
+     * @param parentFolderPath Path to the parent of the file provided
+     */
+    updateProcessJSON(fileName, parentFolderPath, destFolderPath) {
+        try {
+            const oldFilePath = path.resolve(parentFolderPath, fileName);
+            const newFilePath = path.resolve(destFolderPath, fileName);
+            fs.renameSync(oldFilePath, newFilePath);
+            return true;
+        } catch (e) {
+            console.log(e);
+            return false;
         }
     }
 }

@@ -11,15 +11,20 @@ export class GoogleCloudBucketController {
         console.log('/google-cloud/bucket/upload POST hit');
         if (this.GCBCsrvc.validateBodyForBuketFileUpload(requestbody)) {
             let response;
-            if (requestbody.hasOwnProperty('parent_folder')) {
+            if (!requestbody || (requestbody && Object.keys(requestbody).length === 0)) {
+                console.log('executing auto initiate upload');
+                response = await this.GCBCsrvc.autoInitiateUpload();
+            } else if (requestbody.hasOwnProperty('parent_folder')) {
                 response = await this.GCBCsrvc.initiateUpload(requestbody.parent_folder, requestbody.filePaths, requestbody.folderName, requestbody.bucketName, 'dir');
             } else {
                 response = await this.GCBCsrvc.initiateUpload(requestbody.folderPath, requestbody.filePaths, requestbody.folderName, requestbody.bucketName);
 
             }
             if (response['ok']) {
+                console.log('sending response');
                 res.status(200).send({status: 200, message: `Uploading files to the Google Storage Bucket. Process started successfully.`});
             } else {
+                console.log('sending error');
                 res.status(500).send({status: response['status'] || 500, message: response['error']});
             }
         } else {
