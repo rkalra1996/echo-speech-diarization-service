@@ -67,7 +67,10 @@ export class YoutubeDlCoreService {
         const ytDLfileDetails = this.dbCSrvc.readYTDFolderDetails('json');
         console.log('json files are ', ytDLfileDetails);
         // start the download sequence for each file that is present inside the youtube-download folder
-        const destFolderAddr = path.resolve(this.destFolderName, 'audio_download');
+        const destFolderAddr = path.resolve(this.destFolderName, 'Audio_Download');
+        if (!this.dbCSrvc.isYTDirectoryPresent('Audio_Download')) {
+            this.dbCSrvc.creteNewFolderInYTD_DB('Audio_Download');
+        }
         ytDLfileDetails.forEach(async (jsonFileName) => {
             const villageFileName = jsonFileName.split('.json')[0];
             const destVillageFolderAddress = path.resolve(destFolderAddr, villageFileName);

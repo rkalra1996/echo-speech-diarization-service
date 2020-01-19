@@ -11,7 +11,9 @@ export class GoogleSentimentAnalysisController {
         console.log('/google-cloud/v1/analyze POST hit');
         let response;
         if (this.GSACsrvc.validateBodyForSentimentAnalysis(requestbody)) {
-            if (requestbody.hasOwnProperty('parent_folder')) {
+            if (!requestbody || !Object.keys(requestbody).length) {
+                response = await this.GSACsrvc.autoInitiate();
+            } else if (requestbody.hasOwnProperty('parent_folder')) {
                 response = await this.GSACsrvc.initiateAnalysis(requestbody.data, requestbody.parent_folder, 'dir');
             } else if (Array.isArray(requestbody.data)) {
                 // to process if the data is itself provided in the body

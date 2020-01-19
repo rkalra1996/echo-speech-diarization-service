@@ -7,6 +7,8 @@ import { GoogleSentimentAnalysisController } from './controllers/google-sentimen
 import { GoogleSentimentAnalysisCoreService } from './services/google-sentiment-analysis-core/google-sentiment-analysis-core.service';
 import { GoogleSentimentAnalysisUtilityService } from './services/google-sentiment-analysis-utility/google-sentiment-analysis-utility.service';
 import { ReadDbModule } from '../read-db/read-db.module';
+import { GoogleCloudEventHandlerService } from './event-handler/google-cloud-event-handler/google-cloud-event-handler.service';
+import { GoogleCloudEventUtilityService } from './event-handler/services/google-cloud-event-utility/google-cloud-event-utility.service';
 
 @Module({
   controllers: [
@@ -18,6 +20,8 @@ import { ReadDbModule } from '../read-db/read-db.module';
     GoogleCloudBucketUtilityService,
     GoogleSentimentAnalysisCoreService,
     GoogleSentimentAnalysisUtilityService,
+    GoogleCloudEventHandlerService,
+    GoogleCloudEventUtilityService,
   ],
 imports: [
   HttpModule,

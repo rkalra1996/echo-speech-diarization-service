@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
+import * as path from 'path';
 import { GcloudTokenProviderService } from '../../../automate-access-token/services/gcloud-token-provider/gcloud-token-provider.service';
-import e = require('express');
+import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
+import { GoogleCloudEventHandlerService } from '../../event-handler/google-cloud-event-handler/google-cloud-event-handler.service';
 
 @Injectable()
 export class GoogleSentimentAnalysisUtilityService {
 
     constructor(
         private tokenProvider: GcloudTokenProviderService,
+        private dbcSrvc: DatabseCommonService,
+        private emitter: GoogleCloudEventHandlerService,
         ) {}
 
         checkIfFileExists(filePath) {
@@ -89,5 +93,22 @@ export class GoogleSentimentAnalysisUtilityService {
             finalData.transcript.combined_transcript = transArray.join(' ');
             console.log('finalData looks like ', finalData);
             return finalData;
+        }
+
+        processJSONFiles(jsonFilesToProcess) {
+            return new Promise((resolve, reject) => {
+                jsonFilesToProcess.forEach(jsonFile => {
+                    const fileName = jsonFile.split('.json')[0];
+                    const filePath = path.resolve(this.dbcSrvc.YOUTUBE_DL_DB_URL, 'Google_Speech_To_Text', fileName, jsonFile);
+                    const fileData = {fileDetails: {}};
+                    fileData.fileDetails['filePath'] = filePath;
+                    fileData.fileDetails['fileName'] = fileName;
+                    const fileDataString = this.getFileData(filePath);
+                    fileData['fileData'] = JSON.parse(fileDataString);
+                    // trigger event to start analysis
+                    this.emitter.triggerEvent('START_SENTIMENT_ANALYSIS', fileData);
+                });
+                resolve({ok: true});
+            });
         }
 }

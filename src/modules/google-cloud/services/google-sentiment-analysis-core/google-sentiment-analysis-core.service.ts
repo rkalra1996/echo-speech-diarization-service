@@ -2,6 +2,7 @@ import { Injectable, HttpService } from '@nestjs/common';
 import { GoogleSentimentAnalysisUtilityService } from '../google-sentiment-analysis-utility/google-sentiment-analysis-utility.service';
 import { AccessTokenGeneratorService } from '../../../automate-access-token/services/access-token-generator/access-token-generator.service';
 import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
+import { GoogleCloudEventHandlerService } from '../../event-handler/google-cloud-event-handler/google-cloud-event-handler.service';
 
 @Injectable()
 export class GoogleSentimentAnalysisCoreService {
@@ -11,11 +12,15 @@ export class GoogleSentimentAnalysisCoreService {
         private httpSrvc: HttpService,
         private atgSrvc: AccessTokenGeneratorService,
         private dbCSrvc: DatabseCommonService,
+        private emitter: GoogleCloudEventHandlerService,
     ) { }
 
     validateBodyForSentimentAnalysis(requestBody): boolean {
         let isValid = false;
-        if (requestBody && requestBody.constructor === Object) {
+        if (!requestBody || !Object.keys(requestBody).length) {
+            console.log('auto sentiment analysis initiated');
+            isValid = true;
+        } else if (requestBody && requestBody.constructor === Object) {
             if (Object.keys(requestBody).length > 0) {
                 if (Object.keys(requestBody).indexOf('data') > -1 && requestBody.data.length > 0) {
                     console.log('body is validated');
@@ -75,14 +80,6 @@ export class GoogleSentimentAnalysisCoreService {
 
         const sentimentAnalysisPromises = [{}];
         for (const dataEach of fileData) {
-            // const speechToTextResponseData = dataEach.diarized_data.response.results;
-            // const checkSentimentIfPresent = speechToTextResponseData[speechToTextResponseData.length - 1];
-            // let speechToTextLastData;
-            // if (checkSentimentIfPresent.documentSentiment) {
-            //     speechToTextLastData = speechToTextResponseData[speechToTextResponseData.length - 2];
-            // } else {
-            //     speechToTextLastData = speechToTextResponseData[speechToTextResponseData.length - 1];
-            // }
             const speechData = Object.entries(dataEach)[0][1];
             console.log('Speech Data : ' + speechData);
             let speeckDataCombined ;
@@ -105,43 +102,17 @@ export class GoogleSentimentAnalysisCoreService {
                 sentimentAnalysisPromises[0][keyName] = resp.data;
             }
         }
-        console.log('hie there ', sentimentAnalysisPromises);
         console.log('recieved response from Google Sentiment Analysis.', new Date().toTimeString());
-        console.log("Resposeeee : ");
+        console.log('Response : ');
         console.log(sentimentAnalysisPromises);
         return Promise.resolve({ ok: true, message: 'Perform Sentiment Analysis. Process started successfully.', response: sentimentAnalysisPromises });
 
-                // console.log('Data :::::::: ' , JSON.stringify(fileData));
-                // for (let i = 0; i < fileData.length; i++) {
-                //     // console.log('Res : ' + JSON.stringify(res[i]));
-                //     // console.log('Res : ' + res[i].data);
-                //     console.log('Response from Sentiment Analysis : ' + JSON.stringify(res[i].data));
-                //     // const results = fileData.data[i].diarized_data.response.results;
-                //     // const checkSentimentIfPresent = results[results.length - 1];
-                //     fileData.data[i]['sentiment'] = res[i].data;
-                    // if (checkSentimentIfPresent.documentSentiment) {
-                    //     fileData.data[i].diarized_data.response.results[results.length - 1] = res[i].data;
-                    //  } else {
-                    //      fileData.data[i].diarized_data.response.results.push(res[i].data);
-                    //  }
-                // }
-                // this.gsauSrvc.writeSentimentToFileData(filePath, fileData);
-                // return Promise.resolve({response: {message: `Process completed successfully`, data: {name: res.name, id: res.id}}});
-
     }
 
-    async handleMultipleRequestsForTypeFile(fileData, filePath): Promise<any> {
+    async handleMultipleRequestsForTypeFile(fileData, filePath, auto = false, fileObjDetails?: object): Promise<any> {
 
         const sentimentAnalysisPromises = [];
         for (const dataEach of fileData['data']) {
-            // const speechToTextResponseData = dataEach.diarized_data.response.results;
-            // const checkSentimentIfPresent = speechToTextResponseData[speechToTextResponseData.length - 1];
-            // let speechToTextLastData;
-            // if (checkSentimentIfPresent.documentSentiment) {
-            //     speechToTextLastData = speechToTextResponseData[speechToTextResponseData.length - 2];
-            // } else {
-            //     speechToTextLastData = speechToTextResponseData[speechToTextResponseData.length - 1];
-            // }
             let speechData;
             if (dataEach['diarized_data']['response'].hasOwnProperty('results_en')) {
                 console.log('detected translated results');
@@ -151,8 +122,6 @@ export class GoogleSentimentAnalysisCoreService {
             } else {
                 speechData = dataEach['transcript'];
             }
-            console.log('Speech Data File Type: ' + speechData);
-            console.log(speechData);
             if (speechData && speechData['combined_transcript']) {
             sentimentAnalysisPromises.push(this.startSentimentAnalysisProcess(speechData['combined_transcript']));
             } else {
@@ -162,27 +131,18 @@ export class GoogleSentimentAnalysisCoreService {
         Promise.all(sentimentAnalysisPromises)
             .then((res: any) => {
                 console.log('recieved response from Google Sentiment Analysis.', new Date().toTimeString());
-                // console.log('Data :::::::: ' , JSON.stringify(fileData));
                 for (let i = 0; i < fileData['data'].length; i++) {
-                    // console.log('Res : ' + JSON.stringify(res[i]));
-                    // console.log('Res : ' + res[i].data);
-                    console.log('Response from Sentiment Analysis : ' + JSON.stringify(res[i].data));
-                    // const results = fileData.data[i].diarized_data.response.results;
-                    // const checkSentimentIfPresent = results[results.length - 1];
+                    // console.log('Response from Sentiment Analysis : ' + JSON.stringify(res[i].data));
                     fileData.data[i]['sentiment'] = res[i].data;
-                    // if (checkSentimentIfPresent.documentSentiment) {
-                    //     fileData.data[i].diarized_data.response.results[results.length - 1] = res[i].data;
-                    //  } else {
-                    //      fileData.data[i].diarized_data.response.results.push(res[i].data);
-                    //  }
                 }
                 this.gsauSrvc.writeSentimentToFileData(filePath, fileData);
-                // return Promise.resolve({response: {message: `Process completed successfully`, data: {name: res.name, id: res.id}}});
+                if (auto) {
+                    this.emitter.triggerEvent('INITIATE_PROCESS_UPDATION', {filePath, fileObjDetails});
+                }
             })
             .catch(err => {
                 console.log('recieved error from Google Sentiment Analysis. ', new Date().toTimeString());
                 console.log(err);
-                // return Promise.resolve({error: err.message, status: err.code});
             });
         return Promise.resolve({ ok: true, message: 'Perform Sentiment Analysis. Process started successfully.' });
     }
@@ -196,7 +156,7 @@ export class GoogleSentimentAnalysisCoreService {
                 .catch(async err => {
                     console.log('some error occured while hitting api, going inside refresh block');
                     console.log(err.toJSON());
-                    if (err.response.status === '401' || err.response.code === '401') {
+                    if (err.response.status.toString() === '401' || err.response.code.toString() === '401') {
                         console.log('token has expired, refreshing the token');
                         console.log('sending refresh code request at ', new Date().toTimeString());
                         const isRefreshed = await this.atgSrvc.refreshAuthKey();
@@ -214,13 +174,30 @@ export class GoogleSentimentAnalysisCoreService {
 
     performSentimentAnalysis(requestDetails): Promise<any> {
         console.log('sending request to start the Sentiment Analysis ', new Date().toTimeString());
-        // this.httpSrvc.post(requestDetails.url, requestDetails.data, requestDetails.requestConfig).toPromise()
-        // .then((res) => {
-        //     console.log(res, 'response fromsentianalysis');
-        // }).catch((err) => {
-        //     console.log('error caught from promise', err)
-        // });
         return this.httpSrvc.post(requestDetails.url, requestDetails.data, requestDetails.requestConfig).toPromise();
+    }
+
+    async autoInitiate() {
+        if (!this.dbCSrvc.isYTDirectoryPresent('Sentiment_Analysis')) {
+            if (this.dbCSrvc.creteNewFolderInYTD_DB('Sentiment_Analysis')) {
+                console.log('dir Sentiment_Analysis created');
+            } else {
+                throw new Error('An error occured while creating directory Sentiment_Analysis');
+            }
+        }
+        const jsonFilesToProcess = this.dbCSrvc.readYTDFolderDetails('json', 'Google_Speech_To_Text');
+        if (jsonFilesToProcess.length > 0) {
+            const response = await this.gsauSrvc.processJSONFiles(jsonFilesToProcess);
+            if (response['ok']) {
+                console.log('Processing of json files for sentiment analysis has started successfully');
+                return {ok: true};
+            } else {
+                return {ok: false, error: 'Could not start the Sentiment Analysis process, process ABORTED'};
+            }
+        } else {
+            console.log('No files to process inside Google_Speech_To_Text');
+            return {ok: true};
+        }
     }
 
 }
