@@ -14,7 +14,10 @@ export class GoogleTranslateUtilityService {
 
     validateRequestBody(requestBody) {
         let isValid = false;
-        if (requestBody && Object.keys(requestBody).length > 0) {
+        if (!requestBody || !Object.keys(requestBody).length) {
+            console.log('auto execution initiated');
+            isValid = true;
+        } else if (requestBody && Object.keys(requestBody).length > 0) {
             if (requestBody.hasOwnProperty('parent_folder')) {
                 // if user supplies parent_folder name to do translation
                 if (requestBody.parent_folder && typeof requestBody.parent_folder === 'string') {
@@ -38,10 +41,7 @@ export class GoogleTranslateUtilityService {
             } else {
                 console.log('neither of the keys are present, [data, parent_folder]')
             }
-        } else {
-            console.log('empty body not allowed');
         }
-
         return isValid;
     }
 
@@ -69,7 +69,6 @@ export class GoogleTranslateUtilityService {
 
     getTranslatedCombinedTranscript(translatedResults) {
         const translatedCombinedTranscript = translatedResults.map(translatedObject => translatedObject.alternatives[0].transcript).join(' ');
-        console.log('original combined transcript is ', translatedCombinedTranscript);
         return translatedCombinedTranscript;
     }
 
@@ -198,11 +197,13 @@ export class GoogleTranslateUtilityService {
     async hitTranslateAPI(requestData) {
         return this.httpSrvc.post(requestData.url, requestData.data, requestData.requestConfig).toPromise()
                 .catch(async error => {
-                    if (error.response.status === '401' || error.response.code === '401') {
+                    if (error.response.status.toString() === '401' || error.response.code.toString() === '401') {
                         console.log('token has expired, refreshing the token');
                         console.log('sending refresh code request at ', new Date().toTimeString());
                         const isRefreshed = await this.atgSrvc.refreshAuthKey();
                         if (isRefreshed) {
+                            // update the token
+                            requestData = this.tokenProvider.updateAuthTokenInRequest(requestData);
                             console.log('sending handleRequest request at ', new Date().toTimeString());
                             return await this.hitTranslateAPI(requestData);
                         } else {

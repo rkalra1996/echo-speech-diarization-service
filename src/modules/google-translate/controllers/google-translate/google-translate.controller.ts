@@ -11,7 +11,12 @@ export class GoogleTranslateController {
     async GoogleTranslateHandler(@Body() requestBody, @Res() res): Promise<any> {
         console.log('POST /google-translate/');
         if (this.gtuSrvc.validateRequestBody(requestBody)) {
-            const response = await this.gtcSrvc.initiate(requestBody);
+            let response;
+            if (!requestBody || !Object.keys(requestBody).length) {
+                response = await this.gtcSrvc.autoInitiate();
+            } else {
+                response = await this.gtcSrvc.initiate(requestBody);
+            }
             console.log('recieved');
             if (response['ok']) {
                 return res.status(200).send({ok: true, message: response['message']});

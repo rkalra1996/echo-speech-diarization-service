@@ -285,28 +285,26 @@ export class DatabseCommonService {
         if (languageCode && parentFolderName) {
             // create a file inside parentFolderName/language_backup/ with name speech_to_text_languageCode.json
             // write the contents to the file
-            if (this.isYTDirectoryPresent(parentFolderName)) {
-                const backupFolderName = 'language_backup';
-                const backupFolderAddress = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolderName, backupFolderName);
-                const backupFileAddress = path.resolve(backupFolderAddress, `speech_to_text_${languageCode}.json`);
-                if (!fs.existsSync(backupFolderAddress)) {
-                    fs.mkdirSync(backupFolderAddress);
+            if (!this.isYTDirectoryPresent(parentFolderName)) {
+                this.creteNewFolderInYTD_DB(parentFolderName);
+            }
+            const backupFolderName = 'language_backup';
+            const backupFolderAddress = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolderName, backupFolderName);
+            const backupFileAddress = path.resolve(backupFolderAddress, `speech_to_text_${languageCode}.json`);
+            if (!fs.existsSync(backupFolderAddress)) {
+                fs.mkdirSync(backupFolderAddress);
+            }
+            try {
+                // convert to string if it is in JSON
+                if (dataToBackup.constructor === Object) {
+                    dataToBackup = JSON.stringify(dataToBackup);
                 }
-                try {
-                    // convert to string if it is in JSON
-                    if (dataToBackup.constructor === Object) {
-                        dataToBackup = JSON.stringify(dataToBackup);
-                    }
-                    fs.writeFileSync(backupFileAddress, dataToBackup, {encoding: 'utf-8'});
-                    console.log('backup file created successfully');
-                    return Promise.resolve({ok: true});
-                } catch (e) {
-                    console.log('Error occured', e);
-                    return Promise.resolve({ok: false, error: `An Error occured while creating / writing to backup file ${`speech_to_text_${languageCode}.json`}`});
-                }
-            } else {
-                return Promise.resolve({ok: false, error: `parent directory ${parentFolderName} does not exist!`});
-
+                fs.writeFileSync(backupFileAddress, dataToBackup, { encoding: 'utf-8' });
+                console.log('backup file created successfully');
+                return Promise.resolve({ ok: true });
+            } catch (e) {
+                console.log('Error occured', e);
+                return Promise.resolve({ ok: false, error: `An Error occured while creating / writing to backup file ${`speech_to_text_${languageCode}.json`}` });
             }
         } else {
             return Promise.resolve({ok: false, error: 'Cannot create a backup file if language code / parent Folder is not provided'});

@@ -264,9 +264,9 @@ export class GoogleSpeechToTextCoreService {
     }
 
     async autoInitiate() {
-        if (!this.databaseCommSrvc.isYTDirectoryPresent('Google_Speech_2_Text')) {
-            if (this.databaseCommSrvc.creteNewFolderInYTD_DB('Google_Speech_2_Text')) {
-                console.log('dir Google_Speech_2_Text created');
+        if (!this.databaseCommSrvc.isYTDirectoryPresent('Google_Speech_To_Text')) {
+            if (this.databaseCommSrvc.creteNewFolderInYTD_DB('Google_Speech_To_Text')) {
+                console.log('dir Google_Speech_To_Text created');
             } else {
                 throw new Error('An error occured while creating directory Google_Cloud_Bucket folder');
             }
