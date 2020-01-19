@@ -6,8 +6,6 @@ import { DiarizationSpeakerService } from '../diarization-speaker/diarization-sp
 @Injectable()
 export class GcsBucketFetcherService {
 
-    private _bearer_token = '';
-    private DEFAULT_AUTHORIZATION = '';
     constructor(private httpSrvc: HttpService, private diarizationSpkSrvc: DiarizationSpeakerService) {
     }
 

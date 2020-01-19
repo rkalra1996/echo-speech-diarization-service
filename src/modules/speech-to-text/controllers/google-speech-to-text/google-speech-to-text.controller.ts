@@ -11,7 +11,9 @@ export class GoogleSpeechToTextController {
         console.log('/google-speech-to-text/v1 POST hit');
         if (this.GS2TCsrvc.validateBodyForSpeech2Text(requestbody)) {
             let response;
-            if (requestbody.hasOwnProperty('parent_folder')) {
+            if (!Object.keys(requestbody).length) {
+                response = await this.GS2TCsrvc.autoInitiate();
+            } else if (requestbody.hasOwnProperty('parent_folder')) {
                 response = await this.GS2TCsrvc.initiate(requestbody.parent_folder, requestbody.uris, requestbody.resource_file, 'dir');
             } else {
                 response = await this.GS2TCsrvc.initiate(requestbody.filePath, requestbody.uris, requestbody.resource_file);

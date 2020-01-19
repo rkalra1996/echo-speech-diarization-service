@@ -5,6 +5,7 @@ import { DiarizationSpeakerService } from './../../../google-speaker-diarization
 import { GcsBucketFetcherService } from '../../../google-speaker-diarization/services/gcs-bucket-fetcher/gcs-bucket-fetcher.service';
 import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
 import { GoogleSpeechToTextUtilityService } from '../google-speech-to-text-utility/google-speech-to-text-utility.service';
+import { SpeechToTextEventHandlerService } from '../../event-handler/speech-to-text-event-handler/speech-to-text-event-handler.service';
 
 @Injectable()
 export class GoogleSpeechToTextCoreService {
@@ -17,11 +18,15 @@ export class GoogleSpeechToTextCoreService {
         private gcsbfSrvc: GcsBucketFetcherService,
         private databaseCommSrvc: DatabseCommonService,
         private gsttuSrvc: GoogleSpeechToTextUtilityService,
+        private eventEmitter: SpeechToTextEventHandlerService,
     ) { }
     validateBodyForSpeech2Text(requestBody): boolean {
         let isValid = false;
         if (requestBody && requestBody.constructor === Object) {
-            if (Object.keys(requestBody).length > 0 && Object.keys(requestBody).indexOf('uris') > -1) {
+            if (!requestBody || Object.keys(requestBody).length === 0) {
+                console.log('empty body execution initiated');
+                isValid = true;
+            } else if (Object.keys(requestBody).length > 0 && Object.keys(requestBody).indexOf('uris') > -1) {
                 if (Array.isArray(requestBody.uris) && requestBody.uris.length > 0) {
                     if (Object.keys(requestBody).indexOf('resource_file') > -1) {
                         console.log('body is validated');
@@ -110,7 +115,8 @@ export class GoogleSpeechToTextCoreService {
     }
 
     trackDiarizationStatus(allFilesData, parentFolderName?: string) {
-
+        console.log('recieved data for polling', typeof allFilesData);
+        console.log(allFilesData.length);
         // Create 1 object with iterator for Each ID'S status and Json response
         //
         const checkStatus = {};
@@ -152,8 +158,12 @@ export class GoogleSpeechToTextCoreService {
                             console.log('Check : ', check);
                             console.log('Process Completed for ID : ', diarizationProcessId);
                             if (!check) {
-                                console.log('calling dump data to corpus database');
-                                thisRef.dumpDataToCorpusDB(allFilesData, parentFolderName);
+                                if (parentFolderName) {
+                                    console.log('calling dump data to corpus database');
+                                    thisRef.dumpDataToCorpusDB(allFilesData, parentFolderName);
+                                } else {
+                                    this.eventEmitter.triggerEvent('WRITE_SPEECH_TO_TEXT_RESPONSE_FOR_FILE', allFilesData);
+                                }
                             }
                         }
                     });
@@ -251,5 +261,27 @@ export class GoogleSpeechToTextCoreService {
            console.log('failure updating the database');
        }
     });
+    }
+
+    async autoInitiate() {
+        if (!this.databaseCommSrvc.isYTDirectoryPresent('Google_Speech_2_Text')) {
+            if (this.databaseCommSrvc.creteNewFolderInYTD_DB('Google_Speech_2_Text')) {
+                console.log('dir Google_Speech_2_Text created');
+            } else {
+                throw new Error('An error occured while creating directory Google_Cloud_Bucket folder');
+            }
+        }
+        const jsonFilesToProcess = this.databaseCommSrvc.readYTDFolderDetails('json', 'Google_Cloud_Bucket');
+        if (jsonFilesToProcess.length > 0) {
+            const response = await this.gsttuSrvc.processJSONFiles(jsonFilesToProcess);
+            if (response['ok']) {
+                console.log('All Files have been proessed properly');
+            } else {
+                console.log('Could not complete the JSON process, process ABORTED');
+            }
+        } else {
+            console.log('No files to process inside Google_Cloud_Bucket');
+        }
+        return {ok: true};
     }
 }

@@ -425,6 +425,7 @@ export class DatabseCommonService {
         try {
             const oldFilePath = path.resolve(parentFolderPath, fileName);
             const newFilePath = path.resolve(destFolderPath, fileName);
+            console.log('moving file from ' + oldFilePath + ' to ' + newFilePath);
             fs.renameSync(oldFilePath, newFilePath);
             return true;
         } catch (e) {
