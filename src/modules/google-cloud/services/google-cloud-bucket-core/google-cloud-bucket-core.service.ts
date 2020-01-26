@@ -98,7 +98,7 @@ export class GoogleCloudBucketCoreService {
                 throw new Error('An error occured while creating directory Google_Cloud_Bucket folder');
             }
         }
-        const jsonFilesToProcess = this.dbcSrvc.readYTDFolderDetails('json', 'Audio_download');
+        const jsonFilesToProcess = this.dbcSrvc.readYTDFolderDetails('json', 'Audio_Download');
         if (jsonFilesToProcess.length > 0) {
             this.gcbuSrvc.processJSONFiles(jsonFilesToProcess).then(allProcessed => {
                 if (allProcessed['ok']) {
@@ -106,6 +106,10 @@ export class GoogleCloudBucketCoreService {
                 } else {
                     console.log('An Error occured while processing all the json files', allProcessed['error']);
                 }
+            })
+            .catch(processErr => {
+                console.log('Error while processing json files ', jsonFilesToProcess);
+                console.log(processErr);
             });
         } else {
             console.log('No files to process inside youtube_download folder');

@@ -7,6 +7,7 @@ import * as fs from 'fs';
 
 @Injectable()
 export class SpeechToTextEventUtilityService {
+    public GOOGLE_SPEECT_TO_TEXT = 'Google_Speech_To_Text';
     constructor(
         @Inject(forwardRef(() => GoogleSpeechToTextCoreService))
         private readonly gsttcSrvc: GoogleSpeechToTextCoreService,
@@ -22,15 +23,17 @@ export class SpeechToTextEventUtilityService {
     initiateWriteProcess(dataToWrite) {
         const parsedData = this.gsttuSrvc.parseDataForCorpusDB(dataToWrite);
         console.log('parsed Data looks like ' + typeof parsedData, parsedData);
-        const GSTTAddr =  path.resolve(this.dcSrvc.YOUTUBE_DL_DB_URL, 'Google_Speech_To_Text');
-        if (!this.dcSrvc.isYTDirectoryPresent('Google_Speech_To_Text')) {
-            this.dcSrvc.creteNewFolderInYTD_DB('Google_Speech_To_Text/processed');
+        const GSTTAddr =  path.resolve(this.dcSrvc.YOUTUBE_DL_DB_URL, this.GOOGLE_SPEECT_TO_TEXT);
+        if (!this.dcSrvc.isYTDirectoryPresent(this.GOOGLE_SPEECT_TO_TEXT)) {
+            this.dcSrvc.creteNewFolderInYTD_DB(this.GOOGLE_SPEECT_TO_TEXT);
             console.log('Google_Speech_To_Text dir created');
         }
+        this.dcSrvc.creteNewFolderInYTD_DB(`${this.GOOGLE_SPEECT_TO_TEXT}/processed`);
         const parentFolderName = parsedData['file_data']['fileName'];
         // create a folder inside the speech to text directory
-        if (!this.dcSrvc.isYTDirectoryPresent(path.resolve(GSTTAddr, parentFolderName))) {
-            this.dcSrvc.creteNewFolderInYTD_DB(path.resolve(GSTTAddr, parentFolderName));
+        if (!this.dcSrvc.isYTDirectoryPresent(`${this.GOOGLE_SPEECT_TO_TEXT}/${parentFolderName}`)) {
+            this.dcSrvc.creteNewFolderInYTD_DB(`${this.GOOGLE_SPEECT_TO_TEXT}/${parentFolderName}`);
+            console.log(path.resolve(GSTTAddr, parentFolderName), ' dir created');
         }
         const parentFolderAddr = path.resolve(GSTTAddr, parentFolderName);
         const finalDataToWrite = {data: [...parsedData['data']]};

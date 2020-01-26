@@ -207,7 +207,7 @@ export class GoogleCloudBucketUtilityService {
                 const folderDetails = {};
                 const JSONFolderName = jsonFile.split('.json')[0];
                 // get the wav parent folder corresponding to json file
-                const folderPath = this.dbcSrvc.getuploadSourcePath(`Audio_download/${JSONFolderName}`);
+                const folderPath = this.dbcSrvc.getuploadSourcePath(`Audio_Download/${JSONFolderName}`);
                 if (folderPath) {
                     const filePaths = this.getAllFilesPath(folderPath);
                     if (filePaths.length > 0) {

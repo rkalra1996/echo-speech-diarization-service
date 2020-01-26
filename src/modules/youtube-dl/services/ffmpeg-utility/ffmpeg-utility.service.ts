@@ -146,7 +146,7 @@ export class FfmpegUtilityService {
             if (fileName === sourceFileName) {
                 console.log('file is present in the source directory');
                 const sourceFilePath = path.resolve(__dirname, `./../../../../assets/youtubeDL_db/youtube-download/${sourceFileName}`);
-                const destFilePath = path.resolve(__dirname, `./../../../../assets/youtubeDL_db/Audio_download/${sourceFileName}`);
+                const destFilePath = path.resolve(__dirname, `./../../../../assets/youtubeDL_db/Audio_Download/${sourceFileName}`);
                 try {
                     fs.renameSync(sourceFilePath, destFilePath);
                     resolve({ok: true});
