@@ -28,7 +28,7 @@ export class GoogleSpeechToTextUtilityService {
             // the combined file will be saved in a particular folder
             finalObject['parent_folder_name'] = parentFolderName;
         } else if (responseData[0].hasOwnProperty('fileData')) {
-            finalObject['file_data'] = responseData[0].fileData;
+            finalObject['fileData'] = responseData[0].fileData;
         }
         // collect all the text properly
         finalObject['data'] = responseData.map((urlResponse) => {

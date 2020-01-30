@@ -197,19 +197,28 @@ export class GoogleTranslateUtilityService {
     async hitTranslateAPI(requestData) {
         return this.httpSrvc.post(requestData.url, requestData.data, requestData.requestConfig).toPromise()
                 .catch(async error => {
-                    if (error.response.status.toString() === '401' || error.response.code.toString() === '401') {
-                        console.log('token has expired, refreshing the token');
-                        console.log('sending refresh code request at ', new Date().toTimeString());
-                        const isRefreshed = await this.atgSrvc.refreshAuthKey();
-                        if (isRefreshed) {
-                            // update the token
-                            requestData = this.tokenProvider.updateAuthTokenInRequest(requestData);
-                            console.log('sending handleRequest request at ', new Date().toTimeString());
-                            return await this.hitTranslateAPI(requestData);
-                        } else {
-                            console.log('unable to refresh auth key for gcloud, check manually');
-                            return new Error('Unable to refresh the Google Auth Token. Try again later');
+                    if (
+                        (error.hasOwnProperty('response') && error.response) &&
+                        (error.response.hasOwnProperty('status') && error.response.status !== undefined)
+                        ) {
+                        if (error.response.status.toString() === '401' || error.response.code.toString() === '401') {
+                            console.log('token has expired, refreshing the token');
+                            console.log('sending refresh code request at ', new Date().toTimeString());
+                            const isRefreshed = await this.atgSrvc.refreshAuthKey();
+                            if (isRefreshed) {
+                                // update the token
+                                requestData = this.tokenProvider.updateAuthTokenInRequest(requestData);
+                                console.log('sending handleRequest request at ', new Date().toTimeString());
+                                return await this.hitTranslateAPI(requestData);
+                            } else {
+                                console.log('unable to refresh auth key for gcloud, check manually');
+                                return new Error('Unable to refresh the Google Auth Token. Try again later');
+                            }
                         }
+                    } else {
+                        console.log('weird error occured');
+                        console.log(error);
+                        return new Error('weird error code recieved from the google translate api, check manually');
                     }
                 });
 }

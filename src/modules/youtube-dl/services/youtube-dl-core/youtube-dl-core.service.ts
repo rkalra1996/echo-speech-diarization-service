@@ -172,4 +172,40 @@ export class YoutubeDlCoreService {
             });
         });
     }
+
+    saveFilesToDB(audioFilesArray) {
+        return new Promise((resolve) => {
+            if (!Array.isArray(audioFilesArray)) {
+                resolve({ok: false, status: 400, error: 'No Files provided'})
+            } else {
+                const audioDownloadPath = path.resolve(this.dbCSrvc.YOUTUBE_DL_DB_URL, 'Audio_Download');
+                console.log('destination path is ', audioDownloadPath);
+                const parentFolderName = new Date().toDateString().split(' ').join('_');
+                const parentFolderAddr = path.resolve(audioDownloadPath, parentFolderName)
+                try {
+                    this.dbCSrvc.creteNewFolderInYTD_DB(`Audio_Download/${parentFolderName}`);
+                    // flush the files if same parent folder name is used
+                    const dirFiles = fs.readdirSync(parentFolderAddr)
+                    if (dirFiles.length > 0) {
+                        // directory appears to be empty
+                        console.log(parentFolderName, 'is not empty, flushing files');
+                        this.dbCSrvc.clearDirectory(parentFolderAddr);
+                    }
+                    audioFilesArray.forEach(audioFile => {
+                        console.log(audioFile)
+                        fs.writeFileSync(path.resolve(parentFolderAddr, audioFile.originalname), audioFile.buffer)
+                    });
+                    resolve({ok: true})
+                    // convert to mono
+                    this.ffmpegUSrvc.convertStereo2Mono(parentFolderAddr)
+                    // create a json file in the parent directory for tracking
+                    fs.writeFileSync(path.resolve(audioDownloadPath, `${parentFolderName}.json`), JSON.stringify({village: 'localVillage'}), {encoding: 'utf-8'})
+                } catch (e) {
+                    console.log('Error while saving the audio files');
+                    console.log(e);
+                    resolve({ok: false, status: 500, error: 'Error while saving the files, try again later'})    
+                }
+            }
+        });
+    }
 }

@@ -12,6 +12,7 @@ export class GoogleCloudEventUtilityService {
                 if (fs.lstatSync(path.resolve(sourceParentFolder, dirItem)).isFile()) {
                     console.log('moving file ', dirItem);
                     fs.renameSync(path.resolve(sourceParentFolder, dirItem), path.resolve(destParentFolder, dirItem));
+                    console.log('moved to ', destParentFolder);
                     if (fs.existsSync(path.resolve(sourceParentFolder, dirItem))) {
                         fs.unlinkSync(path.resolve(sourceParentFolder, dirItem));
                     }

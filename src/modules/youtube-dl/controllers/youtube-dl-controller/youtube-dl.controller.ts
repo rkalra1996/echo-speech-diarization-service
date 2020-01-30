@@ -1,5 +1,5 @@
-import { Controller, Post, Res, UseInterceptors, UploadedFile, Body } from '@nestjs/common';
-import {FileInterceptor} from '@nestjs/platform-express';
+import { Controller, Post, Res, UseInterceptors, UploadedFile, Body, UploadedFiles } from '@nestjs/common';
+import {FileInterceptor, FilesInterceptor} from '@nestjs/platform-express';
 import { YoutubeDlCoreService } from './../../services/youtube-dl-core/youtube-dl-core.service';
 import { YoutubeDlUtilityService } from '../../services/youtube-dl-utility/youtube-dl-utility.service';
 
@@ -33,6 +33,18 @@ export class YoutubeDlController {
             response.status(200).send({response: 'ok', message: 'Corpus generation process started'});
         } else {
             response.status(400).send({status: 400, error: `Empty file cannot be read`});
+        }
+    }
+
+    @Post('data/upload')
+    @UseInterceptors(FilesInterceptor('audio_files'))
+    async startRawDownload(@Res() res: any, @UploadedFiles() audioFiles): Promise<any> {
+        console.log('/youtube-dl/data/upload hit');
+        const filesSaved = await this.ydlCoreSrvc.saveFilesToDB(audioFiles)
+        if (filesSaved['ok']) {
+            res.status(200).send({status: 200, message: 'Files have been saved, conversion process initiated as needed'});
+        } else {
+            res.status(filesSaved['status']).send({status: filesSaved['status'], error: filesSaved['error']});
         }
     }
 }

@@ -29,7 +29,7 @@ export class SpeechToTextEventUtilityService {
             console.log('Google_Speech_To_Text dir created');
         }
         this.dcSrvc.creteNewFolderInYTD_DB(`${this.GOOGLE_SPEECT_TO_TEXT}/processed`);
-        const parentFolderName = parsedData['file_data']['fileName'];
+        const parentFolderName = parsedData['fileData']['fileName'];
         // create a folder inside the speech to text directory
         if (!this.dcSrvc.isYTDirectoryPresent(`${this.GOOGLE_SPEECT_TO_TEXT}/${parentFolderName}`)) {
             this.dcSrvc.creteNewFolderInYTD_DB(`${this.GOOGLE_SPEECT_TO_TEXT}/${parentFolderName}`);
@@ -46,7 +46,7 @@ export class SpeechToTextEventUtilityService {
             fs.writeFileSync(path.resolve(parentFolderAddr, `${parentFolderName}.json`), JSON.stringify(finalDataToWrite), {encoding: 'utf-8'});
             // once written, move the corresponding village folder from Google_Cloud_Bucket to processed
             // mvove the corresponding json file from Google_Cloud_Buclet to Google_Speech_To_Text
-            const oldParentFolderAddr = parsedData['file_data'].filePath.split(parentFolderName)[0];
+            const oldParentFolderAddr = parsedData['fileData'].filePath.split(parentFolderName)[0];
             if (this.dcSrvc.updateProcessJSON(`${parentFolderName}.json`, oldParentFolderAddr, GSTTAddr)) {
                 // update the contents of this process file
                 const processDataString = fs.readFileSync(path.resolve(GSTTAddr, `${parentFolderName}.json`), {encoding: 'utf-8'});
