@@ -47,4 +47,22 @@ export class YoutubeDlController {
             res.status(filesSaved['status']).send({status: filesSaved['status'], error: filesSaved['error']});
         }
     }
+
+    @Post('v2/data/download')
+    async downloadFilesFromSource(@Body() requestBody: object, @Res() response: any): Promise<any> {
+        console.log('body recieved is ', requestBody);
+        if(this.ydlUtilitySrvc.validateSourceURLRequest(requestBody)) {
+            console.log('body is valid');
+            const isStarted = await this.ydlCoreSrvc.saveFilesToDB(null, requestBody, 'body');
+            if (isStarted['ok']) {
+                return response.status(200).send({status: 200, message: 'Download process started successfully!'})
+            }
+            else {
+                return response.status(isStarted['status']).send({status: isStarted['status'], error: isStarted['error']});
+            }
+        }
+        else {
+            return response.status(400).send({status: 400, error: 'Body is invalid!'})
+        }
+    }
 }
