@@ -99,7 +99,7 @@ export class YoutubeDlUtilityService {
         }
     }
 
-    validateSourceURLRequest(body): Boolean {
+    validateSourceURLRequest(body): boolean {
         let isValid = false;
         if (body && body.constructor === Object && Object.keys(body).length > 0) {
             if (body.hasOwnProperty('foldername') && body.foldername.length) {
@@ -111,54 +111,54 @@ export class YoutubeDlUtilityService {
 
     downloadCloudFiles(processedData) {
         if (!this.dbCSrvc.isYTDirectoryPresent('Audio_Download')) {
-            this.dbCSrvc.creteNewFolderInYTD_DB('Audio_Download')
+            this.dbCSrvc.creteNewFolderInYTD_DB('Audio_Download');
         }
-        this.dbCSrvc.creteNewFolderInYTD_DB(`Audio_Download/${processedData.parentFolderName}`)
+        this.dbCSrvc.creteNewFolderInYTD_DB(`Audio_Download/${processedData.parentFolderName}`);
 
         const fileUrlPromises = [];
         for (const file of processedData.fileNamesArray) {
             const fileUrl = `${processedData.parentFolderName}/${file}`;
-            console.log('downloading ---> ', fileUrl)
+            console.log('downloading ---> ', fileUrl);
             fileUrlPromises.push(
                 this.storage
                     .bucket(processedData.bucketName).file(fileUrl).download({
-                        destination: path.resolve(__dirname, './../../../../assets/youtubeDL_db/Audio_Download', processedData.parentFolderName, file)
-                        })    
-            )
+                        destination: path.resolve(__dirname, './../../../../assets/youtubeDL_db/Audio_Download', processedData.parentFolderName, file),
+                        }),
+            );
         }
         Promise.all(fileUrlPromises)
         .then(response => {
-            console.log('downloaded ',processedData.fileNamesArray)
-            console.log('convert to mono ', processedData.convertToMono)
+            console.log('downloaded ', processedData.fileNamesArray);
+            console.log('convert to mono ', processedData.convertToMono);
             if (processedData.convertToMono) {
-                const stereoFolderAddress = path.resolve(this.dbCSrvc.YOUTUBE_DL_DB_URL, 'Audio_Download', processedData.parentFolderName)
-                console.log('path source for conversion is ', stereoFolderAddress)
-            this.ffmpegUSrvc.convertStereo2Mono(stereoFolderAddress);
+                const stereoFolderAddress = path.resolve(this.dbCSrvc.YOUTUBE_DL_DB_URL, 'Audio_Download', processedData.parentFolderName);
+                console.log('path source for conversion is ', stereoFolderAddress);
+                this.ffmpegUSrvc.convertStereo2Mono(stereoFolderAddress);
             }
             // write a fresh json file for further process to work on
             // create a json file in the parent directory for tracking
-            const jsonFileAddr = path.resolve(this.dbCSrvc.YOUTUBE_DL_DB_URL, 'Audio_Download', `${processedData.parentFolderName}.json`)
-            fs.writeFileSync(path.resolve(jsonFileAddr), JSON.stringify(processedData.demography), {encoding: 'utf-8'})
+            const jsonFileAddr = path.resolve(this.dbCSrvc.YOUTUBE_DL_DB_URL, 'Audio_Download', `${processedData.parentFolderName}.json`);
+            fs.writeFileSync(path.resolve(jsonFileAddr), JSON.stringify(processedData.demography), {encoding: 'utf-8'});
         })
         .catch(error => {
-            console.log('error', error)
-        })
+            console.log('error', error);
+        });
     }
 
-    getProcessObject(data): Object {
+    getProcessObject(data): object {
         const bucketName = data['bucketname'] ? data['bucketname'] : 'app-blob-storage';
         const parentFolderName = data['foldername'] || null;
         const fileNamesArray = data['filenames'] || [];
-        const demography = data['demography'] || {village: parentFolderName}
+        const demography = data['demography'] || {village: parentFolderName};
         if (!parentFolderName || !fileNamesArray.length) {
-            return {}
+            return {};
         }
         return {
             bucketName,
             parentFolderName,
             fileNamesArray,
             convertToMono: data['ismono'] !== undefined ? !data['ismono'] : true,
-            demography
-        }
+            demography,
+        };
     }
 }

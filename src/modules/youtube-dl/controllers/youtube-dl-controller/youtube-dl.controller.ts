@@ -40,7 +40,7 @@ export class YoutubeDlController {
     @UseInterceptors(FilesInterceptor('audio_files'))
     async startRawDownload(@Res() res: any, @UploadedFiles() audioFiles): Promise<any> {
         console.log('/youtube-dl/data/upload hit');
-        const filesSaved = await this.ydlCoreSrvc.saveFilesToDB(audioFiles)
+        const filesSaved = await this.ydlCoreSrvc.saveFilesToDB(audioFiles);
         if (filesSaved['ok']) {
             res.status(200).send({status: 200, message: 'Files have been saved, conversion process initiated as needed'});
         } else {
@@ -51,17 +51,15 @@ export class YoutubeDlController {
     @Post('v2/data/download')
     async downloadFilesFromSource(@Body() requestBody: object, @Res() response: any): Promise<any> {
         console.log('body recieved is ', requestBody);
-        if(this.ydlUtilitySrvc.validateSourceURLRequest(requestBody)) {
+        if (this.ydlUtilitySrvc.validateSourceURLRequest(requestBody)) {
             console.log('body is valid');
             const isStarted = await this.ydlCoreSrvc.saveFilesToDB(null, requestBody, 'body');
             if (isStarted['ok']) {
                 return response.status(200).send({status: 200, message: 'Download process started successfully!'})
-            }
-            else {
+            } else {
                 return response.status(isStarted['status']).send({status: isStarted['status'], error: isStarted['error']});
             }
-        }
-        else {
+        } else {
             return response.status(400).send({status: 400, error: 'Body is invalid!'})
         }
     }

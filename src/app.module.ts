@@ -17,6 +17,7 @@ import { SpeechToTextModule } from './modules/speech-to-text/speech-to-text.modu
 import { GoogleCloudModule } from './modules/google-cloud/google-cloud.module';
 import { YoutubeModule } from './modules/youtube/youtube.module';
 import { GoogleTranslateModule } from './modules/google-translate/google-translate.module';
+import { CaminoModule } from './modules/camino/camino.module';
 
 @Module({
   // serve static files in the server
@@ -36,6 +37,7 @@ ServeStaticModule.forRoot({
     GoogleCloudModule,
     YoutubeModule,
     GoogleTranslateModule,
+    CaminoModule,
   ],
   controllers: [AppController],
   providers: [AppService, CommonRequestValidatorService],

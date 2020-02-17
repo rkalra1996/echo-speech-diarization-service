@@ -201,7 +201,8 @@ export class GoogleCloudBucketUtilityService {
         }
     }
 
-        async processJSONFiles(jsonFilesToProcess) {
+        async processJSONFiles(jsonFilesToProcess, bucketName = 'corpus-audio12345') {
+            console.log('bucket selected is ', bucketName);
             const JSONFilePromises = [];
             jsonFilesToProcess.forEach(jsonFile => {
                 const folderDetails = {};
@@ -214,7 +215,7 @@ export class GoogleCloudBucketUtilityService {
                         folderDetails['folderPath'] = folderPath;
                         folderDetails['filePaths'] = filePaths;
                         folderDetails['folderName'] = JSONFolderName;
-                        folderDetails['bucketName'] = 'corpus-audio12345';
+                        folderDetails['bucketName'] = bucketName;
 
                         const JSONFilePromise = this.inititateJSONFileUpload(folderDetails);
                         JSONFilePromises.push(JSONFilePromise);
@@ -236,7 +237,9 @@ export class GoogleCloudBucketUtilityService {
                             console.log(error);
                             return Promise.resolve({ok: false});
                         });
-            } else {console.log(false)}
+            } else {
+                console.log(false);
+            }
             return {ok: true};
         }
 

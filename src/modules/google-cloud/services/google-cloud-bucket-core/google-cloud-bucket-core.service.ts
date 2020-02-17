@@ -87,7 +87,7 @@ export class GoogleCloudBucketCoreService {
         return Promise.resolve({ ok: true, message: 'Uploading files to the Google Storage Bucket. Process started successfully.' });
     }
 
-    autoInitiateUpload() {
+    autoInitiateUpload(bucketName?: string) {
         // check if there is any json file in Audio_download folder
         // if yes, start execution
         if (!this.dbcSrvc.isYTDirectoryPresent('Google_Cloud_Bucket')) {
@@ -100,17 +100,35 @@ export class GoogleCloudBucketCoreService {
         }
         const jsonFilesToProcess = this.dbcSrvc.readYTDFolderDetails('json', 'Audio_Download');
         if (jsonFilesToProcess.length > 0) {
-            this.gcbuSrvc.processJSONFiles(jsonFilesToProcess).then(allProcessed => {
-                if (allProcessed['ok']) {
-                    console.log(`All JSON Files ${jsonFilesToProcess} have been processed and uploaded successfully`);
-                } else {
-                    console.log('An Error occured while processing all the json files', allProcessed['error']);
-                }
-            })
-            .catch(processErr => {
-                console.log('Error while processing json files ', jsonFilesToProcess);
-                console.log(processErr);
-            });
+            // send the bucketname, if present
+            if (bucketName) {
+                console.log('uploading to bucket --> ', bucketName);
+                this.gcbuSrvc.processJSONFiles(jsonFilesToProcess, bucketName).then(allProcessed => {
+                    if (allProcessed['ok']) {
+                        console.log(`All JSON Files ${jsonFilesToProcess} have been processed and uploaded successfully`);
+                    } else {
+                        console.log('An Error occured while processing all the json files', allProcessed['error']);
+                    }
+                })
+                .catch(processErr => {
+                    console.log('Error while processing json files ', jsonFilesToProcess);
+                    console.log(processErr);
+                });
+            } else {
+                // for uploading to default bucket
+                console.log('uploading to default bucket');
+                this.gcbuSrvc.processJSONFiles(jsonFilesToProcess).then(allProcessed => {
+                    if (allProcessed['ok']) {
+                        console.log(`All JSON Files ${jsonFilesToProcess} have been processed and uploaded successfully`);
+                    } else {
+                        console.log('An Error occured while processing all the json files', allProcessed['error']);
+                    }
+                })
+                .catch(processErr => {
+                    console.log('Error while processing json files ', jsonFilesToProcess);
+                    console.log(processErr);
+                });
+            }
         } else {
             console.log('No files to process inside youtube_download folder');
         }

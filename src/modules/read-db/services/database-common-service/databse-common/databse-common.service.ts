@@ -383,13 +383,19 @@ export class DatabseCommonService {
             parentFolderAddr = path.resolve(parentFolderAddr, this.YOUTUBE_DOWNLOAD_FOLDER);
         }
         console.log('checking details of ', parentFolderAddr);
-        const directoryDetails = fs.readdirSync(parentFolderAddr);
-        if (extensionToRead && extensionToRead.length > 0) {
+        try {
+            const directoryDetails = fs.readdirSync(parentFolderAddr);
+            if (extensionToRead && extensionToRead.length > 0) {
             return directoryDetails.filter(fileNames => {
                 return path.extname(fileNames).toLocaleLowerCase() === `.${extensionToRead}`;
             });
-        } else {
-            throw new Error('extension keyword is mandatory to search files');
+            } else {
+                throw new Error('extension keyword is mandatory to search files');
+            }
+        } catch (e) {
+            console.log('Error catched while reading YoutubeFolder Details');
+            console.log(e);
+            throw new Error ('Unexpected error while executing internal processes');
         }
     }
 

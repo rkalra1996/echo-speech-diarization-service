@@ -81,7 +81,7 @@ export class YoutubeDlCoreService {
             }
             const tempFileAddr = this.createTempUrlFile(destVillageFolderAddress, `${villageFileName}`, villageFileAudioUrls);
 
-            const processOK = await this.runProcess(destVillageFolderAddress, tempFileAddr)
+            const processOK = await this.runProcess(destVillageFolderAddress, tempFileAddr);
             if (processOK['ok']) {
                 {
                     console.log('wav files extracted successfully for ', villageFileName);
@@ -173,49 +173,58 @@ export class YoutubeDlCoreService {
         });
     }
 
-    saveFilesToDB(audioFilesArray, bodyObject?:object, requestType=null) {
+    saveFilesToDB(audioFilesArray, bodyObject?: object, requestType = null) {
         return new Promise((resolve) => {
             if (requestType === 'body') {
                 console.log('body type detected');
-                const processedObject = this.ytdluSrvc.getProcessObject(bodyObject); 
+                const processedObject = this.ytdluSrvc.getProcessObject(bodyObject);
                 if (Object.keys(processedObject).length > 0) {
-                    resolve({ok: true})
+                    resolve({ok: true});
                     this.ytdluSrvc.downloadCloudFiles(processedObject);
+                } else {
+                    resolve({ok: false, status: 400, error : 'either of bucketname, foldername / demography or fileurls array is missing'});
                 }
-                else {
-                    resolve({ok: false,status: 400, error : 'either of bucketname, foldername / demography or fileurls array is missing'})
-                }
-            }
-            else {
+            } else {
                 if (!Array.isArray(audioFilesArray)) {
-                    resolve({ok: false, status: 400, error: 'No Files provided'})
+                    resolve({ok: false, status: 400, error: 'No Files provided'});
                 } else {
                     const audioDownloadPath = path.resolve(this.dbCSrvc.YOUTUBE_DL_DB_URL, 'Audio_Download');
                     console.log('destination path is ', audioDownloadPath);
                     const parentFolderName = new Date().toDateString().split(' ').join('_');
-                    const parentFolderAddr = path.resolve(audioDownloadPath, parentFolderName)
+                    const parentFolderAddr = path.resolve(audioDownloadPath, parentFolderName);
                     try {
                         this.dbCSrvc.creteNewFolderInYTD_DB(`Audio_Download/${parentFolderName}`);
                         // flush the files if same parent folder name is used
-                        const dirFiles = fs.readdirSync(parentFolderAddr)
+                        const dirFiles = fs.readdirSync(parentFolderAddr);
                         if (dirFiles.length > 0) {
                             // directory appears to be empty
                             console.log(parentFolderName, 'is not empty, flushing files');
                             this.dbCSrvc.clearDirectory(parentFolderAddr);
                         }
                         audioFilesArray.forEach(audioFile => {
-                            console.log(audioFile)
-                            fs.writeFileSync(path.resolve(parentFolderAddr, audioFile.originalname), audioFile.buffer)
+                            console.log(audioFile);
+                            fs.writeFileSync(path.resolve(parentFolderAddr, audioFile.originalname), audioFile.buffer);
                         });
-                        resolve({ok: true})
+                        resolve({ok: true});
                         // convert to mono
-                        this.ffmpegUSrvc.convertStereo2Mono(parentFolderAddr)
+                        // also check if there are any json files in youtube-download folder, this means we need the auto move process - 1
+                        // if there are no json files present inside the youtube-download folder, means we don't need the auto move process - 0
+                        let triggerAutoMove = 1;
+                        if (this.dbCSrvc.isYTDirectoryPresent('youtube-download')) {
+                            if (!this.dbCSrvc.readYTDFolderDetails('json')) {
+                                triggerAutoMove = 0;
+                            }
+                        } else {
+                            triggerAutoMove = 0;
+                        }
+                        console.log('sending auto trigger as ', triggerAutoMove);
+                        this.ffmpegUSrvc.convertStereo2Mono(parentFolderAddr, '.wav', triggerAutoMove);
                         // create a json file in the parent directory for tracking
-                        fs.writeFileSync(path.resolve(audioDownloadPath, `${parentFolderName}.json`), JSON.stringify({village: 'localVillage'}), {encoding: 'utf-8'})
+                        fs.writeFileSync(path.resolve(audioDownloadPath, `${parentFolderName}.json`), JSON.stringify({village: 'localVillage'}), {encoding: 'utf-8'});
                     } catch (e) {
                         console.log('Error while saving the audio files');
                         console.log(e);
-                        resolve({ok: false, status: 500, error: 'Error while saving the files, try again later'})    
+                        resolve({ok: false, status: 500, error: 'Error while saving the files, try again later'});
                     }
                 }
             }
