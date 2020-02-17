@@ -103,7 +103,7 @@ export class GoogleSpeechToTextUtilityService {
     }
     }
 
-    processJSONFiles(jsonFilesToProcess) {
+    processJSONFiles(jsonFilesToProcess, continueToTranslation = false) {
         return new Promise((resolve, reject) => {
             const JSONFilePromises = [];
             jsonFilesToProcess.forEach(jsonFile => {
@@ -125,7 +125,7 @@ export class GoogleSpeechToTextUtilityService {
                     console.log('ProcessID Response for all speech to text files has been recieved');
                     // start polling for each of the audio files
                     FilesResponse.forEach(JSONFileResponse => {
-                        this.eventEmitter.triggerEvent('START_POLL_ON_FILE', JSONFileResponse);
+                        this.eventEmitter.triggerEvent('START_POLL_ON_FILE', JSONFileResponse, continueToTranslation);
                     });
 
                 })

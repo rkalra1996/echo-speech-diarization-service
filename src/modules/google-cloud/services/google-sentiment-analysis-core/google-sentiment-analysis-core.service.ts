@@ -109,7 +109,7 @@ export class GoogleSentimentAnalysisCoreService {
 
     }
 
-    async handleMultipleRequestsForTypeFile(fileData, filePath, auto = false, fileObjDetails?: object): Promise<any> {
+    async handleMultipleRequestsForTypeFile(fileData, filePath, auto = false, fileObjDetails?: object, triggerPipeline = false): Promise<any> {
 
         const sentimentAnalysisPromises = [];
         for (const dataEach of fileData['data']) {
@@ -138,6 +138,9 @@ export class GoogleSentimentAnalysisCoreService {
                 this.gsauSrvc.writeSentimentToFileData(filePath, fileData);
                 if (auto) {
                     this.emitter.triggerEvent('INITIATE_PROCESS_UPDATION', {filePath, fileObjDetails});
+                }
+                if (triggerPipeline) {
+                    console.log('detected auto trigger for sentiment analysis, will invoke keyphrase extraction automatically');
                 }
             })
             .catch(err => {
@@ -177,7 +180,8 @@ export class GoogleSentimentAnalysisCoreService {
         return this.httpSrvc.post(requestDetails.url, requestDetails.data, requestDetails.requestConfig).toPromise();
     }
 
-    async autoInitiate() {
+    async autoInitiate(triggerPipeline = false) {
+        // trigger keyphrase extraction api if triggerPipeline is set to true. Specifically set for camino
         if (!this.dbCSrvc.isYTDirectoryPresent('Sentiment_Analysis')) {
             if (this.dbCSrvc.creteNewFolderInYTD_DB('Sentiment_Analysis')) {
                 console.log('dir Sentiment_Analysis created');
@@ -187,7 +191,7 @@ export class GoogleSentimentAnalysisCoreService {
         }
         const jsonFilesToProcess = this.dbCSrvc.readYTDFolderDetails('json', 'Google_Speech_To_Text');
         if (jsonFilesToProcess.length > 0) {
-            const response = await this.gsauSrvc.processJSONFiles(jsonFilesToProcess);
+            const response = await this.gsauSrvc.processJSONFiles(jsonFilesToProcess, triggerPipeline);
             if (response['ok']) {
                 console.log('Processing of json files for sentiment analysis has started successfully');
                 return {ok: true};

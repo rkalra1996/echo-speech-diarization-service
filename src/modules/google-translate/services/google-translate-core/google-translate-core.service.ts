@@ -3,12 +3,14 @@ import { GoogleTranslateUtilityService } from './../google-translate-utility/goo
 import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
 import * as path from 'path';
 import * as fs from 'fs';
+import { GoogleSentimentAnalysisCoreService } from '../../../google-cloud/services/google-sentiment-analysis-core/google-sentiment-analysis-core.service';
 @Injectable()
 export class GoogleTranslateCoreService {
 
     constructor(
         private gtuSrvc: GoogleTranslateUtilityService,
         private databaseCommSrvc: DatabseCommonService,
+        private gsacSrvc: GoogleSentimentAnalysisCoreService,
         ) {}
 
     async initiate(data) {
@@ -23,7 +25,7 @@ export class GoogleTranslateCoreService {
         }
     }
 
-    async autoInitiate() {
+    async autoInitiate(triggerPipeline = false) {
         if (!this.databaseCommSrvc.isYTDirectoryPresent('Google_Speech_To_Text')) {
             throw new Error('Google_Speech_To_Text folder does not exist to read files for translation');
         }
@@ -42,6 +44,13 @@ export class GoogleTranslateCoreService {
                     const isWritten = await this.autoBackupAndWriteTranslatedFiles(jsonFileDataString, newDataObject, fileName, jsonFileAddr);
                     if (isWritten['ok']) {
                         console.log('successfully written', fileName);
+                        // trigger sentiment analysis after translation has been done, if triggerPipeline is set to true
+                        if (triggerPipeline) {
+                            console.log('trigger pipeline for language translation detected, proceeding to sentiment analysis');
+                            this.gsacSrvc.autoInitiate(true);
+                        } else {
+                            console.log('no need to auto trigger sentiment analysis, trigger manually');
+                        }
                     } else {
                         console.log('An error occured while translating file ', fileName);
                         console.log(isWritten['error']);

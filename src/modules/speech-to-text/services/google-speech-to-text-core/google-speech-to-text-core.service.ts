@@ -114,7 +114,7 @@ export class GoogleSpeechToTextCoreService {
         return Promise.resolve({ok: true, message: 'Speech to text is now working'});
     }
 
-    trackDiarizationStatus(allFilesData, parentFolderName?: string) {
+    trackDiarizationStatus(allFilesData, parentFolderName = null, inititatePipeline = false) {
         console.log('recieved data for polling', typeof allFilesData);
         console.log(allFilesData.length);
         // Create 1 object with iterator for Each ID'S status and Json response
@@ -162,7 +162,7 @@ export class GoogleSpeechToTextCoreService {
                                     console.log('calling dump data to corpus database');
                                     thisRef.dumpDataToCorpusDB(allFilesData, parentFolderName);
                                 } else {
-                                    this.eventEmitter.triggerEvent('WRITE_SPEECH_TO_TEXT_RESPONSE_FOR_FILE', allFilesData);
+                                    this.eventEmitter.triggerEvent('WRITE_SPEECH_TO_TEXT_RESPONSE_FOR_FILE', allFilesData, inititatePipeline);
                                 }
                             }
                         }
@@ -263,7 +263,8 @@ export class GoogleSpeechToTextCoreService {
     });
     }
 
-    async autoInitiate() {
+    async autoInitiate(continueToTranslation = false) {
+        // if continueToTranslation is true, the moment we save the speech to text json, it will auto trigger language translation api
         if (!this.databaseCommSrvc.isYTDirectoryPresent('Google_Speech_To_Text')) {
             if (this.databaseCommSrvc.creteNewFolderInYTD_DB('Google_Speech_To_Text')) {
                 console.log('dir Google_Speech_To_Text created');
@@ -273,7 +274,7 @@ export class GoogleSpeechToTextCoreService {
         }
         const jsonFilesToProcess = this.databaseCommSrvc.readYTDFolderDetails('json', 'Google_Cloud_Bucket');
         if (jsonFilesToProcess.length > 0) {
-            const response = await this.gsttuSrvc.processJSONFiles(jsonFilesToProcess);
+            const response = await this.gsttuSrvc.processJSONFiles(jsonFilesToProcess, continueToTranslation);
             if (response['ok']) {
                 console.log('All Files have been proessed properly');
             } else {

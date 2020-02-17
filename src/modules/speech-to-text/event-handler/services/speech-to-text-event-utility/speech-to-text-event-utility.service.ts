@@ -4,6 +4,7 @@ import { GoogleSpeechToTextUtilityService } from '../../../services/google-speec
 import { DatabseCommonService } from '../../../../read-db/services/database-common-service/databse-common/databse-common.service';
 import * as path from 'path';
 import * as fs from 'fs';
+import { GoogleTranslateCoreService } from '../../../../google-translate/services/google-translate-core/google-translate-core.service';
 
 @Injectable()
 export class SpeechToTextEventUtilityService {
@@ -14,13 +15,14 @@ export class SpeechToTextEventUtilityService {
         @Inject(forwardRef(() => GoogleSpeechToTextUtilityService))
         private gsttuSrvc: GoogleSpeechToTextUtilityService,
         private dcSrvc: DatabseCommonService,
+        private readonly gtSrvc: GoogleTranslateCoreService,
         ) {}
 
-    trackDiarizationStatus(dataToTrack) {
-        this.gsttcSrvc.trackDiarizationStatus(dataToTrack);
+    trackDiarizationStatus(dataToTrack, inititatePipeline = false) {
+        this.gsttcSrvc.trackDiarizationStatus(dataToTrack, undefined, inititatePipeline);
     }
 
-    initiateWriteProcess(dataToWrite) {
+    initiateWriteProcess(dataToWrite, inititatePipeline = false) {
         const parsedData = this.gsttuSrvc.parseDataForCorpusDB(dataToWrite);
         console.log('parsed Data looks like ' + typeof parsedData, parsedData);
         const GSTTAddr =  path.resolve(this.dcSrvc.YOUTUBE_DL_DB_URL, this.GOOGLE_SPEECT_TO_TEXT);
@@ -66,6 +68,12 @@ export class SpeechToTextEventUtilityService {
                 if (this.dcSrvc.updateProcessJSON('google-cloud-uris.txt', sourceGCUriParentAddr, sourceProcessedParentAddress)) {
                     console.log('file has been moved and updated properly');
                     fs.rmdirSync(path.resolve(sourceGCUriParentAddr));
+                }
+                if (inititatePipeline) {
+                    console.log('calling language translator service');
+                    // sending true to language translator means we want to call sentiment analysis api
+                    // this is specifically implemented for camino
+                    this.gtSrvc.autoInitiate(true);
                 }
             }
         } catch (e) {

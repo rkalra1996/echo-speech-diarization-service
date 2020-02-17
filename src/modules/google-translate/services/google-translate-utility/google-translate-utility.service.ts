@@ -30,7 +30,7 @@ export class GoogleTranslateUtilityService {
                 // if user supplies data to translate in the api
                 if (requestBody.data && Object.keys(requestBody.data).length > 0) {
                     if (requestBody.data.hasOwnProperty('text') && typeof requestBody.data.text === 'string' && requestBody.data.text.length > 0) {
-                        console.log('body valid for data key')
+                        console.log('body valid for data key');
                         isValid = true;
                     } else {
                         console.log('either text key is not present or it is not of type string or empty string');

@@ -27,6 +27,7 @@ imports: [
   HttpModule,
   AutomateAccessTokenModule,
   ReadDbModule,
-]
+],
+exports: [GoogleSentimentAnalysisCoreService, GoogleCloudEventHandlerService, GoogleCloudEventUtilityService],
 })
 export class GoogleCloudModule {}

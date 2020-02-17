@@ -11,8 +11,11 @@ export class WebhooksHandlerService {
             const fileInfo = this.getFileInfo(requestBody);
             console.log(fileInfo);
             // call the speech to text api to start translation
-            this.S2T.autoInitiate().then(started => {
+            this.S2T.autoInitiate(true)
+            .then(started => {
                 res();
+            }).catch(initiateErr => {
+                console.log('Error while initiating s2t');
             });
         });
     }

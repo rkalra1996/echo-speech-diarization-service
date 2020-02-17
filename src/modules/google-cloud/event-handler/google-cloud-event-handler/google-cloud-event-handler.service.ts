@@ -21,7 +21,7 @@ export class GoogleCloudEventHandlerService {
     }
 
     handleEvents() {
-        this._mainEmitter.on('START_SENTIMENT_ANALYSIS', (fileObj => {
+        this._mainEmitter.on('START_SENTIMENT_ANALYSIS', (fileObj, triggerPipeline) => {
             console.log('sentiment analysis recieved ', fileObj);
             fileObj['fileDetails']['destPath'] = path.resolve(this.dbcSrvc.YOUTUBE_DL_DB_URL, 'Sentiment_Analysis', `${fileObj['fileDetails']['fileName']}`, `${fileObj['fileDetails']['fileName']}.json`);
             console.log('will save the sentiment added file in ', fileObj['fileDetails']['destPath']);
@@ -29,13 +29,13 @@ export class GoogleCloudEventHandlerService {
                 this.dbcSrvc.creteNewFolderInYTD_DB('Sentiment_Analysis');
             }
             if (this.dbcSrvc.creteNewFolderInYTD_DB(`Sentiment_Analysis/${fileObj['fileDetails']['fileName']}`)) {
-                this.gsacSrvc.handleMultipleRequestsForTypeFile(fileObj['fileData'], fileObj['fileDetails']['destPath'], true, fileObj['fileDetails']);
+                this.gsacSrvc.handleMultipleRequestsForTypeFile(fileObj['fileData'], fileObj['fileDetails']['destPath'], true, fileObj['fileDetails'], triggerPipeline);
             } else {
                 console.log('Error while creating new folder in Sentiment_Analysis, ABORT');
             }
-        }));
+        });
 
-        this._mainEmitter.on('INITIATE_PROCESS_UPDATION', dataToUse => {
+        this._mainEmitter.on('INITIATE_PROCESS_UPDATION', (dataToUse) => {
             console.log('\nrecieved file data to write as ', dataToUse);
             // check if processed folder is present in Google_Speech_To_Text, create one
             if (!this.dbcSrvc.isYTDirectoryPresent('Google_Speech_To_Text/processed')) {
@@ -57,7 +57,7 @@ export class GoogleCloudEventHandlerService {
             // last step is to move the corresponding village folders inside processed folder of Google_Speech_To_Text
             const sourceDirAddress = path.resolve(this.dbcSrvc.YOUTUBE_DL_DB_URL, 'Google_Speech_To_Text', dataToUse.fileObjDetails.fileName);
             const destDirAddress = path.resolve(this.dbcSrvc.YOUTUBE_DL_DB_URL, 'Google_Speech_To_Text', 'processed', dataToUse.fileObjDetails.fileName);
-            if(this.gceuSrvc.moveDirectory(sourceDirAddress, destDirAddress)) {
+            if (this.gceuSrvc.moveDirectory(sourceDirAddress, destDirAddress)) {
                 fs.rmdirSync(sourceDirAddress);
             }
         });
@@ -71,10 +71,10 @@ export class GoogleCloudEventHandlerService {
         return this._mainEmitter;
     }
 
-    triggerEvent(eventName, dataToSend?: object) {
+    triggerEvent(eventName, dataToSend?: object, triggerPipeline= false) {
         if(this.validateEvent(eventName)) {
             console.log('triggering a new event ', eventName);
-            this._mainEmitter.emit(eventName, dataToSend);
+            this._mainEmitter.emit(eventName, dataToSend, triggerPipeline);
         } else {
             console.log(`Event name ${eventName} specified is not allowed`);
         }

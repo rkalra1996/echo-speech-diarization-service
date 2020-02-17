@@ -95,7 +95,7 @@ export class GoogleSentimentAnalysisUtilityService {
             return finalData;
         }
 
-        processJSONFiles(jsonFilesToProcess) {
+        processJSONFiles(jsonFilesToProcess, triggerPipeline = false) {
             return new Promise((resolve, reject) => {
                 jsonFilesToProcess.forEach(jsonFile => {
                     const fileName = jsonFile.split('.json')[0];
@@ -106,7 +106,7 @@ export class GoogleSentimentAnalysisUtilityService {
                     const fileDataString = this.getFileData(filePath);
                     fileData['fileData'] = JSON.parse(fileDataString);
                     // trigger event to start analysis
-                    this.emitter.triggerEvent('START_SENTIMENT_ANALYSIS', fileData);
+                    this.emitter.triggerEvent('START_SENTIMENT_ANALYSIS', fileData, triggerPipeline);
                 });
                 resolve({ok: true});
             });

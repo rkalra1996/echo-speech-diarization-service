@@ -13,7 +13,7 @@ export class SpeechToTextEventHandlerService {
     }
 
     handleEvents() {
-        this._mainEmitter.on('START_POLL_ON_FILE', (fileData) => {
+        this._mainEmitter.on('START_POLL_ON_FILE', (fileData, inititatePipeline?: any) => {
             const processCollectionArray = fileData.map(processObj => {
                 return {
                     process_id: processObj.processID,
@@ -22,12 +22,17 @@ export class SpeechToTextEventHandlerService {
                 };
             });
             console.log('mapped data looks like', processCollectionArray);
-            this.stteuSrvc.trackDiarizationStatus(processCollectionArray);
+            this.stteuSrvc.trackDiarizationStatus(processCollectionArray, inititatePipeline);
         });
 
-        this._mainEmitter.on('WRITE_SPEECH_TO_TEXT_RESPONSE_FOR_FILE', dataToUse => {
+        this._mainEmitter.on('WRITE_SPEECH_TO_TEXT_RESPONSE_FOR_FILE', (dataToUse, initiatePipeline = false) => {
             console.log('data recieved to write is ', dataToUse);
-            this.stteuSrvc.initiateWriteProcess(dataToUse);
+            if (initiatePipeline) {
+                console.log('got inititate pipeline request, will call language translator after saving to json');
+            } else {
+                console.log('no pipeline command recieved');
+            }
+            this.stteuSrvc.initiateWriteProcess(dataToUse, initiatePipeline);
         });
     }
 
@@ -39,10 +44,10 @@ export class SpeechToTextEventHandlerService {
         return this._mainEmitter;
     }
 
-    triggerEvent(eventName, dataToSend?: object) {
-        if(this.validateEvent(eventName)) {
+    triggerEvent(eventName, dataToSend?: object, pipelineTrigger?: boolean) {
+        if (this.validateEvent(eventName)) {
             console.log('triggering a new event ', eventName);
-            this._mainEmitter.emit(eventName, dataToSend);
+            this._mainEmitter.emit(eventName, dataToSend, pipelineTrigger);
         } else {
             console.log(`Event name ${eventName} specified is not allowed`);
         }
