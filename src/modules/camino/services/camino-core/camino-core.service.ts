@@ -57,7 +57,10 @@ export class CaminoCoreService {
                 } else {
                     const audioDownloadPath = path.resolve(this.dbCSrvc.YOUTUBE_DL_DB_URL, 'Audio_Download');
                     console.log('destination path is ', audioDownloadPath);
-                    const parentFolderName = new Date().toDateString().split(' ').join('_');
+                    let  parentFolderName = new Date().toDateString().split(' ').join('_');
+                    // adding date to the folder name
+                    parentFolderName = parentFolderName + `_${new Date().getHours()}_${new Date().getMinutes()}_${new Date().getSeconds()}`;
+                    console.log('will download audio in ', parentFolderName);
                     const parentFolderAddr = path.resolve(audioDownloadPath, parentFolderName);
                     try {
                         this.dbCSrvc.creteNewFolderInYTD_DB(`Audio_Download/${parentFolderName}`);
