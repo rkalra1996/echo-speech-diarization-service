@@ -184,6 +184,7 @@ export class GoogleSpeechToTextUtilityService {
                 Promise.all(fileCloudUriPromises)
             .then(fileProcessResponse => {
                 console.log('file process response is ', JSON.stringify(fileProcessResponse));
+                // add filename to the response
                 resolve(fileProcessResponse);
             })
             .catch(fileProcessError => {
@@ -205,7 +206,7 @@ export class GoogleSpeechToTextUtilityService {
                     // capture the current diarization id and go further
                     console.log('recieved response for ', requestDetails.data.audio.uri);
                     console.log(response.data);
-                    resolve({ processID: response.data.name, google_cloud_uri: requestDetails.data.audio.uri, fileData });
+                    resolve({ processID: response.data.name, google_cloud_uri: requestDetails.data.audio.uri, originalfilename: `${requestDetails.data.audio.uri.substr(requestDetails.data.audio.uri.lastIndexOf('/') + 1, requestDetails.data.audio.uri.length) }`,  fileData });
                 })
                 .catch(error => {
                     console.log('recieved error from hitSpeechToTextApi request at ', new Date().toTimeString());

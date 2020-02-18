@@ -1,4 +1,4 @@
-import { Module, HttpModule } from '@nestjs/common';
+import { Module, HttpModule, forwardRef } from '@nestjs/common';
 import { GoogleSpeechToTextController } from './controllers/google-speech-to-text/google-speech-to-text.controller';
 import { GoogleSpeechToTextCoreService } from './services/google-speech-to-text-core/google-speech-to-text-core.service';
 import { GoogleSpeakerDiarizationModule } from '../google-speaker-diarization/google-speaker-diarization.module';
@@ -12,6 +12,7 @@ import { GoogleSentimentAnalysisCoreService } from '../google-cloud/services/goo
 import { GoogleSentimentAnalysisUtilityService } from '../google-cloud/services/google-sentiment-analysis-utility/google-sentiment-analysis-utility.service';
 import { GoogleCloudModule } from '../google-cloud/google-cloud.module';
 import { CaminoModule } from '../camino/camino.module';
+import { AppModule } from './../../app.module';
 
 @Module({
     imports: [
@@ -19,6 +20,7 @@ import { CaminoModule } from '../camino/camino.module';
         GoogleSpeakerDiarizationModule,
         GoogleTranslateModule,
         GoogleCloudModule,
+        forwardRef(() => AppModule),
         CaminoModule,
     ],
     controllers: [GoogleSpeechToTextController],

@@ -4,6 +4,7 @@ import { AccessTokenGeneratorService } from '../../../automate-access-token/serv
 import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
 import { GoogleCloudEventHandlerService } from '../../event-handler/google-cloud-event-handler/google-cloud-event-handler.service';
 import { CaminoCoreService } from '../../../camino/services/camino-core/camino-core.service';
+import { StatusService } from '../../../../services/shared/status/status.service';
 
 @Injectable()
 export class GoogleSentimentAnalysisCoreService {
@@ -15,6 +16,7 @@ export class GoogleSentimentAnalysisCoreService {
         private dbCSrvc: DatabseCommonService,
         private emitter: GoogleCloudEventHandlerService,
         private caminoSrvc: CaminoCoreService,
+        private readonly statusSrvc: StatusService,
     ) { }
 
     validateBodyForSentimentAnalysis(requestBody): boolean {
@@ -132,6 +134,7 @@ export class GoogleSentimentAnalysisCoreService {
         }
         Promise.all(sentimentAnalysisPromises)
             .then((res: any) => {
+                const combinedFileData = fileData;
                 console.log('recieved response from Google Sentiment Analysis.', new Date().toTimeString());
                 for (let i = 0; i < fileData['data'].length; i++) {
                     // console.log('Response from Sentiment Analysis : ' + JSON.stringify(res[i].data));
@@ -144,7 +147,11 @@ export class GoogleSentimentAnalysisCoreService {
                 if (triggerPipeline) {
                     console.log('detected auto trigger for sentiment analysis, will invoke keyphrase extraction automatically');
                     // to call the keyphrase extraction api and send the keyphrase of the text to a specific json db which will record all the keyphrases
-                    this.caminoSrvc.initiateKeyPhraseExtraction(filePath);
+                    // by this point the state of the files is to be updated
+                    console.log('extracting file name from ' , combinedFileData);
+                    console.log(combinedFileData.data[0].filename);
+                    this.statusSrvc.updateStatus(combinedFileData.data[0].filename, 3);
+                    this.caminoSrvc.initiateKeyPhraseExtraction(filePath, combinedFileData.data[0].filename);
                 }
             })
             .catch(err => {

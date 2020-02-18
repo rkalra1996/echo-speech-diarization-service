@@ -15,6 +15,8 @@ import { YoutubeDlModule } from '../youtube-dl/youtube-dl.module';
 import { FfmpegUtilityService } from '../youtube-dl/services/ffmpeg-utility/ffmpeg-utility.service';
 import { YoutubeDlUtilityService } from '../youtube-dl/services/youtube-dl-utility/youtube-dl-utility.service';
 import { KeyphrasePythonService } from '../camino/services/keyphrase-python/keyphrase-python.service';
+import { AppModule } from './../../app.module';
+import { StatusService } from './../../services/shared/status/status.service';
 
 @Module({
   controllers: [
@@ -31,6 +33,7 @@ import { KeyphrasePythonService } from '../camino/services/keyphrase-python/keyp
     YoutubeDlUtilityService,
     GoogleCloudEventUtilityService,
     KeyphrasePythonService,
+    StatusService,
     CaminoCoreService,
   ],
 imports: [
@@ -40,6 +43,9 @@ imports: [
   YoutubeDlModule,
   forwardRef(() => {
     return CaminoModule;
+  }),
+  forwardRef(() => {
+    return AppModule;
   }),
 ],
 exports: [GoogleSentimentAnalysisCoreService, GoogleCloudEventHandlerService, GoogleCloudEventUtilityService],

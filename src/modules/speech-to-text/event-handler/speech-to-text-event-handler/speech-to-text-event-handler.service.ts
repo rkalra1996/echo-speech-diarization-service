@@ -19,6 +19,7 @@ export class SpeechToTextEventHandlerService {
                     process_id: processObj.processID,
                     source_url: processObj.google_cloud_uri,
                     fileData: processObj.fileData,
+                    filename: processObj.originalfilename,
                 };
             });
             console.log('mapped data looks like', processCollectionArray);

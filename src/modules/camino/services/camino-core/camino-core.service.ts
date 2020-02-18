@@ -7,6 +7,7 @@ import { GoogleCloudBucketCoreService } from './../../../google-cloud/services/g
 import * as path from 'path';
 import * as fs from 'fs';
 import { KeyphrasePythonService } from '../keyphrase-python/keyphrase-python.service';
+import { StatusService } from './../../../../services/shared/status/status.service';
 @Injectable()
 export class CaminoCoreService {
 
@@ -15,7 +16,8 @@ export class CaminoCoreService {
         private dbCSrvc: DatabseCommonService,
         private ytdluSrvc: YoutubeDlUtilityService,
         private readonly gcbSrvc: GoogleCloudBucketCoreService,
-        private readonly keyPhraseSrvc: KeyphrasePythonService) {}
+        private readonly keyPhraseSrvc: KeyphrasePythonService,
+        private readonly statusSrvc: StatusService) {}
 
     async uploadToCloud(fileData) {
         console.log('processing file info to upload to the cloud');
@@ -137,19 +139,47 @@ export class CaminoCoreService {
         return audioData;
     }
 
-    initiateKeyPhraseExtraction(filePathToUse) {
+    initiateKeyPhraseExtraction(filePathToUse, originalFilename = null) {
         console.log('file recieved is ', filePathToUse);
+        console.log('running keyphrase extraction for ', originalFilename);
         // we have the path of the file from where we need to read the transcript
         // get the body for keyPhrase extraction
-        this.keyPhraseSrvc.prepareRequestBodyForKPExtraction(filePathToUse);
-        // prepare request data
-        this.keyPhraseSrvc.getKeyPhraseRequestData('');
+        const body = this.keyPhraseSrvc.prepareRequestBodyForKPExtraction(filePathToUse);
         // send the data to api for keyPhrase extraction
-        this.keyPhraseSrvc.hitKPhraseAPI({});
+        console.log('body looks like ', body);
+        this.keyPhraseSrvc.hitKPhraseAPI(body, originalFilename)
+        .then(phraseRes => {
+            // dump the key phrases to the status db for particular file
+            const dumpData = this.createDumpData(phraseRes);
+            this.statusSrvc.dumpData(originalFilename, dumpData, 4);
+        })
+        .catch(() => {
+            // update the status that an error occured at keyPhrase level ===> -4
+            console.log('updating status as -4 for ', originalFilename);
+            this.statusSrvc.updateStatus(originalFilename, -4);
+        });
         // prepare data for wordcloud json
-        this.keyPhraseSrvc.preapreaWordCloudObject('');
+        // this.keyPhraseSrvc.preapreaWordCloudObject('');
         // send the result to a wordcloud database
-        this.sendDataToWordCloudDB({});
+        // this.sendDataToWordCloudDB({});
+    }
+
+    createDumpData(dataToProcess) {
+        const filteredData = [];
+        dataToProcess.documents
+        .forEach(documentObj => {
+            if (documentObj.hasOwnProperty('keyPhrases') && Array.isArray(documentObj.keyPhrases)) {
+                const filteredKP = documentObj.keyPhrases.filter(keyPhrase => keyPhrase.length > 0);
+                console.log('filtered KP looks like ', filteredKP);
+                const newObj = {
+                    keyPhrases: filteredKP,
+                    sentiment: documentObj.sentiment,
+                };
+                console.log('returning ', newObj);
+                filteredData.push(newObj);
+            } else {return {};}
+        });
+        return filteredData;
     }
 
     sendDataToWordCloudDB(dataToSave) {

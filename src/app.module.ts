@@ -18,6 +18,7 @@ import { GoogleCloudModule } from './modules/google-cloud/google-cloud.module';
 import { YoutubeModule } from './modules/youtube/youtube.module';
 import { GoogleTranslateModule } from './modules/google-translate/google-translate.module';
 import { CaminoModule } from './modules/camino/camino.module';
+import { StatusService } from './services/shared/status/status.service';
 
 @Module({
   // serve static files in the server
@@ -40,8 +41,8 @@ ServeStaticModule.forRoot({
     CaminoModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CommonRequestValidatorService],
-  exports: [CommonRequestValidatorService],
+  providers: [AppService, CommonRequestValidatorService, StatusService],
+  exports: [CommonRequestValidatorService, StatusService],
 })
 export class AppModule {
 

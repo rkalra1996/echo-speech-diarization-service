@@ -12,6 +12,7 @@ import { AutomateAccessTokenModule } from '../automate-access-token/automate-acc
 import { WebhooksHandlerService } from './services/webhooks-handler/webhooks-handler.service';
 import { SpeechToTextModule } from '../speech-to-text/speech-to-text.module';
 import { KeyphrasePythonService } from './services/keyphrase-python/keyphrase-python.service';
+import { AppModule } from './../../app.module';
 
 @Module({
     imports: [
@@ -21,6 +22,7 @@ import { KeyphrasePythonService } from './services/keyphrase-python/keyphrase-py
         AutomateAccessTokenModule,
         forwardRef(() => GoogleCloudModule),
         forwardRef(() => SpeechToTextModule),
+        forwardRef(() => AppModule),
     ],
     controllers: [CaminoController],
     providers: [

@@ -33,7 +33,7 @@ export class GoogleTranslateCoreService {
         const jsonFiles = this.databaseCommSrvc.readYTDFolderDetails('json', 'Google_Speech_To_Text');
         if (jsonFiles.length) {
             jsonFiles.forEach(async jsonFile => {
-                const fileName = jsonFile.split('.json')[0]
+                const fileName = jsonFile.split('.json')[0];
                 console.log('checking for file ', fileName);
                 const jsonFileAddr = path.resolve(sourceParentFolderAddr, fileName, jsonFile);
                 const jsonFileDataString = fs.readFileSync(jsonFileAddr, {encoding: 'utf-8'});

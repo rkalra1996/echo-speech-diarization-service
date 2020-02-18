@@ -1,16 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { GoogleSpeechToTextCoreService } from './../../../speech-to-text/services/google-speech-to-text-core/google-speech-to-text-core.service';
+import { StatusService } from './../../../../services/shared/status/status.service';
 
 @Injectable()
 export class WebhooksHandlerService {
 
-    constructor(private readonly S2T: GoogleSpeechToTextCoreService) {}
+    constructor(
+        private readonly S2T: GoogleSpeechToTextCoreService,
+        private readonly statusSrvc: StatusService) {}
 
     handleWebhookEvent(requestBody) {
         return new Promise((res, rej) => {
             const fileInfo = this.getFileInfo(requestBody);
+            console.log('fileinfo to set status in status db is ');
             console.log(fileInfo);
             // call the speech to text api to start translation
+            // update the status in status DB
+            this.statusSrvc.updateStatus(fileInfo.filename, 1);
             this.S2T.autoInitiate(true)
             .then(started => {
                 res();

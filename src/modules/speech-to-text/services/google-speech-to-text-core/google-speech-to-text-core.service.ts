@@ -263,7 +263,7 @@ export class GoogleSpeechToTextCoreService {
     });
     }
 
-    async autoInitiate(continueToTranslation = false) {
+    async autoInitiate(continueToTranslation = false, filename = null) {
         // if continueToTranslation is true, the moment we save the speech to text json, it will auto trigger language translation api
         if (!this.databaseCommSrvc.isYTDirectoryPresent('Google_Speech_To_Text')) {
             if (this.databaseCommSrvc.creteNewFolderInYTD_DB('Google_Speech_To_Text')) {
