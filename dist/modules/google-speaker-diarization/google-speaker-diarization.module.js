@@ -23,6 +23,7 @@ GoogleSpeakerDiarizationModule = __decorate([
         imports: [common_1.HttpModule, read_db_module_1.ReadDbModule],
         controllers: [diarization_beta_controller_1.DiarizationBetaController],
         providers: [diarization_speaker_service_1.DiarizationSpeakerService, initiate_diarization_handler_service_1.InitiateDiarizationHandlerService, google_speaker_diarization_event_handler_service_1.GoogleSpeakerDiarizationEventHandlerService, write_converted_data_to_json_service_1.WriteConvertedDataToJsonService, gcloud_token_provider_service_1.GcloudTokenProviderService, access_token_generator_service_1.AccessTokenGeneratorService, gcs_bucket_fetcher_service_1.GcsBucketFetcherService],
+        exports: [diarization_speaker_service_1.DiarizationSpeakerService, gcloud_token_provider_service_1.GcloudTokenProviderService, access_token_generator_service_1.AccessTokenGeneratorService, gcs_bucket_fetcher_service_1.GcsBucketFetcherService, read_db_module_1.ReadDbModule],
     })
 ], GoogleSpeakerDiarizationModule);
 exports.GoogleSpeakerDiarizationModule = GoogleSpeakerDiarizationModule;

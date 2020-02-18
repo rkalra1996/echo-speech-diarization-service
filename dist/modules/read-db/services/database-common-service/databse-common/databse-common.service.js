@@ -23,6 +23,8 @@ let DatabseCommonService = class DatabseCommonService {
         this.speakerMergerSrvc = speakerMergerSrvc;
         this.DB_URL = path.resolve(__dirname, './../../../../../assets/vis_db');
         this.DIARIZATION_DB_URL = path.resolve(__dirname, './../../../../../assets/diarization_db');
+        this.YOUTUBE_DL_DB_URL = path.resolve(__dirname, './../../../../../assets/youtubeDL_db');
+        this.YOUTUBE_DOWNLOAD_FOLDER = 'youtube-download';
     }
     readJSONdb() {
         console.log('reading from file', this.DB_URL);
@@ -142,6 +144,252 @@ let DatabseCommonService = class DatabseCommonService {
             ok: true,
             error: '',
         };
+    }
+    writeFileToyoutubeDLdb(dataObjectToWrite) {
+        const parentFolderName = dataObjectToWrite.parent_folder_name;
+        const parentFolderAddr = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolderName);
+        const targetFileName = `${parentFolderName}_speech_to_text.json`;
+        const targetFileAddr = path.resolve(parentFolderAddr, targetFileName);
+        console.log('writing data at ', targetFileAddr);
+        if (!fs.existsSync(parentFolderAddr)) {
+            fs.mkdirSync(parentFolderAddr);
+        }
+        return new Promise((resolve, reject) => {
+            fs.writeFile(targetFileAddr, JSON.stringify({ data: dataObjectToWrite.data }), { encoding: 'utf-8' }, err => {
+                if (err) {
+                    console.log('An error occured while writing data to youtubeDL db', err);
+                    resolve({ ok: false, error: 'An error occured while writing data to youtubeDL db' });
+                }
+                resolve({ ok: true });
+            });
+        });
+    }
+    get getTodayDate() {
+        const todayDate = new Date();
+        const dd = String(todayDate.getDate()).padStart(2, '0');
+        const mm = String(todayDate.getMonth() + 1).padStart(2, '0');
+        const yyyy = todayDate.getFullYear();
+        return (mm + '_' + dd + '_' + yyyy);
+    }
+    getYoutubeDownloadFileAddress(villageDetails, parentFolderAddr) {
+        villageDetails['country'] = villageDetails['country'] ? villageDetails['country'] : 'india';
+        const targetFileName = `${villageDetails.village}__${this.getTodayDate}.json`;
+        const targetFileAddr = path.resolve(parentFolderAddr, targetFileName);
+        console.log('file created at ', targetFileAddr);
+        return { address: targetFileAddr, file: targetFileName };
+    }
+    writeYoutubeUrlsToFile(parentFolder, fileName, dataArray, villageDetailsObj) {
+        if (!fs.existsSync(path.resolve(this.YOUTUBE_DL_DB_URL))) {
+            fs.mkdirSync(path.resolve(this.YOUTUBE_DL_DB_URL));
+        }
+        const parentFolderAddr = path.resolve(this.YOUTUBE_DL_DB_URL, this.YOUTUBE_DOWNLOAD_FOLDER);
+        console.log('parent folder to use is ', parentFolderAddr);
+        if (!fs.existsSync(parentFolderAddr)) {
+            fs.mkdirSync(parentFolderAddr);
+        }
+        const targetDetails = Object.assign({}, this.getYoutubeDownloadFileAddress(villageDetailsObj, parentFolderAddr));
+        const targetFileAddr = targetDetails.address;
+        try {
+            const dataToWrite = Object.assign({}, villageDetailsObj);
+            dataToWrite['audio_urls'] = [...dataArray];
+            fs.writeFileSync(targetFileAddr, JSON.stringify(dataToWrite), { encoding: 'utf-8' });
+            console.log('file written successfully');
+            return { parentFolder: this.YOUTUBE_DOWNLOAD_FOLDER, fileName: `${targetDetails.file}` };
+        }
+        catch (e) {
+            console.log(e);
+            throw new Error(`An error occured while writing youtube urls to file ${targetDetails.file}`);
+        }
+    }
+    writeTextFileToyoutubeDLdb(dataObjectToWrite) {
+        const parentFolderName = dataObjectToWrite.parent_folder_name;
+        const parentFolderAddr = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolderName);
+        const textFolderName = 'speech-to-text';
+        const textFolderAddr = path.resolve(parentFolderAddr, textFolderName);
+        if (!fs.existsSync(textFolderAddr)) {
+            fs.mkdirSync(textFolderAddr);
+        }
+        const writeTextDataPromise = [];
+        for (const dataEach of dataObjectToWrite.data) {
+            const sourceUrl = dataEach.source_url;
+            const fileLocArray = sourceUrl.split('/');
+            let fileName = fileLocArray[fileLocArray.length - 1];
+            fileName = fileName.replace('.wav', '.txt');
+            console.log('Writing the text data to ' + fileName);
+            const fileLocation = path.resolve(textFolderAddr, fileName);
+            if (fs.existsSync(fileLocation)) {
+                fs.unlinkSync(fileLocation);
+            }
+            const resultData = dataEach.diarized_data.response.results;
+            const dataTextOnly = resultData[resultData.length - 1].combined_transcript;
+            console.log('Test Data is : ' + dataTextOnly);
+            writeTextDataPromise.push(new Promise((resolve, reject) => {
+                fs.writeFile(fileLocation, dataTextOnly, { encoding: 'utf-8' }, err => {
+                    if (err) {
+                        console.log('An error occured while writing speech Text to ', err);
+                        resolve({ ok: false, error: 'An error occured while text data to the speech-to-text folder' });
+                    }
+                    resolve({ ok: true });
+                });
+            }));
+        }
+        return writeTextDataPromise;
+    }
+    isYTDirectoryPresent(directoryToVerify) {
+        const parentDirAddr = path.resolve(this.YOUTUBE_DL_DB_URL, directoryToVerify);
+        return fs.existsSync(parentDirAddr);
+    }
+    createSpeechToTextFileBackup(dataToBackup, languageCode, parentFolderName) {
+        if (languageCode && parentFolderName) {
+            if (!this.isYTDirectoryPresent(parentFolderName)) {
+                this.creteNewFolderInYTD_DB(parentFolderName);
+            }
+            const backupFolderName = 'language_backup';
+            const backupFolderAddress = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolderName, backupFolderName);
+            const backupFileAddress = path.resolve(backupFolderAddress, `speech_to_text_${languageCode}.json`);
+            if (!fs.existsSync(backupFolderAddress)) {
+                fs.mkdirSync(backupFolderAddress);
+            }
+            try {
+                if (dataToBackup.constructor === Object) {
+                    dataToBackup = JSON.stringify(dataToBackup);
+                }
+                fs.writeFileSync(backupFileAddress, dataToBackup, { encoding: 'utf-8' });
+                console.log('backup file created successfully');
+                return Promise.resolve({ ok: true });
+            }
+            catch (e) {
+                console.log('Error occured', e);
+                return Promise.resolve({ ok: false, error: `An Error occured while creating / writing to backup file ${`speech_to_text_${languageCode}.json`}` });
+            }
+        }
+        else {
+            return Promise.resolve({ ok: false, error: 'Cannot create a backup file if language code / parent Folder is not provided' });
+        }
+    }
+    async backupAndWriteTranslatedFile(originalFileDataString, newFileData, parentFolder = null) {
+        const originalFileData = JSON.parse(originalFileDataString);
+        const sourceLang = originalFileData.data[0].diarized_data.response.results[0].languageCode;
+        console.log(`source language code detected in the file for creating backup is ${sourceLang}`);
+        const isBackedUp = await this.createSpeechToTextFileBackup(originalFileData, sourceLang, parentFolder);
+        if (!isBackedUp['ok']) {
+            return { ok: false, error: isBackedUp['error'] };
+        }
+        const isWritten = await this.writeFileToyoutubeDLdb({ data: newFileData, parent_folder_name: parentFolder });
+        if (isWritten['ok']) {
+            console.log('successfully written new contents to original file');
+            return Promise.resolve({ ok: true, message: 'Data has been translated to english successfully' });
+        }
+        return Promise.resolve({ ok: true, message: `An Error occured while writing new file data in original file ${parentFolder}_speech_to_text_${sourceLang}.json` });
+    }
+    readFromYT_DB(parentFolder, fileNameToRead) {
+        const FileAddress = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolder, fileNameToRead);
+        try {
+            const fileData = fs.readFileSync(FileAddress, { encoding: 'utf-8' });
+            return fileData;
+        }
+        catch (e) {
+            console.log('An error occured while reading the file from YT_DB', e);
+            return null;
+        }
+    }
+    getuploadSourcePath(parentFolder) {
+        const parentAddress = path.resolve(this.YOUTUBE_DL_DB_URL, parentFolder);
+        if (fs.existsSync(parentAddress)) {
+            return parentAddress;
+        }
+        else {
+            return null;
+        }
+    }
+    getbucketUrlsFile(parentFolder) {
+        const bucketFileAddr = path.resolve(this.getuploadSourcePath(parentFolder), 'google-cloud-uris.txt');
+        return bucketFileAddr;
+    }
+    getSpeechToTextSourcePath(parentFolder) {
+        const parentFolderAddress = this.getuploadSourcePath(parentFolder);
+        if (parentFolderAddress) {
+            const googleSpeechToTextAddr = path.resolve(parentFolderAddress, `${parentFolder}_speech_to_text.json`);
+            return googleSpeechToTextAddr;
+        }
+        else {
+            console.log('parent folder does not exist');
+            return null;
+        }
+    }
+    readYTDFolderDetails(extensionToRead, folderPath) {
+        let parentFolderAddr = this.YOUTUBE_DL_DB_URL;
+        if (folderPath && folderPath.length > 0) {
+            parentFolderAddr = path.resolve(parentFolderAddr, folderPath);
+        }
+        else {
+            parentFolderAddr = path.resolve(parentFolderAddr, this.YOUTUBE_DOWNLOAD_FOLDER);
+        }
+        console.log('checking details of ', parentFolderAddr);
+        try {
+            const directoryDetails = fs.readdirSync(parentFolderAddr);
+            if (extensionToRead && extensionToRead.length > 0) {
+                return directoryDetails.filter(fileNames => {
+                    return path.extname(fileNames).toLocaleLowerCase() === `.${extensionToRead}`;
+                });
+            }
+            else {
+                throw new Error('extension keyword is mandatory to search files');
+            }
+        }
+        catch (e) {
+            console.log('Error catched while reading YoutubeFolder Details');
+            console.log(e);
+            throw new Error('Unexpected error while executing internal processes');
+        }
+    }
+    creteNewFolderInYTD_DB(folderPath) {
+        try {
+            const newFolders = folderPath.split('/');
+            let newFolderPath = this.YOUTUBE_DL_DB_URL;
+            newFolders.forEach(folder => {
+                const folderPartialPath = path.resolve(newFolderPath, folder);
+                if (!fs.existsSync(folderPartialPath)) {
+                    fs.mkdirSync(folderPartialPath);
+                }
+                newFolderPath = folderPartialPath;
+            });
+            return true;
+        }
+        catch (e) {
+            console.log('error while creating new folders');
+            console.log(e);
+            return false;
+        }
+    }
+    updateProcessJSON(fileName, parentFolderPath, destFolderPath) {
+        try {
+            const oldFilePath = path.resolve(parentFolderPath, fileName);
+            const newFilePath = path.resolve(destFolderPath, fileName);
+            console.log('moving file from ' + oldFilePath + ' to ' + newFilePath);
+            fs.renameSync(oldFilePath, newFilePath);
+            return true;
+        }
+        catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
+    clearDirectory(dirPath) {
+        try {
+            var files = fs.readdirSync(dirPath);
+        }
+        catch (e) {
+            return;
+        }
+        if (files.length > 0)
+            for (var i = 0; i < files.length; i++) {
+                var filePath = dirPath + '/' + files[i];
+                if (fs.statSync(filePath).isFile())
+                    fs.unlinkSync(filePath);
+                else
+                    this.clearDirectory(filePath);
+            }
     }
 };
 DatabseCommonService = __decorate([

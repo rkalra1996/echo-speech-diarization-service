@@ -99,6 +99,9 @@ var nodeModule = (function (d3) {
                 if (d.ptype.toLowerCase() == varConfig.SPOKE) {
                     return colorCodes.spokeColor;
                 }
+                else if(d.ptype.toLowerCase() == varConfig.STUDENT){
+                    return colorCodes.studentColor;
+                }
                 else if (d.ptype.toLowerCase() == varConfig.SUBSPOKE) {
                     // assign a random color to this new subspoke and store it in its meta data
                     d['assigned_color'] = colorConfig.getRandomColor();

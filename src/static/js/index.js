@@ -70,7 +70,7 @@
 
                 $(`#imageContainer_${imageContainerSectionID}`).css('display', 'block');
                 
-                _scrollToBottom('imageSection');
+                // _scrollToBottom('imageSection');
                 return;
             }
 

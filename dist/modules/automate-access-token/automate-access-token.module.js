@@ -14,7 +14,7 @@ let AutomateAccessTokenModule = class AutomateAccessTokenModule {
 AutomateAccessTokenModule = __decorate([
     common_1.Module({
         providers: [access_token_generator_service_1.AccessTokenGeneratorService, gcloud_token_provider_service_1.GcloudTokenProviderService],
-        exports: [access_token_generator_service_1.AccessTokenGeneratorService]
+        exports: [access_token_generator_service_1.AccessTokenGeneratorService, gcloud_token_provider_service_1.GcloudTokenProviderService]
     })
 ], AutomateAccessTokenModule);
 exports.AutomateAccessTokenModule = AutomateAccessTokenModule;

@@ -19,6 +19,12 @@ const automate_access_token_module_1 = require("./modules/automate-access-token/
 const async_reader_module_1 = require("./modules/async-reader/async-reader.module");
 const speaker_merger_module_1 = require("./modules/speaker-merger/speaker-merger.module");
 const zoom_parser_module_1 = require("./modules/zoom-parser/zoom-parser.module");
+const youtube_dl_module_1 = require("./modules/youtube-dl/youtube-dl.module");
+const speech_to_text_module_1 = require("./modules/speech-to-text/speech-to-text.module");
+const google_cloud_module_1 = require("./modules/google-cloud/google-cloud.module");
+const youtube_module_1 = require("./modules/youtube/youtube.module");
+const google_translate_module_1 = require("./modules/google-translate/google-translate.module");
+const camino_module_1 = require("./modules/camino/camino.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -34,6 +40,12 @@ AppModule = __decorate([
             speaker_merger_module_1.SpeakerMergerModule,
             async_reader_module_1.AsyncReaderModule,
             zoom_parser_module_1.ZoomParserModule,
+            youtube_dl_module_1.YoutubeDlModule,
+            speech_to_text_module_1.SpeechToTextModule,
+            google_cloud_module_1.GoogleCloudModule,
+            youtube_module_1.YoutubeModule,
+            google_translate_module_1.GoogleTranslateModule,
+            camino_module_1.CaminoModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, common_request_validator_service_1.CommonRequestValidatorService],

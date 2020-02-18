@@ -8,6 +8,7 @@ var variablesConfig = (function(){
         },
         HUB: "hub",
         SPOKE: "spoke",
+        STUDENT: "student",
         SUBHUB: "subhub",
         SUBSPOKE: "subspoke",
         NODE_SIZE: {

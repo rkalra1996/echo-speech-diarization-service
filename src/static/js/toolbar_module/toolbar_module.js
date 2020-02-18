@@ -14,14 +14,6 @@ var toolbarModule = (function(jQuery){
             <p class="name">Type</p>
             <p class="value">${data.type}</p>
         </div>
-        <div class="row">
-            <p class="name">Gender</p>
-            <p class="value">${data.gender}</p>
-        </div>
-        <div class="row">
-            <p class="name">Tone</p>
-            <p class="value ${data.tone}">${data.tone}</p>
-      </div>
       `;
 
       // insert the template into the element
@@ -82,7 +74,7 @@ var toolbarModule = (function(jQuery){
 
     function applyBorder(selection, type) {
         if (!!type && typeof type === 'string') {
-            let colorCode = type && type.toLowerCase().includes('hub') ? '#1f77b4' : '#ff7f0e';
+            let colorCode = type && type.toLowerCase().includes('teacher') ? '#1f77b4' : '#ff7f0e';
         selection.children().css({"border": `5px solid ${colorCode}`});
         }
     }
@@ -103,7 +95,7 @@ var toolbarModule = (function(jQuery){
             let gender = dataToUse.gender || 'Not Specified';
             let tone = dataToUse.tone || 'NA';
 
-        _renderNodeDetailsTemplate(el,{name, type, gender, tone});
+        _renderNodeDetailsTemplate(el,{name, type});
         }
 
     }
