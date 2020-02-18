@@ -1,4 +1,4 @@
-import { Module, HttpModule } from '@nestjs/common';
+import { Module, HttpModule, forwardRef } from '@nestjs/common';
 import { CaminoController } from './controllers/camino/camino.controller';
 import { CaminoCoreService } from './services/camino-core/camino-core.service';
 import { ReadDbModule } from '../read-db/read-db.module';
@@ -19,8 +19,8 @@ import { KeyphrasePythonService } from './services/keyphrase-python/keyphrase-py
         ReadDbModule,
         YoutubeDlModule,
         AutomateAccessTokenModule,
-        GoogleCloudModule,
-        SpeechToTextModule,
+        forwardRef(() => GoogleCloudModule),
+        forwardRef(() => SpeechToTextModule),
     ],
     controllers: [CaminoController],
     providers: [
@@ -32,6 +32,6 @@ import { KeyphrasePythonService } from './services/keyphrase-python/keyphrase-py
         WebhooksHandlerService,
         KeyphrasePythonService,
     ],
-    exports: [KeyphrasePythonService],
+    exports: [CaminoCoreService],
 })
 export class CaminoModule {}

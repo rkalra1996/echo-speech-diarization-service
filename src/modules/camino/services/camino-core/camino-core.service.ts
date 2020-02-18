@@ -139,8 +139,9 @@ export class CaminoCoreService {
 
     initiateKeyPhraseExtraction(filePathToUse) {
         console.log('file recieved is ', filePathToUse);
+        // we have the path of the file from where we need to read the transcript
         // get the body for keyPhrase extraction
-        this.keyPhraseSrvc.prepareRequestBodyForKPExtraction('');
+        this.keyPhraseSrvc.prepareRequestBodyForKPExtraction(filePathToUse);
         // prepare request data
         this.keyPhraseSrvc.getKeyPhraseRequestData('');
         // send the data to api for keyPhrase extraction

@@ -11,6 +11,7 @@ import { GoogleTranslateUtilityService } from '../google-translate/services/goog
 import { GoogleSentimentAnalysisCoreService } from '../google-cloud/services/google-sentiment-analysis-core/google-sentiment-analysis-core.service';
 import { GoogleSentimentAnalysisUtilityService } from '../google-cloud/services/google-sentiment-analysis-utility/google-sentiment-analysis-utility.service';
 import { GoogleCloudModule } from '../google-cloud/google-cloud.module';
+import { CaminoModule } from '../camino/camino.module';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { GoogleCloudModule } from '../google-cloud/google-cloud.module';
         GoogleSpeakerDiarizationModule,
         GoogleTranslateModule,
         GoogleCloudModule,
+        CaminoModule,
     ],
     controllers: [GoogleSpeechToTextController],
     providers: [
