@@ -37,4 +37,18 @@ export class CaminoController {
         return response.status(200).send();
     }
 
+    @Get('feedback/status/:filename')
+    async getFileStatus(@Param() params, @Res() response): Promise<any> {
+        if (params.filename) {
+            const statusDetails = await this.caminoCoreSrvc.getFileStatus(params.filename);
+            if (statusDetails['ok']) {
+                response.status(200).send({status: 200, data: statusDetails['data']});
+            } else {
+                response.status(statusDetails['status']).send({status: statusDetails['status'], error: statusDetails['error']});
+            }
+        } else {
+            response.status(400).send({status: 400, error: 'filename in params is mandatory'});
+        }
+    }
+
 }

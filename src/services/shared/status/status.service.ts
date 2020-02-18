@@ -36,4 +36,17 @@ export class StatusService {
             }
         });
     }
+
+    getStatus(filename) {
+        const wavedFileName = `${filename}.wav`;
+        return new Promise((res, rej) => {
+            const fileData = fs.readFileSync(this.STATUS_DB_PATH, 'utf-8');
+            const fileJSON = JSON.parse(fileData);
+            if (Object.keys(fileJSON).includes(wavedFileName)) {
+                res(fileJSON[wavedFileName]);
+            } else {
+                rej({status: 400, error: 'filename not present in the status db'});
+            }
+        });
+    }
 }

@@ -192,4 +192,19 @@ export class CaminoCoreService {
             console.log('Error occured while accesing wordcloud db');
         }
     }
+
+    getFileStatus(filename) {
+        const monoFilename = `mono_${filename}`;
+        return new Promise((res, rej) => {
+            this.statusSrvc.getStatus(monoFilename)
+            .then(statusDetails => {
+                console.log('receved status details as ', statusDetails);
+                res({ok: true, data: statusDetails});
+            })
+            .catch(err => {
+                console.log('error in status api ', err);
+                res({status: err['status'], error: err['error']});
+            });
+        });
+    }
 }
