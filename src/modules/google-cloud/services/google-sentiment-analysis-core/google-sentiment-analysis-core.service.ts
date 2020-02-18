@@ -3,7 +3,7 @@ import { GoogleSentimentAnalysisUtilityService } from '../google-sentiment-analy
 import { AccessTokenGeneratorService } from '../../../automate-access-token/services/access-token-generator/access-token-generator.service';
 import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
 import { GoogleCloudEventHandlerService } from '../../event-handler/google-cloud-event-handler/google-cloud-event-handler.service';
-import { CaminoCoreService } from 'src/modules/camino/services/camino-core/camino-core.service';
+import { CaminoCoreService } from '../../../camino/services/camino-core/camino-core.service';
 
 @Injectable()
 export class GoogleSentimentAnalysisCoreService {
