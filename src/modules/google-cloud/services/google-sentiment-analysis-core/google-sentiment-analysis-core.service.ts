@@ -3,6 +3,7 @@ import { GoogleSentimentAnalysisUtilityService } from '../google-sentiment-analy
 import { AccessTokenGeneratorService } from '../../../automate-access-token/services/access-token-generator/access-token-generator.service';
 import { DatabseCommonService } from '../../../read-db/services/database-common-service/databse-common/databse-common.service';
 import { GoogleCloudEventHandlerService } from '../../event-handler/google-cloud-event-handler/google-cloud-event-handler.service';
+import { CaminoCoreService } from 'src/modules/camino/services/camino-core/camino-core.service';
 
 @Injectable()
 export class GoogleSentimentAnalysisCoreService {
@@ -13,6 +14,7 @@ export class GoogleSentimentAnalysisCoreService {
         private atgSrvc: AccessTokenGeneratorService,
         private dbCSrvc: DatabseCommonService,
         private emitter: GoogleCloudEventHandlerService,
+        private caminoSrvc: CaminoCoreService,
     ) { }
 
     validateBodyForSentimentAnalysis(requestBody): boolean {
@@ -141,6 +143,8 @@ export class GoogleSentimentAnalysisCoreService {
                 }
                 if (triggerPipeline) {
                     console.log('detected auto trigger for sentiment analysis, will invoke keyphrase extraction automatically');
+                    // to call the keyphrase extraction api and send the keyphrase of the text to a specific json db which will record all the keyphrases
+                    this.caminoSrvc.initiateKeyPhraseExtraction(filePath);
                 }
             })
             .catch(err => {

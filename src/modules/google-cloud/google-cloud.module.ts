@@ -9,6 +9,8 @@ import { GoogleSentimentAnalysisUtilityService } from './services/google-sentime
 import { ReadDbModule } from '../read-db/read-db.module';
 import { GoogleCloudEventHandlerService } from './event-handler/google-cloud-event-handler/google-cloud-event-handler.service';
 import { GoogleCloudEventUtilityService } from './event-handler/services/google-cloud-event-utility/google-cloud-event-utility.service';
+import { CaminoModule } from '../camino/camino.module';
+import { CaminoCoreService } from '../camino/services/camino-core/camino-core.service';
 
 @Module({
   controllers: [
@@ -27,7 +29,8 @@ imports: [
   HttpModule,
   AutomateAccessTokenModule,
   ReadDbModule,
+  CaminoModule,
 ],
-exports: [GoogleSentimentAnalysisCoreService, GoogleCloudEventHandlerService, GoogleCloudEventUtilityService],
+exports: [GoogleSentimentAnalysisCoreService, GoogleCloudEventHandlerService, GoogleCloudEventUtilityService, CaminoCoreService],
 })
 export class GoogleCloudModule {}

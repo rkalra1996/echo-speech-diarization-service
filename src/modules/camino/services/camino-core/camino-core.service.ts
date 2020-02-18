@@ -6,6 +6,7 @@ import { GoogleCloudBucketCoreService } from './../../../google-cloud/services/g
 
 import * as path from 'path';
 import * as fs from 'fs';
+import { KeyphrasePythonService } from '../keyphrase-python/keyphrase-python.service';
 @Injectable()
 export class CaminoCoreService {
 
@@ -13,7 +14,8 @@ export class CaminoCoreService {
         private ffmpegUSrvc: FfmpegUtilityService,
         private dbCSrvc: DatabseCommonService,
         private ytdluSrvc: YoutubeDlUtilityService,
-        private readonly gcbSrvc: GoogleCloudBucketCoreService) {}
+        private readonly gcbSrvc: GoogleCloudBucketCoreService,
+        private readonly keyPhraseSrvc: KeyphrasePythonService) {}
 
     async uploadToCloud(fileData) {
         console.log('processing file info to upload to the cloud');
@@ -133,5 +135,30 @@ export class CaminoCoreService {
             }
         }
         return audioData;
+    }
+
+    initiateKeyPhraseExtraction(filePathToUse) {
+        console.log('file recieved is ', filePathToUse);
+        // get the body for keyPhrase extraction
+        this.keyPhraseSrvc.prepareRequestBodyForKPExtraction('');
+        // prepare request data
+        this.keyPhraseSrvc.getKeyPhraseRequestData('');
+        // send the data to api for keyPhrase extraction
+        this.keyPhraseSrvc.hitKPhraseAPI({});
+        // prepare data for wordcloud json
+        this.keyPhraseSrvc.preapreaWordCloudObject('');
+        // send the result to a wordcloud database
+        this.sendDataToWordCloudDB({});
+    }
+
+    sendDataToWordCloudDB(dataToSave) {
+        const DB_FILE_PATH = path.join(__dirname, './../../../../assets/word_cloud_db/db.json');
+        try {
+            console.log('file fetch path is ', DB_FILE_PATH);
+            const wordcloudContents = fs.readFileSync(DB_FILE_PATH);
+            console.log('contents are ', wordcloudContents);
+        } catch (e) {
+            console.log('Error occured while accesing wordcloud db');
+        }
     }
 }

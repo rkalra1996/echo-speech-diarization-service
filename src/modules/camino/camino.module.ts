@@ -11,6 +11,7 @@ import { GoogleCloudBucketUtilityService } from '../google-cloud/services/google
 import { AutomateAccessTokenModule } from '../automate-access-token/automate-access-token.module';
 import { WebhooksHandlerService } from './services/webhooks-handler/webhooks-handler.service';
 import { SpeechToTextModule } from '../speech-to-text/speech-to-text.module';
+import { KeyphrasePythonService } from './services/keyphrase-python/keyphrase-python.service';
 
 @Module({
     imports: [
@@ -29,6 +30,8 @@ import { SpeechToTextModule } from '../speech-to-text/speech-to-text.module';
         GoogleCloudBucketCoreService,
         CaminoCoreService,
         WebhooksHandlerService,
+        KeyphrasePythonService,
     ],
+    exports: [KeyphrasePythonService],
 })
 export class CaminoModule {}
