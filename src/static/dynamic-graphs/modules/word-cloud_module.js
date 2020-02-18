@@ -1,16 +1,33 @@
 var wordCloudModule = (function(d3Object){
 
+  function _parseObjects(dataArray) {
+    if (dataArray.length > 0) {
+      dataArray.forEach(dataObj => {
+        const videoName = dataObj.name;
+        const keyPhraseString = dataObj.phraseString;
+        // create multiple svg elements accordingly
+        // and call the drawWordCloud(dataOfTB, svgElObject.wcSVGRight)
+      });
+    }
+    else {
+      console.log('empty array');
+    }
+  }
+
     function _getD3(svgElObject) {
         console.log('get d3 from Word Cloud module')
 
-        // d3.json('/read-vis-db/json', (err, data) => {
-        //     if(err) {
-        //         console.log("Error in Word Cloud Data",err);
-        //     }
-        //     else {
-        //         console.log("Success");
-        //     }
-        // })
+        d3.json('./../assets/word_cloud_db/db.json', (err, data) => {
+             if(err) {
+                 console.log("Error in Word Cloud Data",err);
+             }
+             else {
+                 console.log("Success");
+                 console.log('data looks like ', data);
+                 _parseObjects(data.data)
+
+             }
+        });
 
         var dataOfCancer = `Happy New Year to all of you by come to 17th week off and I CBS cancer prevention acquisition intervention in tobacco cessation Department of Psychiatry all India Institute of Medical Sciences
         dependence Treatment Center good afternoon everyone at the ABC app games show identity see which is located in ghaziabad we provide a patient as well as Outpatient Treatment and especially with respect
