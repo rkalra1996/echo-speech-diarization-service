@@ -11,6 +11,7 @@ var colorConfig = (function(){
     var _colorCodes = {
         hubColor: '#1f77b4',
         spokeColor: '#ff7f0e',
+        studentColor: '#ff7f0e',
         activeColor: '#00ffd0',
         videoStatusOnColor: '#4CAF50',
         videoStatusOffColor: 'red',

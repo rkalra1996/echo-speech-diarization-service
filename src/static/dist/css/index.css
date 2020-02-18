@@ -296,11 +296,13 @@ navbar {
 }
 
 .initialText {
+  min-width: 40%;
+  max-width: 40%;
   text-align: center;
   color: lightslategrey;
   font-size: 1.4rem;
   position: absolute;
-  left: 40%;
+  left: 20%;
   top: 45%;
 }
 
@@ -614,7 +616,6 @@ input[type=range]:focus::-ms-fill-upper {
   margin: 0;
   position: absolute;
   right: 70px;
-  margin-top: 50px;
   top: 35%;
   text-align: center;
 }

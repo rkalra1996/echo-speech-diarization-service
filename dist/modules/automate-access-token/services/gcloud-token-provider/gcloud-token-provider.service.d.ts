@@ -5,4 +5,6 @@ export declare class GcloudTokenProviderService {
     readonly process_token: string;
     cleanKey(keyString: string): string;
     makeIncorrect(keyString: string): string;
+    updateAuthTokenInRequest(requestDetails: any): any;
+    getRequestType(headers: any): "get" | "post";
 }

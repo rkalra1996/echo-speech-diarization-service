@@ -93,6 +93,7 @@ let DiarizationSpeakerService = class DiarizationSpeakerService {
         const url = `https://speech.googleapis.com/v1/operations/${id}`;
         const response = await this.httpSrvc.get(url, requestConfig).toPromise()
             .then((resp) => {
+            console.log('recieved response for diarization id ', id);
             return Promise.resolve({ resp });
         })
             .catch(err => {
@@ -104,7 +105,8 @@ let DiarizationSpeakerService = class DiarizationSpeakerService {
 };
 DiarizationSpeakerService = __decorate([
     common_1.Injectable(),
-    __metadata("design:paramtypes", [common_1.HttpService, google_speaker_diarization_event_handler_service_1.GoogleSpeakerDiarizationEventHandlerService,
+    __metadata("design:paramtypes", [common_1.HttpService,
+        google_speaker_diarization_event_handler_service_1.GoogleSpeakerDiarizationEventHandlerService,
         gcloud_token_provider_service_1.GcloudTokenProviderService])
 ], DiarizationSpeakerService);
 exports.DiarizationSpeakerService = DiarizationSpeakerService;
