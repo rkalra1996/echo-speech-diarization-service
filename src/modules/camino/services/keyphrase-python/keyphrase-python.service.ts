@@ -16,7 +16,7 @@ export class KeyphrasePythonService {
     }
 
     hitKPhraseAPI(requestBody, filename?: string) {
-        const endpoint = 'http://localhost:5000/devcon/submit';
+        const endpoint = 'http://52.221.207.221:5000/devcon/submit';
         console.log('request created is ', requestBody);
         return this.http.post(endpoint, requestBody.data).toPromise()
         .then(phraseRes => {
