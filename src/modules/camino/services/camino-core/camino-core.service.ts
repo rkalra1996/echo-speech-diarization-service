@@ -81,6 +81,10 @@ export class CaminoCoreService {
                             console.log('correctedFile name looks like ', audioFile);
                             fs.writeFileSync(path.resolve(parentFolderAddr, audioFile.originalname), audioFile.buffer);
                         });
+                        // update the file status in status db ======> 0
+                        const monoFileNameForStatus = `mono_${audioFilesArray[0]['originalname'].split(path.extname(audioFilesArray[0]['originalname']))[0]}.wav`;
+                        this.statusSrvc.updateStatus(monoFileNameForStatus, 0);
+                        console.log('updated status ', monoFileNameForStatus);
                         resolve({ok: true});
                         // convert to mono
                         // also check if there are any json files in youtube-download folder, this means we need the auto move process - 1
