@@ -25,6 +25,7 @@ const google_cloud_module_1 = require("./modules/google-cloud/google-cloud.modul
 const youtube_module_1 = require("./modules/youtube/youtube.module");
 const google_translate_module_1 = require("./modules/google-translate/google-translate.module");
 const camino_module_1 = require("./modules/camino/camino.module");
+const status_service_1 = require("./services/shared/status/status.service");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -48,8 +49,8 @@ AppModule = __decorate([
             camino_module_1.CaminoModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService, common_request_validator_service_1.CommonRequestValidatorService],
-        exports: [common_request_validator_service_1.CommonRequestValidatorService],
+        providers: [app_service_1.AppService, common_request_validator_service_1.CommonRequestValidatorService, status_service_1.StatusService],
+        exports: [common_request_validator_service_1.CommonRequestValidatorService, status_service_1.StatusService],
     })
 ], AppModule);
 exports.AppModule = AppModule;

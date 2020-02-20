@@ -12,6 +12,7 @@
     width: 95%;
     margin: auto;
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     flex-direction: row;
     align-items: stretch;
@@ -20,15 +21,15 @@
 .heading {
     font-size: 1.4rem;
     font-weight: bold;
-    padding : 1em 0;
+    padding : 1em 42%;
     width: 95%;
     margin: auto;
 }
 
 .imageBlock {
     margin: 15px;
-    width: 45%;
-
+    width: 100%;
+    display: contents;
 }
 
 .imageBlock.i1 {
